@@ -11,7 +11,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "ng lint; stylelint src/**/*.scss"
+      "pre-commit": "ng lint && stylelint src/**/*.scss"
     }
   },
   "private": true,
