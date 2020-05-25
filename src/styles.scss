@@ -1,3 +1,11 @@
+@import './styles/variables';
+@import './styles/theme';
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('assets/fonts/Roboto-Regular.ttf');
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -15,6 +23,7 @@ body {
 }
 
 body {
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  background-color: $background-color;
+  font-family: Roboto, sans-serif;
   margin: 0;
 }

@@ -1,4 +1,4 @@
-import { IUrls } from '../interfaces/urls.interface';
+import { IUrls } from '../interfaces';
 
 const host = 'http://localhost:8000/';
 
