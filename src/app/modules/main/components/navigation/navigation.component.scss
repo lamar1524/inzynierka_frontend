@@ -1,0 +1,10 @@
+@import '../../../../../styles/variables';
+
+.container {
+  background-color: #000;
+  height: $nav-height;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}

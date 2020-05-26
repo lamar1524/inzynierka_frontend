@@ -1,0 +1,7 @@
+@import '../../../../../styles/variables';
+
+.container {
+  min-height: calc(100vh - #{$nav-height});
+  position: absolute;
+  top: $nav-height;
+}

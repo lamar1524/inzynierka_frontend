@@ -10,6 +10,6 @@ export class LoginGuard implements CanActivate {
   constructor(private authService: AuthService) {}
 
   canActivate(): boolean {
-    return !this.authService.isLoggedIn();
+    return this.authService.isLoggedIn();
   }
 }

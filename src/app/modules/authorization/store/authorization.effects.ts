@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import { ROUTES } from '@core/consts';
 import { PopupService } from '@core/services';
@@ -18,7 +18,10 @@ export class AuthorizationEffects {
       ofType(authActions.login),
       switchMap((action) =>
         this.authService.loginUser(action.data).pipe(
-          map((res) => authActions.loginSuccess({ user: res })),
+          map((res) => {
+            this.router.navigate([ROUTES.home.path]);
+            return authActions.loginSuccess({ user: res });
+          }),
           catchError(() => {
             this.popupService.error('Podałeś błędne dane');
             return of(authActions.loginFailed());
