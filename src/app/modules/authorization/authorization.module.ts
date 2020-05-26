@@ -6,12 +6,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
-import { AuthorizationRoutingModule } from '@authorization/authorization-routing.module';
-import { LoginGuard } from '@authorization/guards';
-import { AuthInterceptor } from '@authorization/interceptors';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
+import { AuthorizationRoutingModule } from '@authorization/authorization-routing.module';
+import { LoginGuard } from '@authorization/guards';
+import { AuthInterceptor } from '@authorization/interceptors';
 import { STORE_FEATURES } from '@core/consts';
 import { LoginComponent, RegisterComponent } from './components';
 import { AuthService } from './services';

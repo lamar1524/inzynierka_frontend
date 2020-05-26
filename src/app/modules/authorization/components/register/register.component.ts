@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { selectRegisterLoading, AuthModuleState } from '@authorization/store';
 import { ROUTES } from '@core/consts';
 import { IRoutes } from '@core/interfaces';
 import { equalityValidator } from '@core/validators/equality.validator';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import * as authActions from '../../store/authorization.actions';
 
 @Component({
