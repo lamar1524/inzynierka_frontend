@@ -1,7 +1,7 @@
 import { USER_ROLE } from '../enums';
 
 export interface ILoginUser {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -11,4 +11,5 @@ export interface IUser {
   last_name: string;
   role: USER_ROLE;
   image: string;
+  token?: string;
 }

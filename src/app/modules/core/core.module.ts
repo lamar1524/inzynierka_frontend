@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { PopupComponent } from './components/popup/popup.component';
-import { PopupService } from './services/popup.service';
+import { PopupComponent } from './components';
+import { PopupService } from './services';
 
 @NgModule({
   declarations: [PopupComponent],
