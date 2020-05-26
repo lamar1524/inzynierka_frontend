@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { selectLoginLoading } from '@authorization/store';
 import { Store } from '@ngrx/store';
-
-import { AuthModuleState } from '@authorization/store/authorization.reducer';
-import { ILoginUser } from '@core/interfaces/user.interface';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+
+import { selectLoginLoading } from '@authorization/store';
+import { AuthModuleState } from '@authorization/store/authorization.reducer';
+import { ROUTES } from '@core/consts';
+import { IRoutes } from '@core/interfaces';
+import { ILoginUser } from '@core/interfaces/user.interface';
 import * as authActions from '../../store/authorization.actions';
 
 @Component({
@@ -17,6 +19,7 @@ import * as authActions from '../../store/authorization.actions';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  readonly routes: IRoutes;
   loading$: Observable<boolean>;
 
   constructor(private store: Store<AuthModuleState>, private cdRef: ChangeDetectorRef) {
@@ -30,6 +33,7 @@ export class LoginComponent {
         this.cdRef.markForCheck();
       }),
     );
+    this.routes = ROUTES;
   }
 
   get email() {
