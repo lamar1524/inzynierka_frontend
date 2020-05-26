@@ -1,7 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { of, Observable } from 'rxjs';
+import { of, throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { AuthService } from '../services';
@@ -19,7 +19,7 @@ export class AuthInterceptor implements HttpInterceptor {
         if (error.status === 401) {
           this.handle401Error(request, next, error);
         }
-        return of(error);
+        return throwError(error);
       }),
     );
   }

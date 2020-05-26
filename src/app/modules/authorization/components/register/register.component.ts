@@ -1,8 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+
+import { selectRegisterLoading, AuthModuleState } from '@authorization/store';
 import { ROUTES } from '@core/consts';
 import { IRoutes } from '@core/interfaces';
 import { equalityValidator } from '@core/validators/equality.validator';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import * as authActions from '../../store/authorization.actions';
 
 @Component({
   selector: 'app-register',
@@ -13,8 +19,9 @@ import { equalityValidator } from '@core/validators/equality.validator';
 export class RegisterComponent {
   registerForm: FormGroup;
   routes: IRoutes;
+  loading$: Observable<boolean>;
 
-  constructor() {
+  constructor(private store: Store<AuthModuleState>, private cdRef: ChangeDetectorRef) {
     this.registerForm = new FormGroup({
       first_name: new FormControl(null, Validators.required),
       last_name: new FormControl(null, Validators.required),
@@ -23,6 +30,12 @@ export class RegisterComponent {
       repeatPassword: new FormControl(null, [Validators.required, equalityValidator('password')]),
     });
     this.routes = ROUTES;
+    this.loading$ = this.store.select(selectRegisterLoading).pipe(
+      tap((loading) => {
+        loading ? this.registerForm.disable() : this.registerForm.enable();
+        this.cdRef.markForCheck();
+      }),
+    );
   }
 
   get firstName() {
@@ -44,5 +57,8 @@ export class RegisterComponent {
     return this.registerForm.get('repeatPassword');
   }
 
-  submitRegister(): void {}
+  submitRegister(): void {
+    const { first_name, last_name, email, password } = this.registerForm.value;
+    this.store.dispatch(authActions.register({ data: { first_name, last_name, email, password } }));
+  }
 }

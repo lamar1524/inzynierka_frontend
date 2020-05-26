@@ -24,8 +24,47 @@
         <mat-form-field>
           <input matInput placeholder="Powtórz hasło" formControlName="repeatPassword" type="password" class="form-control" />
         </mat-form-field>
+        <div class="errors__wrapper u-text--red">
+          <div *ngIf="firstName.invalid && firstName.dirty && firstName.touched">
+            <div *ngIf="firstName.errors.required">
+              Imię jest wymagane
+            </div>
+          </div>
+          <div *ngIf="lastName.invalid && lastName.dirty && lastName.touched">
+            <div *ngIf="lastName.errors.required">
+              Nazwisko jest wymagane
+            </div>
+          </div>
+          <div *ngIf="email.invalid && email.dirty && email.touched">
+            <div *ngIf="email.errors.required">
+              Email jest wymagany
+            </div>
+            <div *ngIf="email.errors.email">
+              Wprowadź poprawny email
+            </div>
+          </div>
+          <div *ngIf="password.invalid && password.dirty && password.touched">
+            <div *ngIf="password.errors.required">
+              Hasło jest wymagane
+            </div>
+            <div *ngIf="password.errors.minLength">
+              Wymagana długość hasła to 8 znaków
+            </div>
+          </div>
+          <div *ngIf="repeatPassword.invalid && repeatPassword.dirty && repeatPassword.touched">
+            <div *ngIf="repeatPassword.errors.required">
+              Powtórzenie hasła jest wymagane
+            </div>
+            <div *ngIf="repeatPassword.errors.notEqual">
+              Hasła nie są identyczne!
+            </div>
+          </div>
+        </div>
         <div class="button__wrapper">
-          <button [disabled]="registerForm.invalid" class="form__button" type="submit" mat-raised-button color="primary">Wyślij</button>
+          <button [disabled]="registerForm.invalid || registerForm.disabled" class="form__button" type="submit" mat-raised-button color="primary">
+            <span *ngIf="(loading$ | async) === false; else spinner">Wyślij</span>
+            <ng-template #spinner><mat-spinner [diameter]="40"></mat-spinner></ng-template>
+          </button>
         </div>
       </form>
     </div>
