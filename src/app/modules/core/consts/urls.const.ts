@@ -5,4 +5,5 @@ const host = 'http://localhost:8000/';
 export const URLS: IUrls = {
   host,
   login: host + 'login/',
+  register: host + 'users/register/',
 };

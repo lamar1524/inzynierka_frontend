@@ -1,3 +1,6 @@
+@import '../../../../../styles/mixins';
+@import '../../../../../styles/variables';
+
 .container {
   height: 100%;
 
@@ -5,7 +8,7 @@
     align-items: center;
     display: flex;
     flex-direction: row;
-    height: 30%;
+    height: 20%;
     justify-content: center;
   }
 
@@ -22,7 +25,7 @@
   }
 
   .login__wrapper {
-    height: 70%;
+    height: 80%;
   }
 
   .login__header {
@@ -39,7 +42,7 @@
 
   .mat-form-field {
     display: block;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
 
   .button__wrapper {
@@ -47,7 +50,7 @@
   }
 
   .form__button {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
     padding: 10px 30px;
   }
 
@@ -57,10 +60,26 @@
 
     .register__caption {
       display: inline-block;
+      font-size: 2rem;
     }
   }
 
   .errors {
     padding: 10px 0;
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    margin: 0 auto;
+    width: 50%;
+
+    .mat-form-field {
+      display: block;
+      font-size: 1.8rem;
+    }
+  }
+
+  @include break(map-get($breakpoints, lg)) {
+    margin: 0 auto;
+    width: 40%;
   }
 }

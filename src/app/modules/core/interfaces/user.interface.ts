@@ -5,6 +5,13 @@ export interface ILoginUser {
   password: string;
 }
 
+export interface IRegisterUser {
+  email: string;
+  first_name: string;
+  last_name: string;
+  password: string;
+}
+
 export interface IUser {
   id: number;
   email: string;

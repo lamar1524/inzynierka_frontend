@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { ROUTES, URLS } from '@core/consts';
 import { USER_ROLE } from '@core/enums';
-import { ILoginUser, IUser } from '@core/interfaces/user.interface';
+import { ILoginUser, IRegisterUser, IUser } from '@core/interfaces/user.interface';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
@@ -32,6 +32,10 @@ export class AuthService {
         role: res.is_admin ? USER_ROLE.ADMIN : res.is_lecturer ? USER_ROLE.LECTURER : USER_ROLE.USER,
       })),
     );
+  }
+
+  registerUser(data: IRegisterUser) {
+    return this.http.post(URLS.register, data);
   }
 
   saveToken(token: string): void {

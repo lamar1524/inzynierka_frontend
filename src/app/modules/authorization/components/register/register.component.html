@@ -5,15 +5,33 @@
     </div>
     <div class="header__text u-text--bold">Teams</div>
   </div>
-  <div class="login__wrapper">
-    <div class="login__header">Logowanie</div>
-    <div class="login__form">
-
+  <div class="register__wrapper">
+    <div class="register__header">Logowanie</div>
+    <div class="register__form">
+      <form class="form-group" (ngSubmit)="submitRegister()" [formGroup]="registerForm">
+        <mat-form-field class="form-control">
+          <input matInput placeholder="Imię" formControlName="first_name" type="text" class="form-control" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Nazwisko" formControlName="last_name" type="text" class="form-control" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" type="email" class="form-control" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Hasło" formControlName="password" type="password" class="form-control" />
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Powtórz hasło" formControlName="repeatPassword" type="password" class="form-control" />
+        </mat-form-field>
+        <div class="button__wrapper">
+          <button [disabled]="registerForm.invalid" class="form__button" type="submit" mat-raised-button color="primary">Wyślij</button>
+        </div>
+      </form>
     </div>
     <div class="caption__wrapper">
-      <div class="register__caption u-text--primary">
-        <p>Nie masz jeszcze konta?</p>
-        <p>Zarejestruj się!</p>
+      <div class="login__caption u-text--primary u-text--link" [routerLink]="[routes.login.path]">
+        <p>Powrót</p>
       </div>
     </div>
   </div>
