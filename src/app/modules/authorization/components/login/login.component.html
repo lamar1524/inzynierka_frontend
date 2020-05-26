@@ -1,1 +1,29 @@
-<p>login works!</p>
+<div class="container">
+  <div class="header">
+    <div class="header__logo">
+      <img class="logo" src="../../../../../assets/img/logo-ur.jpg" alt="Logo" />
+    </div>
+    <div class="header__text u-text--bold">Teams</div>
+  </div>
+  <div class="login__wrapper">
+    <div class="login__header">Logowanie</div>
+    <div class="login__form">
+      <form class="form-group" [formGroup]="loginForm">
+        <mat-form-field class="form-control">
+          <input matInput placeholder="Email" type="email" formControlName="email" />
+        </mat-form-field>
+        <mat-form-field class="form-control">
+          <input matInput placeholder="Hasło" type="password" formControlName="password" />
+        </mat-form-field>
+        <div class="button__wrapper">
+          <button type="submit" class="form__button" mat-raised-button [disabled]="loginForm.invalid" color="primary">Zaloguj</button>
+        </div>
+      </form>
+    </div>
+    <div class="caption__wrapper">
+      <div class="register__caption u-text--primary">
+        <p>Nie masz jeszcze konta?</p><p> Zarejestruj się!</p>
+      </div>
+    </div>
+  </div>
+</div>

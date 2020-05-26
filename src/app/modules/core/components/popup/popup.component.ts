@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
-import { POPUP_STATE } from '../../enums/popup.state.enum';
 
+import { POPUP_STATE } from '../../enums';
 
 @Component({
   selector: 'app-popup',
