@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { selectLoginLoading } from '@authorization/store';
 import { Store } from '@ngrx/store';
 
 import { AuthModuleState } from '@authorization/store/authorization.reducer';
 import { ILoginUser } from '@core/interfaces/user.interface';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import * as authActions from '../../store/authorization.actions';
 
 @Component({
@@ -13,18 +15,22 @@ import * as authActions from '../../store/authorization.actions';
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm: FormGroup;
   loading$: Observable<boolean>;
 
-  constructor(private store: Store<AuthModuleState>) {
+  constructor(private store: Store<AuthModuleState>, private cdRef: ChangeDetectorRef) {
     this.loginForm = new FormGroup({
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, Validators.required),
     });
+    this.loading$ = this.store.select(selectLoginLoading).pipe(
+      tap((loading) => {
+        loading ? this.loginForm.disable() : this.loginForm.enable();
+        this.cdRef.markForCheck();
+      }),
+    );
   }
-
-  ngOnInit(): void {}
 
   get email() {
     return this.loginForm.get('email');
@@ -39,6 +45,10 @@ export class LoginComponent implements OnInit {
       username: this.email.value,
       password: this.password.value,
     };
+  }
+
+  get ableToSend() {
+    return this.loginForm.enabled && this.loginForm.valid;
   }
 
   submitLogin() {

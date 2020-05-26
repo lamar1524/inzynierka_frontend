@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 import { ROUTES, URLS } from '@core/consts';
+import { USER_ROLE } from '@core/enums';
 import { ILoginUser, IUser } from '@core/interfaces/user.interface';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,14 @@ export class AuthService {
       tap((response) => {
         this.saveToken(response.token);
       }),
+      map((res: any) => ({
+        id: res.id,
+        email: res.email,
+        first_name: res.first_name,
+        last_name: res.last_name,
+        image: res.image,
+        role: res.is_admin ? USER_ROLE.ADMIN : res.is_lecturer ? USER_ROLE.LECTURER : USER_ROLE.USER,
+      })),
     );
   }
 
