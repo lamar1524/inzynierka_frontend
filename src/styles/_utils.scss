@@ -1,0 +1,17 @@
+@import './variables';
+
+.u-text--bold {
+  font-weight: 700;
+}
+
+.u-text--primary {
+  color: $primary;
+}
+
+.u-text--red {
+  color: $warn;
+}
+
+.u-text--link {
+  cursor: pointer;
+}

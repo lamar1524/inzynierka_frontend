@@ -1,0 +1,26 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$primary-palette: (
+  500: #0066cb,
+  contrast: (
+    500: white
+  )
+);
+
+$secondary-palette: (
+  500: #000,
+  contrast: (
+    500: white
+  )
+);
+
+$grouper-primary: mat-palette($primary-palette, 500);
+
+$grouper-accent: mat-palette($secondary-palette, 500);
+
+$grouper-warn: mat-palette($mat-red);
+
+$grouper-theme: mat-light-theme($grouper-primary, $grouper-accent, $grouper-warn);
+
+@include angular-material-theme($grouper-theme);

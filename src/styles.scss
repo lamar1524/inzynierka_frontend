@@ -1,1 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+@import './styles/variables';
+@import './styles/theme';
+@import './styles/utils';
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('assets/fonts/Roboto-Regular.ttf');
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+
+  &::before,
+  &::after {
+    box-sizing: border-box;
+  }
+}
+
+html {
+  font-size: 62.5%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: $background-color;
+  font-family: Roboto, sans-serif;
+  font-size: 1.6rem;
+  margin: 0;
+}
+
+@keyframes autofill {
+  0%,
+  100% {
+    background: transparent;
+    color: #000;
+  }
+}
+
+input:-webkit-autofill {
+  animation-delay: 1s !important; /* Safari support - any positive time runs instantly */
+  animation-fill-mode: both !important;
+  animation-name: autofill !important;
+}
