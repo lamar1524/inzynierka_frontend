@@ -1,10 +1,126 @@
 @import '../../../../../styles/variables';
 
+$logo-width: 75px;
+$user-width: 50%;
+$message-width: 50px;
+$hamburger-height: 20px;
+$hamburger-width: 30px;
+
+@mixin hamburger-inner() {
+  background-color: #707070;
+  display: inline-block;
+  height: 2px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
 .container {
-  background-color: #000;
+  align-items: center;
+  background-color: #fff;
+  display: flex;
+  flex-direction: row;
   height: $nav-height;
   left: 0;
   position: fixed;
   top: 0;
   width: 100%;
+
+  .wrapper {
+    height: 100%;
+  }
+
+  .logo__wrapper {
+    height: 75px;
+    width: $logo-width;
+
+    .logo {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .user__wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+    width: $user-width;
+  }
+
+  .img__wrapper {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 60px;
+
+    .img {
+      border: 1px solid #707070;
+      border-radius: 50%;
+      display: inline-block;
+      height: 52px;
+      width: 52px;
+    }
+  }
+
+  .message__wrapper {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: $message-width;
+
+    .message {
+      height: 32px;
+      width: 32px;
+    }
+  }
+
+  .nav__wrapper {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: calc(100% - #{$logo-width} - #{$user-width} - #{$message-width});
+
+    .hamburger__wrapper {
+      align-items: center;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      display: flex;
+      height: calc(#{$hamburger-height} + 5px);
+      justify-content: center;
+      width: calc(#{$hamburger-width} + 5px);
+    }
+
+    .hamburger {
+      display: inline-block;
+      height: $hamburger-height;
+      position: relative;
+      width: $hamburger-width;
+    }
+
+    .hamburger__inner {
+      top: 50%;
+      transform: translateY(-50%);
+      @include hamburger-inner();
+
+      &::after,
+      &::before {
+        content: '';
+        @include hamburger-inner();
+      }
+
+      &::before {
+        top: calc(-#{$hamburger-height} / 2);
+        transform: translateY(50%);
+      }
+
+      &::after {
+        top: calc(#{$hamburger-height} / 2);
+        transform: translateY(-50%);
+      }
+    }
+  }
 }

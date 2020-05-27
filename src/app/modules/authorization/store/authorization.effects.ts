@@ -49,4 +49,20 @@ export class AuthorizationEffects {
       ),
     ),
   );
+
+  loadUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.loadUser),
+      switchMap(() =>
+        this.authService.getCurrentUser().pipe(
+          map((res) => authActions.loadUserSuccess({ user: res })),
+          catchError((error) => {
+            this.popupService.error('Coś poszło nie tak, wylogowywanie');
+            this.authService.logout();
+            return of(authActions.loadUserFailed());
+          }),
+        ),
+      ),
+    ),
+  );
 }

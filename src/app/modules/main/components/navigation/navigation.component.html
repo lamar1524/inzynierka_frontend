@@ -1,3 +1,22 @@
 <div class="container">
-  lll
+  <div class="logo__wrapper wrapper">
+    <img class="logo" alt="Logo" src="../../../../../assets/img/logo-ur.jpg" />
+  </div>
+  <div class="user__wrapper wrapper" *ngIf="currentUser$ | async as currentUser; else spinner">
+    <div class="img__wrapper">
+      <img class="img" alt="Photo" [src]="currentUser.image" />
+    </div>
+    <span class="name__wrapper">{{ currentUser.first_name }} {{ currentUser.last_name }} </span>
+  </div>
+  <ng-template class="wrapper" #spinner><mat-spinner [diameter]="50"></mat-spinner></ng-template>
+  <div class="message__wrapper wrapper">
+    <img class="message" src="../../../../../assets/img/msg.png" alt="msg" />
+  </div>
+  <div class="nav__wrapper wrapper">
+    <button class="hamburger__wrapper">
+      <span class="hamburger">
+        <span class="hamburger__inner"></span>
+      </span>
+    </button>
+  </div>
 </div>
