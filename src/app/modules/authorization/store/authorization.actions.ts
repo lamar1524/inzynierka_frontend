@@ -13,3 +13,6 @@ export const registerFailed = createAction('[Authorization] Register user fail')
 export const loadUser = createAction('[Authorization] Load user');
 export const loadUserSuccess = createAction('[Authorization] Load user success', props<{ user: IUser }>());
 export const loadUserFailed = createAction('[Authorization] Load user fail');
+
+export const logoutUser = createAction('[Authorization] Logout user');
+export const logoutUserSuccess = createAction('[Authorization] Logout user success');

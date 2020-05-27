@@ -8,15 +8,41 @@
     </div>
     <span class="name__wrapper">{{ currentUser.first_name }} {{ currentUser.last_name }} </span>
   </div>
-  <ng-template class="wrapper" #spinner><mat-spinner [diameter]="50"></mat-spinner></ng-template>
+  <ng-template #spinner>
+    <div class="user__wrapper wrapper">
+      <mat-spinner [diameter]="50"></mat-spinner>
+    </div>
+  </ng-template>
   <div class="message__wrapper wrapper">
     <img class="message" src="../../../../../assets/img/msg.png" alt="msg" />
   </div>
-  <div class="nav__wrapper wrapper">
-    <button class="hamburger__wrapper">
-      <span class="hamburger">
+  <div class="hamburger__wrapper wrapper">
+    <button class="hamburger__box" (click)="toggleNav()">
+      <span class="hamburger" [ngClass]="{ 'hamburger--active': navVisibility | async }">
         <span class="hamburger__inner"></span>
       </span>
     </button>
+  </div>
+</div>
+<div class="nav" [ngClass]="{ 'nav--active': navVisibility | async }">
+  <div class="options">
+    <div class="option__wrapper">
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.allPosts.path]" mat-button>Strona główna</button>
+    </div>
+    <div class="option__wrapper">
+      <button class="option" (click)="closeNav()" mat-button>Wiadomości</button>
+    </div>
+    <div class="option__wrapper">
+      <button class="option" (click)="closeNav()" mat-button>Grupy</button>
+    </div>
+    <div class="option__wrapper">
+      <button class="option" (click)="closeNav()" mat-button>Szukaj</button>
+    </div>
+    <div class="option__wrapper">
+      <button class="option" (click)="closeNav()" mat-button>Profil</button>
+    </div>
+    <div class="option__wrapper">
+      <button class="option" (click)="logout()" mat-button>Wyloguj</button>
+    </div>
   </div>
 </div>

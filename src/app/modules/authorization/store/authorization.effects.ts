@@ -65,4 +65,14 @@ export class AuthorizationEffects {
       ),
     ),
   );
+
+  logoutUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.logoutUser),
+      switchMap(() => {
+        this.authService.logout();
+        return of(authActions.logoutUserSuccess());
+      }),
+    ),
+  );
 }

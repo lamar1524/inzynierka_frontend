@@ -1,13 +1,22 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { StoreModule } from '@ngrx/store';
 
-import { MainComponent } from './components';
-import { NavigationComponent } from './components/navigation/navigation.component';
+import { STORE_FEATURES } from '@core/consts';
+import { MainComponent, NavigationComponent } from './components';
 import { MainRoutingModule } from './main-routing.module';
+import { mainReducer } from './store';
 
 @NgModule({
   declarations: [MainComponent, NavigationComponent],
-  imports: [CommonModule, MainRoutingModule, MatProgressSpinnerModule],
+  imports: [
+    CommonModule,
+    MainRoutingModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    StoreModule.forFeature(STORE_FEATURES.main, mainReducer),
+  ],
 })
 export class MainModule {}
