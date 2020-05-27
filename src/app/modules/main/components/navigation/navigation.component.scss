@@ -1,4 +1,5 @@
 @import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
 
 $logo-width: 75px;
 $user-width: 50%;
@@ -16,15 +17,27 @@ $hamburger-width: 30px;
 }
 
 .container {
-  align-items: center;
   background-color: #fff;
-  display: flex;
-  flex-direction: row;
+  box-shadow: 0 3px 17px 0 rgba(0, 0, 0, 0.42);
+  display: block;
   height: $nav-height;
   left: 0;
   position: fixed;
   top: 0;
   width: 100%;
+  z-index: 2;
+
+  .left__wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+  }
+
+  .right__wrapper {
+    display: none;
+  }
 
   .wrapper {
     height: 100%;
@@ -42,7 +55,9 @@ $hamburger-width: 30px;
 
   .user__wrapper {
     align-items: center;
+    color: $primary;
     display: flex;
+    font-size: 2rem;
     justify-content: space-around;
     width: $user-width;
   }
@@ -142,7 +157,8 @@ $hamburger-width: 30px;
 
 .nav {
   align-items: center;
-  background-color: #fff;
+  background-color: $background-color;
+  color: $primary;
   display: flex;
   flex-direction: column;
   height: calc(100vh - #{$nav-height});
@@ -172,4 +188,49 @@ $hamburger-width: 30px;
 
 .nav--active {
   transform: translateX(0);
+}
+
+.help__nav {
+  display: none;
+}
+
+@include break(map-get($breakpoints, lg)) {
+  .container {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .left__wrapper {
+      justify-content: flex-start;
+      width: 50%;
+    }
+
+    .right__wrapper {
+      color: $primary;
+      display: flex;
+      justify-content: flex-end;
+      width: 50%;
+
+      .option__wrapper {
+        display: inline-block;
+      }
+    }
+
+    .hamburger__wrapper {
+      display: none;
+    }
+
+    .user__wrapper {
+      justify-content: flex-start;
+
+      .img__wrapper {
+        margin: 0 15px;
+      }
+    }
+
+    .message__wrapper {
+      display: none;
+    }
+  }
 }
