@@ -21,3 +21,8 @@ export interface IUser {
   image: string;
   token?: string;
 }
+
+export interface IResponseUsers {
+  next: string;
+  users: IUser[];
+}

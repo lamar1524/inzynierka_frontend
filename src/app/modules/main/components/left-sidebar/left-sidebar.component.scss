@@ -11,7 +11,7 @@ $image-size: 48px;
     display: flex;
     flex-direction: column;
     height: calc(100vh - #{$nav-height});
-    justify-content: center;
+    justify-content: flex-start;
     left: 0;
     position: fixed;
     top: $nav-height;
@@ -25,7 +25,8 @@ $image-size: 48px;
       width: 90%;
     }
 
-    .groups__header {
+    .groups__header,
+    .search__header {
       border-bottom: 2px solid $primary;
       font-size: 2rem;
       margin-bottom: 5px;
@@ -33,7 +34,6 @@ $image-size: 48px;
 
     .group {
       align-items: center;
-      background-color: #fff;
       border-radius: 10px;
       display: flex;
       flex-direction: row;
@@ -43,17 +43,8 @@ $image-size: 48px;
       transition: background-color 0.5s ease;
       width: 95%;
 
-      &:hover {
-        background-color: $primary;
-        cursor: pointer;
-      }
-
-      &:active {
-        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.75);
-      }
-
       .group-image__wrapper {
-        border: 1px solid $grey;
+        border: 1px solid $gray;
         border-radius: 50%;
         height: $image-size;
         width: $image-size;
@@ -80,13 +71,14 @@ $image-size: 48px;
 
     .search__wrapper {
       margin: 10px 0 10px auto;
+      min-height: 25%;
       width: 90%;
 
       .form-group {
         align-items: center;
         display: flex;
         justify-content: space-between;
-        margin: 0 auto;
+        margin: 15px auto 0 0;
         width: 95%;
       }
 

@@ -4,4 +4,5 @@ export interface IUrls {
   register: string;
   currentUser: string;
   usersGroups: string;
+  friendsList: string;
 }

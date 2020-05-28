@@ -1,5 +1,6 @@
 <div class="container">
   <div class="search__wrapper">
+    <div class="search__header">Wyszukiwarka</div>
     <form (ngSubmit)="navigateToSearch()" [formGroup]="searchForm" class="form-group">
       <mat-form-field>
         <input placeholder="Szukaj..." type="search" formControlName="phrase" matInput />
@@ -9,7 +10,7 @@
   </div>
   <div class="groups__wrapper" *ngIf="(groupsLoading$ | async) === false; else spinner">
     <div class="groups__header">Grupy</div>
-    <div class="group" *ngFor="let group of groups$ | async">
+    <div class="group" (mouseenter)="hover($event)" (mouseleave)="unHover($event)" *ngFor="let group of groups$ | async; index as i">
       <div class="group-image__wrapper">
         <img class="group-image" alt="image" [src]="group.image" />
       </div>

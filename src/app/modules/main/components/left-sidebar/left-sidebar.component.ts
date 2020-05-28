@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -17,7 +18,7 @@ export class LeftSidebarComponent {
   groupsLoading$: Observable<boolean>;
   searchForm: FormGroup;
 
-  constructor(private store: Store<MainModuleState>) {
+  constructor(private store: Store<MainModuleState>, @Inject(DOCUMENT) private document: Document) {
     this.store.dispatch(loadBaseGroups());
     this.groups$ = this.store.select(selectBaseGroups);
     this.groupsLoading$ = this.store.select(selectBaseGroupsLoading);
@@ -31,5 +32,13 @@ export class LeftSidebarComponent {
     if (data.phrase !== null && data.phrase !== '') {
       console.log(data);
     }
+  }
+
+  hover(event) {
+    event.target.classList.add('u-item--hover');
+  }
+
+  unHover(event) {
+    event.target.classList.remove('u-item--hover');
   }
 }

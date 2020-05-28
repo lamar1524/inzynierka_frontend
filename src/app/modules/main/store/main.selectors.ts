@@ -7,3 +7,6 @@ export const selectNavVisibility = createSelector(mainSelector, (state: MainStat
 
 export const selectBaseGroupsLoading = createSelector(mainSelector, (state: MainState) => state.basicGroupsLoading);
 export const selectBaseGroups = createSelector(mainSelector, (state: MainState) => state.basicGroups);
+
+export const selectFriendsLoading = createSelector(mainSelector, (state: MainState) => state.friendsLoading);
+export const selectFriends = createSelector(mainSelector, (state: MainState) => state.friends);
