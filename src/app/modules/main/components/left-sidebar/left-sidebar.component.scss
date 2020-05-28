@@ -9,6 +9,7 @@ $image-size: 48px;
   @include break(map-get($breakpoints, lg)) {
     align-items: center;
     display: flex;
+    flex-direction: column;
     height: calc(100vh - #{$nav-height});
     justify-content: center;
     left: 0;
@@ -76,10 +77,32 @@ $image-size: 48px;
     .groups__caption {
       padding-top: 5px;
     }
+
+    .search__wrapper {
+      margin: 10px 0 10px auto;
+      width: 90%;
+
+      .form-group {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+        width: 95%;
+      }
+
+      .form-button {
+        max-width: 30%;
+      }
+
+      .mat-form-field {
+        max-width: 60%;
+      }
+    }
   }
 
   @include break(map-get($breakpoints, xl)) {
-    .groups__wrapper {
+    .groups__wrapper,
+    .search__wrapper {
       width: 80%;
     }
   }

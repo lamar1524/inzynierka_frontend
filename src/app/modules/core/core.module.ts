@@ -4,11 +4,11 @@ import { NgModule } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { PopupComponent } from './components';
-import { GroupsService, PopupService } from './services';
+import { GroupsService, MessagesService, PopupService } from './services';
 
 @NgModule({
   declarations: [PopupComponent],
   imports: [CommonModule, MatSnackBarModule, HttpClientModule],
-  providers: [PopupService, GroupsService],
+  providers: [PopupService, GroupsService, MessagesService],
 })
 export class CoreModule {}

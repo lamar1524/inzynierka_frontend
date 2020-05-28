@@ -1,13 +1,23 @@
 <div class="container">
+  <div class="search__wrapper">
+    <form (ngSubmit)="navigateToSearch()" [formGroup]="searchForm" class="form-group">
+      <mat-form-field>
+        <input placeholder="Szukaj..." type="search" formControlName="phrase" matInput />
+      </mat-form-field>
+      <button type="submit" class="form-button" mat-raised-button color="primary">Szukaj</button>
+    </form>
+  </div>
   <div class="groups__wrapper" *ngIf="(groupsLoading$ | async) === false; else spinner">
     <div class="groups__header">Grupy</div>
     <div class="group" *ngFor="let group of groups$ | async">
       <div class="group-image__wrapper">
-        <img class="group-image" alt="image" [src]="group.image">
+        <img class="group-image" alt="image" [src]="group.image" />
       </div>
-      <div class="group__name"><span>{{ group.name.length >= 35 ? (group.name | slice:0:35) + '...' : group.name}}</span></div>
+      <div class="group__name">
+        <span>{{ group.name.length >= 35 ? (group.name | slice: 0:35) + '...' : group.name }}</span>
+      </div>
     </div>
-    <div class="groups__caption u-text--link" *ngIf="(groups$ | async) && (groups$ | async).length > 0; else error">Zobacz więcej...</div>
+    <div class="groups__caption u-text--link u-text--primary" *ngIf="(groups$ | async) && (groups$ | async).length > 0; else error">Zobacz więcej...</div>
     <ng-template #error>
       <div class="groups__caption u-text--link">Brak grup...</div>
     </ng-template>
