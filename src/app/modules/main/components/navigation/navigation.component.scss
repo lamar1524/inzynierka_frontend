@@ -8,7 +8,7 @@ $hamburger-height: 20px;
 $hamburger-width: 30px;
 
 @mixin hamburger-inner() {
-  background-color: #707070;
+  background-color: $grey;
   display: inline-block;
   height: 2px;
   left: 0;
@@ -70,7 +70,7 @@ $hamburger-width: 30px;
     width: 60px;
 
     .img {
-      border: 1px solid #707070;
+      border: 1px solid $grey;
       border-radius: 50%;
       display: inline-block;
       height: 52px;

@@ -18,23 +18,11 @@ export class AuthService {
     this.TOKEN_KEY = 'Token';
   }
 
-  private static userNormalize(res: any) {
-    return {
-      id: res.id,
-      email: res.email,
-      first_name: res.first_name,
-      last_name: res.last_name,
-      image: res.image,
-      role: res.is_admin ? USER_ROLE.ADMIN : res.is_lecturer ? USER_ROLE.LECTURER : USER_ROLE.USER,
-    };
-  }
-
   loginUser(data: ILoginUser): Observable<IUser> {
     return this.http.post<IUser>(URLS.login, data).pipe(
       tap((response) => {
         this.saveToken(response.token);
       }),
-      map(AuthService.userNormalize),
     );
   }
 
@@ -60,6 +48,6 @@ export class AuthService {
   }
 
   getCurrentUser() {
-    return this.http.get<IUser>(URLS.currentUser).pipe(map(AuthService.userNormalize));
+    return this.http.get<IUser>(URLS.currentUser);
   }
 }

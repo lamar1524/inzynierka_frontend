@@ -7,4 +7,5 @@ export const URLS: IUrls = {
   login: host + 'login/',
   register: host + 'users/register/',
   currentUser: host + 'users/current_user/',
+  usersGroups: host + 'groups/list/',
 };

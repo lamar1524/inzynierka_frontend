@@ -24,7 +24,7 @@ export class AuthorizationEffects {
           }),
           catchError(() => {
             this.popupService.error('Podałeś błędne dane');
-            return of(authActions.loginFailed());
+            return of(authActions.loginFail());
           }),
         ),
       ),
@@ -43,7 +43,7 @@ export class AuthorizationEffects {
           }),
           catchError((error) => {
             this.popupService.error(error.error.email[0]);
-            return of(authActions.registerFailed());
+            return of(authActions.registerFail());
           }),
         ),
       ),
@@ -59,7 +59,7 @@ export class AuthorizationEffects {
           catchError((error) => {
             this.popupService.error('Coś poszło nie tak, wylogowywanie');
             this.authService.logout();
-            return of(authActions.loadUserFailed());
+            return of(authActions.loadUserFail());
           }),
         ),
       ),
