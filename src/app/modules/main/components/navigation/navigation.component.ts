@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
-import { ROUTES } from '@core/consts';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import * as authActions from '@authorization/store/authorization.actions';
+import { ROUTES } from '@core/consts';
 import { IRoutes, IUser } from '@core/interfaces';
-import { first } from 'rxjs/operators';
 import { hideNav, selectNavVisibility, toggleNav, MainModuleState } from '../../store';
 
 @Component({

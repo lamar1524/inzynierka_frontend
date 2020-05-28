@@ -1,9 +1,10 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, HostListener, Inject } from '@angular/core';
-import { IResponseUsers, IUser } from '@core/interfaces';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+
+import { IResponseUsers, IUser } from '@core/interfaces';
 import { loadFriendsList, selectFriends, selectFriendsLoading, MainModuleState } from '../../store';
 
 @Component({

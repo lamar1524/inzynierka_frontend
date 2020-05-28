@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { URLS } from '@core/consts';
-import { IResponseGroups } from '@core/interfaces/group.interface';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { URLS } from '@core/consts';
+import { IResponseGroups } from '@core/interfaces/group.interface';
 
 @Injectable({
   providedIn: 'root',

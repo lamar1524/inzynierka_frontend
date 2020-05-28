@@ -1,6 +1,6 @@
-import { IResponseUsers } from '@core/interfaces';
 import { createReducer, on, Action } from '@ngrx/store';
 
+import { IResponseUsers } from '@core/interfaces';
 import { IGroup } from '@core/interfaces/group.interface';
 import * as mainActions from './main.actions';
 
