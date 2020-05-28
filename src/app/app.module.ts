@@ -1,4 +1,6 @@
+import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import localePl from '@angular/common/locales/pl';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,6 +16,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainModule } from './modules/main/main.module';
 
+registerLocaleData(localePl, 'pl-PL');
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -26,9 +30,10 @@ import { MainModule } from './modules/main/main.module';
     HttpClientModule,
     CoreModule,
     AuthorizationModule,
-    MainModule
+    MainModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
+  exports: [],
 })
 export class AppModule {}

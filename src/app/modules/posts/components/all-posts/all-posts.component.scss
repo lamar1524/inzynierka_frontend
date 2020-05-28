@@ -3,18 +3,29 @@
 
 .container {
   min-height: calc(100vh - #{$nav-height});
+  padding: 15px 25px;
   position: absolute;
   top: $nav-height;
+  width: 100%;
+
+  .posts__wrapper {
+    margin: 0 auto;
+    width: 90%;
+  }
+
+  .error {
+    font-size: 2rem;
+  }
 
   @include break(map-get($breakpoints, lg)) {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
     height: calc(100vh - #{$nav-height});
-    justify-content: center;
     left: 25vw;
     position: absolute;
     top: $nav-height;
     width: 50vw;
+
+    .posts__wrapper {
+      width: 80%;
+    }
   }
 }

@@ -7,6 +7,7 @@
         <span>{{ friend.first_name }} {{ friend.last_name }}</span>
       </div>
     </div>
+    <div class="error__wrapper" *ngIf="(users$ | async)?.length === 0 || (users$ | async) === null">Brak kontaktów.</div>
     <div class="spinner__wrapper" *ngIf="usersLoading$ | async"><mat-spinner [diameter]="75"></mat-spinner></div>
   </div>
 </div>

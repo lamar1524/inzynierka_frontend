@@ -30,7 +30,6 @@ export class LeftSidebarComponent {
   navigateToSearch() {
     const data = this.searchForm.value;
     if (data.phrase !== null && data.phrase !== '') {
-      console.log(data);
     }
   }
 

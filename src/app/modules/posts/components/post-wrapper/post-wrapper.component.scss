@@ -1,0 +1,57 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.container {
+  background-color: #fff;
+  border-radius: 10px;
+  margin: 15px 0;
+  min-height: 80px;
+  padding: 5px 0;
+  width: 100%;
+
+  .post__header {
+    border-bottom: 1px solid $primary;
+    min-height: 40px;
+    padding: 0 10px;
+  }
+
+  .post__credentials {
+    align-items: flex-end;
+    display: flex;
+  }
+
+  .arrow {
+    height: 10px;
+    margin: 0 5px;
+    width: 15px;
+  }
+
+  .post__user,
+  .post__group,
+  .post__image {
+    display: inline-block;
+  }
+
+  .post__date {
+    display: block;
+    font-size: 1.2rem;
+  }
+
+  .post__content {
+    font-size: 1.4rem;
+    padding: 15px 10px 0;
+  }
+
+  .post__text {
+    padding-bottom: 5px;
+  }
+
+  .post__image {
+    max-height: 100px;
+
+    .image {
+      max-height: 100%;
+      max-width: 100%;
+    }
+  }
+}

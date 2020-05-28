@@ -5,4 +5,5 @@ export interface IUrls {
   currentUser: string;
   usersGroups: string;
   friendsList: string;
+  allPosts: string;
 }
