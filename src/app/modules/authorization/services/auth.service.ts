@@ -23,14 +23,6 @@ export class AuthService {
       tap((response) => {
         this.saveToken(response.token);
       }),
-      map((res: any) => ({
-        id: res.id,
-        email: res.email,
-        first_name: res.first_name,
-        last_name: res.last_name,
-        image: res.image,
-        role: res.is_admin ? USER_ROLE.ADMIN : res.is_lecturer ? USER_ROLE.LECTURER : USER_ROLE.USER,
-      })),
     );
   }
 
@@ -53,5 +45,9 @@ export class AuthService {
   logout() {
     sessionStorage.removeItem(this.TOKEN_KEY);
     this.router.navigate([ROUTES.login.path]);
+  }
+
+  getCurrentUser() {
+    return this.http.get<IUser>(URLS.currentUser);
   }
 }

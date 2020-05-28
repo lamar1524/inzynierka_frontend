@@ -1,13 +1,14 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { PopupComponent } from './components';
-import { PopupService } from './services';
+import { GroupsService, MessagesService, PopupService } from './services';
 
 @NgModule({
   declarations: [PopupComponent],
-  imports: [CommonModule, MatSnackBarModule],
-  providers: [PopupService],
+  imports: [CommonModule, MatSnackBarModule, HttpClientModule],
+  providers: [PopupService, GroupsService, MessagesService],
 })
 export class CoreModule {}

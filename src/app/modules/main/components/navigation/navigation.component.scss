@@ -1,0 +1,236 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+$logo-width: 75px;
+$user-width: 50%;
+$message-width: 50px;
+$hamburger-height: 20px;
+$hamburger-width: 30px;
+
+@mixin hamburger-inner() {
+  background-color: $gray;
+  display: inline-block;
+  height: 2px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.container {
+  background-color: #fff;
+  box-shadow: 0 3px 17px 0 rgba(0, 0, 0, 0.42);
+  display: block;
+  height: $nav-height;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+
+  .left__wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+  }
+
+  .right__wrapper {
+    display: none;
+  }
+
+  .wrapper {
+    height: 100%;
+  }
+
+  .logo__wrapper {
+    height: 75px;
+    width: $logo-width;
+
+    .logo {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .user__wrapper {
+    align-items: center;
+    color: $primary;
+    display: flex;
+    font-size: 2rem;
+    justify-content: space-around;
+    width: $user-width;
+  }
+
+  .img__wrapper {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 60px;
+
+    .img {
+      border: 1px solid $gray;
+      border-radius: 50%;
+      display: inline-block;
+      height: 52px;
+      width: 52px;
+    }
+  }
+
+  .message__wrapper {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: $message-width;
+
+    .message {
+      height: 32px;
+      width: 32px;
+    }
+  }
+
+  .hamburger__wrapper {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: calc(100% - #{$logo-width} - #{$user-width} - #{$message-width});
+
+    .hamburger__box {
+      align-items: center;
+      background: transparent;
+      border: 0;
+      cursor: pointer;
+      display: flex;
+      height: calc(#{$hamburger-height} + 5px);
+      justify-content: center;
+      width: calc(#{$hamburger-width} + 5px);
+    }
+
+    .hamburger {
+      display: inline-block;
+      height: $hamburger-height;
+      position: relative;
+      width: $hamburger-width;
+    }
+
+    .hamburger__inner {
+      top: 50%;
+      transform: translateY(-50%);
+      @include hamburger-inner();
+
+      &::after,
+      &::before {
+        content: '';
+        transition: transform 0.5s ease-in-out;
+        @include hamburger-inner();
+      }
+
+      &::before {
+        top: calc(-#{$hamburger-height} / 2);
+        transform: translateY(50%);
+      }
+
+      &::after {
+        top: calc(#{$hamburger-height} / 2);
+        transform: translateY(-50%);
+      }
+    }
+  }
+
+  .hamburger--active {
+    .hamburger__inner {
+      background: transparent;
+
+      &::before {
+        transform: translateY(calc(#{$hamburger-height/2})) rotate(45deg);
+      }
+
+      &::after {
+        transform: translateY(calc(-#{$hamburger-height/2})) rotate(-45deg);
+      }
+    }
+  }
+}
+
+.nav {
+  align-items: center;
+  background-color: $background-color;
+  color: $primary;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - #{$nav-height});
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  top: $nav-height;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease-in-out;
+  width: 100vw;
+  z-index: 1;
+
+  .options {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 75%;
+    justify-content: space-around;
+    width: 100%;
+  }
+
+  .option {
+    font-size: 3.5rem;
+    padding: 10px;
+  }
+}
+
+.nav--active {
+  transform: translateX(0);
+}
+
+.help__nav {
+  display: none;
+}
+
+@include break(map-get($breakpoints, lg)) {
+  .container {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .left__wrapper {
+      justify-content: flex-start;
+      width: 50%;
+    }
+
+    .right__wrapper {
+      color: $primary;
+      display: flex;
+      justify-content: flex-end;
+      width: 50%;
+
+      .option__wrapper {
+        display: inline-block;
+      }
+    }
+
+    .hamburger__wrapper {
+      display: none;
+    }
+
+    .user__wrapper {
+      justify-content: flex-start;
+
+      .img__wrapper {
+        margin: 0 15px;
+      }
+    }
+
+    .message__wrapper {
+      display: none;
+    }
+  }
+}
