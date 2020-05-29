@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
-import { IPost } from '@core/interfaces';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+
+import { selectCurrentUser, AuthModuleState } from '@authorization/store';
+import { USER_ROLE } from '@core/enums';
+import { IPost, IUser } from '@core/interfaces';
 import { selectAllPosts, selectAllPostsLoading, PostModuleState } from '../../store';
 
 import * as postsActions from '../../store/posts.actions';
@@ -15,13 +18,16 @@ import * as postsActions from '../../store/posts.actions';
 })
 export class AllPostsComponent implements OnDestroy {
   next: string;
-  posts$: Subscription;
+  sub$: Subscription;
   posts: IPost[];
   postsLoading$: Observable<boolean>;
+  currentUser: IUser;
+  readonly adminRole: USER_ROLE;
 
-  constructor(private store: Store<PostModuleState>, private cdRef: ChangeDetectorRef) {
+  constructor(private store: Store<PostModuleState | AuthModuleState>, private cdRef: ChangeDetectorRef) {
+    this.sub$ = new Subscription();
     this.store.dispatch(postsActions.loadAllPosts({ url: null }));
-    this.posts$ = this.store
+    const posts$ = this.store
       .select(selectAllPosts)
       .pipe(filter((res) => res !== null))
       .subscribe((resPosts) => {
@@ -29,10 +35,20 @@ export class AllPostsComponent implements OnDestroy {
         this.posts = resPosts?.posts;
         this.cdRef.markForCheck();
       });
+    this.sub$.add(posts$);
     this.postsLoading$ = this.store.select(selectAllPostsLoading);
+    const currentUser$ = this.store.select(selectCurrentUser).subscribe((user) => {
+      this.currentUser = user;
+    });
+    this.sub$.add(currentUser$);
+    this.adminRole = USER_ROLE.ADMIN;
+  }
+
+  getPerm(post: IPost): boolean {
+    return post.owner.id === this.currentUser.id || this.currentUser.role === USER_ROLE.ADMIN;
   }
 
   ngOnDestroy(): void {
-    this.posts$.unsubscribe();
+    this.sub$.unsubscribe();
   }
 }

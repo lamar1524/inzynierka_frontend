@@ -9,18 +9,39 @@
       </div>
       <div class="date">{{ post.date_posted | date: 'medium':'+1':'pl-PL' }}</div>
     </div>
-    <div class="options__wrapper">
-      <button class="options__button" mat-icon-button>
+    <div class="options__wrapper" *ngIf="isOwnerOrAdmin">
+      <button class="options__button" mat-icon-button (click)="dropdownReveal($event)">
         <img class="options__img" alt="options" src="../../../../../assets/img/options.svg" />
       </button>
     </div>
   </div>
-  <div class="post__content">
+  <div class="post__content" *ngIf="!formVisibility; else form">
     <div class="post__text">{{ post.content }}</div>
     <div class="post__file">
-      <p>Załącznik: </p>
-      <a class="u-text--link" [href]="post.file" target="_blank">{{post.file.split('/').reverse()[0]}}</a>
+      <p>Załącznik:</p>
+      <a class="u-text--link" [href]="post.file" target="_blank">{{ post.file.split('/').reverse()[0] }}</a>
     </div>
     <div class="post__image" *ngIf="post.image"><img class="image" alt="post image" [src]="post.image" /></div>
+  </div>
+  <ng-template #form>
+    <div class="form__wrapper">
+      <form [formGroup]="editForm" class="form-group">
+        <mat-form-field class="form-input">
+          <textarea class="form__textarea" formControlName="content" matInput cdkTextareaAutosize cdkAutosizeMinRows="1"></textarea>
+        </mat-form-field>
+        <div class="button__wrapper">
+          <button type="submit" mat-raised-button color="primary">Zapisz</button>
+          <button type="button" mat-raised-button color="primary" (click)="hideForm()">Anuluj</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+  <div class="dropdown" *ngIf="dropdownVisible">
+    <div class="option" (mouseenter)="hoverOption($event)" (mouseleave)="unHoverOption($event)" (click)="editButton($event)">
+      Edytuj
+    </div>
+    <div class="option" (mouseenter)="hoverOption($event)" (mouseleave)="unHoverOption($event)" (click)="deleteButton($event)">
+      Usuń
+    </div>
   </div>
 </div>
