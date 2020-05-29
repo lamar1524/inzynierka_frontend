@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IResponsePosts } from '@core/interfaces';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+import { IResponsePosts } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',

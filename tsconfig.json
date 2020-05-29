@@ -4,7 +4,10 @@
     "baseUrl": "src",
     "paths": {
       "@authorization/*": ["app/modules/authorization/*"],
-      "@core/*": ["app/modules/core/*"]
+      "@core/*": ["app/modules/core/*"],
+      "@posts/*": ["app/modules/posts/*"],
+      "@main/*": ["app/modules/main/*"],
+      "@reusable-modules/*": ["app/reusable-modules/*"]
     },
     "outDir": "./dist/out-tsc",
     "sourceMap": true,

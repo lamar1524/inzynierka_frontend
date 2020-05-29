@@ -8,12 +8,13 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { STORE_FEATURES } from '@core/consts';
-import { AllPostsComponent, PostWrapperComponent } from './components';
+import { PostWrapperModule } from '@reusable-modules/post-wrapper';
+import { AllPostsComponent } from './components';
 import { PostsRoutingModule } from './posts-routing.module';
 import { postsReducer, PostsEffects } from './store';
 
 @NgModule({
-  declarations: [AllPostsComponent, PostWrapperComponent],
+  declarations: [AllPostsComponent],
   imports: [
     CommonModule,
     PostsRoutingModule,
@@ -22,7 +23,8 @@ import { postsReducer, PostsEffects } from './store';
     MatButtonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule
-  ]
+    MatInputModule,
+    PostWrapperModule,
+  ],
 })
 export class PostsModule {}

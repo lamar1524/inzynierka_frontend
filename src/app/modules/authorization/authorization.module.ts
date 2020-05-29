@@ -9,11 +9,11 @@ import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { AuthorizationRoutingModule } from '@authorization/authorization-routing.module';
-import { LoginGuard } from '@authorization/guards';
-import { AuthInterceptor } from '@authorization/interceptors';
 import { STORE_FEATURES } from '@core/consts';
+import { AuthorizationRoutingModule } from './authorization-routing.module';
 import { LoginComponent, RegisterComponent } from './components';
+import { LoginGuard } from './guards';
+import { AuthInterceptor } from './interceptors';
 import { AuthService } from './services';
 import { authReducer, AuthorizationEffects } from './store';
 
