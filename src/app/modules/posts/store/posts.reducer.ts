@@ -17,6 +17,7 @@ export const initialState: PostState = {
   allPostsLoading: false,
   allPosts: {
     next: null,
+    previous: null,
     posts: null,
   },
   postEditing: false,
@@ -28,7 +29,7 @@ export const POSTS_REDUCER = createReducer(
   on(postsActions.loadAllPostsSuccess, (state, { posts }) => ({
     ...state,
     allPostsLoading: false,
-    allPosts: state.allPosts ? posts : { next: posts.next, posts: [...state.allPosts.posts, ...posts.posts] },
+    allPosts: posts.previous ? { next: posts.next, posts: [...state.allPosts.posts, ...posts.posts] } : posts,
   })),
   on(postsActions.loadAllPostsFail, (state) => ({ ...state, allPostsLoading: false })),
 

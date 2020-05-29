@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Inject,
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IPost } from '@core/interfaces';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-post-wrapper',
@@ -14,6 +13,7 @@ import { Observable } from 'rxjs';
 export class PostWrapperComponent implements OnInit {
   @Input() post: IPost;
   @Input() isOwnerOrAdmin: boolean;
+  @Input() postLoading: boolean;
   @Output() sendUpdate: EventEmitter<{ id: number; data: FormData }>;
   dropdownVisible: boolean;
   editForm: FormGroup;
@@ -71,7 +71,6 @@ export class PostWrapperComponent implements OnInit {
   }
 
   chooseFile() {
-    console.log(this.image);
     const input = this.document.querySelector('.file__input');
     input.dispatchEvent(new MouseEvent('click'));
   }

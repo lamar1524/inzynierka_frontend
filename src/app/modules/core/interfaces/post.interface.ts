@@ -14,6 +14,7 @@ export interface IPost {
 
 export interface IResponsePosts {
   next: string;
+  previous?: string;
   posts: IPost[];
 }
 

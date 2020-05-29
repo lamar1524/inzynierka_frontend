@@ -22,7 +22,6 @@ export class PostsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.posts);
   }
 
   getPerm(post: IPost): boolean {

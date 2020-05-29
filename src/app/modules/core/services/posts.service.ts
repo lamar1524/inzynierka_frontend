@@ -13,7 +13,7 @@ export class PostsService {
   constructor(private http: HttpClient) {}
 
   loadAllPosts(url: string): Observable<IResponsePosts> {
-    return this.http.get<IResponsePosts>(url).pipe(map((res: any) => ({ next: res.next, posts: res.results })));
+    return this.http.get<IResponsePosts>(url).pipe(map((res: any) => ({ next: res.next, previous: res.previous, posts: res.results })));
   }
 
   editPost(post: FormData, postId: number): Observable<IPost> {
