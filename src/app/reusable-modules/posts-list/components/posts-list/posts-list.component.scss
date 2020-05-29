@@ -2,12 +2,6 @@
 @import '../../../../../styles/mixins';
 
 .container {
-  min-height: calc(100vh - #{$nav-height});
-  padding: 15px 25px;
-  position: absolute;
-  top: $nav-height;
-  width: 100%;
-
   .posts__wrapper {
     margin: 0 auto;
     width: 90%;
@@ -18,11 +12,7 @@
   }
 
   @include break(map-get($breakpoints, lg)) {
-    height: calc(100vh - #{$nav-height});
-    left: 25vw;
-    position: absolute;
-    top: $nav-height;
-    width: 50vw;
+    width: 100%;
 
     .posts__wrapper {
       width: 80%;

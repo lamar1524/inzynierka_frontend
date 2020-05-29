@@ -1,0 +1,18 @@
+@import '../../../../../styles/mixins';
+@import '../../../../../styles/variables';
+
+.container {
+  left: 0;
+  min-height: calc(100vh - #{$nav-height});
+  padding: 15px 25px;
+  position: absolute;
+  top: $nav-height;
+  width: 100%;
+
+  @include break(map-get($breakpoints, lg)) {
+    left: 25vw;
+    min-height: calc(100vh - #{$nav-height});
+    top: $nav-height;
+    width: 50vw;
+  }
+}
