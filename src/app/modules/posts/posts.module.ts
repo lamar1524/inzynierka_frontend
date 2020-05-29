@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
@@ -15,6 +16,7 @@ import { postsReducer, PostsEffects } from './store';
     PostsRoutingModule,
     StoreModule.forFeature(STORE_FEATURES.posts, postsReducer),
     EffectsModule.forFeature([PostsEffects]),
-  ],
+    MatButtonModule
+  ]
 })
 export class PostsModule {}
