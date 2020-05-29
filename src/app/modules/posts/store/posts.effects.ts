@@ -31,6 +31,7 @@ export class PostsEffects {
       switchMap((action) =>
         this.postsService.editPost(action.post, action.id).pipe(
           map((res) => {
+            this.popupService.success('Pomyślnie edytowano komentarz!');
             return postsActions.editPostSuccess();
           }),
           catchError(() => {

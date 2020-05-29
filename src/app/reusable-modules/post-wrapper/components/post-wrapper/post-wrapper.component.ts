@@ -1,8 +1,21 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Inject, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostListener,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IPost } from '@core/interfaces';
+import { Observable, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-post-wrapper',
@@ -10,25 +23,38 @@ import { IPost } from '@core/interfaces';
   styleUrls: ['./post-wrapper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostWrapperComponent implements OnInit {
+export class PostWrapperComponent implements OnInit, OnDestroy {
   @Input() post: IPost;
   @Input() isOwnerOrAdmin: boolean;
   @Input() postLoading: boolean;
+  @Input() postEditing$: Observable<boolean>;
   @Output() sendUpdate: EventEmitter<{ id: number; data: FormData }>;
+  @Output() refreshCallback: EventEmitter<void>;
   dropdownVisible: boolean;
   editForm: FormGroup;
   formVisibility: boolean;
   image: File;
   file: File;
+  subscription: Subscription;
+  postEditing: boolean;
 
   constructor(@Inject(DOCUMENT) private document: Document) {
     this.sendUpdate = new EventEmitter<{ id: number; data: FormData }>();
+    this.refreshCallback = new EventEmitter<void>();
     this.dropdownVisible = false;
   }
 
   ngOnInit(): void {
     this.editForm = new FormGroup({
       content: new FormControl(this.post.content, Validators.required),
+    });
+    this.subscription = this.postEditing$.subscribe((res) => {
+      res ? this.editForm.disable() : this.editForm.enable();
+      if (!res && this.postEditing) {
+        this.formVisibility = false;
+        this.refreshCallback.emit();
+      }
+      this.postEditing = res;
     });
   }
 
@@ -101,5 +127,9 @@ export class PostWrapperComponent implements OnInit {
 
   fileChange($event) {
     this.file = $event.target.files[0];
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

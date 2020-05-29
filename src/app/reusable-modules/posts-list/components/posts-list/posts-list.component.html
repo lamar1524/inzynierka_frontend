@@ -1,7 +1,12 @@
 <div class="container">
   <div class="posts__wrapper">
     <app-post-wrapper
-      [post]="post" *ngFor="let post of posts" [isOwnerOrAdmin]="getPerm(post)" (sendUpdate)="updatePost($event)">
+      [post]="post"
+      *ngFor="let post of posts"
+      [isOwnerOrAdmin]="getPerm(post)"
+      (sendUpdate)="updatePost($event)"
+      [postEditing$]="postEditing$" (refreshCallback)="refreshCallback.emit()"
+    >
     </app-post-wrapper>
     <div class="error" *ngIf="posts?.length === 0 || posts === null">Brak postów w twoich grupach.</div>
   </div>

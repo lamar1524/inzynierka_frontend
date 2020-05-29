@@ -1,12 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
-import { URLS } from '@core/consts';
 import { IPost, IUser } from '@core/interfaces';
 import { Store } from '@ngrx/store';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
-import { $e } from 'codelyzer/angular/styles/chars';
 import { Observable, Subscription } from 'rxjs';
-import { selectAllPosts, selectAllPostsLoading, PostModuleState } from '../../store';
+import { selectAllPosts, selectAllPostsLoading, selectEditingPost, PostModuleState } from '../../store';
 import * as postsActions from '../../store/posts.actions';
 
 @Component({
@@ -17,6 +15,7 @@ import * as postsActions from '../../store/posts.actions';
 })
 export class AllPostsComponent implements OnDestroy {
   postsLoading$: Observable<boolean>;
+  postEditing$: Observable<boolean>;
   posts: IPost[];
   posts$: Subscription;
   next: string;
@@ -31,6 +30,11 @@ export class AllPostsComponent implements OnDestroy {
       this.next = resPosts.next;
       this.cdRef.markForCheck();
     });
+    this.postEditing$ = this.store.select(selectEditingPost);
+  }
+
+  refreshCallback(store: Store<PostModuleState>) {
+    store.dispatch(postsActions.loadAllPosts({ url: null }));
   }
 
   updatePost($event: { id: number; data: FormData }) {
