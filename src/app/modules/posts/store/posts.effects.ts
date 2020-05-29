@@ -24,4 +24,21 @@ export class PostsEffects {
       ),
     ),
   );
+
+  editPost$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(postsActions.editPost),
+      switchMap((action) =>
+        this.postsService.editPost(action.post, action.id).pipe(
+          map((res) => {
+            return postsActions.editPostSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd edycji posta');
+            return of(postsActions.editPostFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }

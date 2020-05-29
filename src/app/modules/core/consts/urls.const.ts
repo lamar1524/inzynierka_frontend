@@ -10,4 +10,5 @@ export const URLS: IUrls = {
   usersGroups: host + 'groups/list/',
   friendsList: host + 'groups/friends_list/',
   allPosts: host + 'posts/user_posts_list/',
+  postEdit: host + 'posts/update/',
 };

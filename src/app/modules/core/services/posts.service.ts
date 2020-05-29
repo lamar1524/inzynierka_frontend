@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { URLS } from '@core/consts';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { IResponsePosts } from '../interfaces';
+import { IPost, IResponsePosts } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -13,5 +14,9 @@ export class PostsService {
 
   loadAllPosts(url: string): Observable<IResponsePosts> {
     return this.http.get<IResponsePosts>(url).pipe(map((res: any) => ({ next: res.next, posts: res.results })));
+  }
+
+  editPost(post: FormData, postId: number): Observable<IPost> {
+    return this.http.put<IPost>(URLS.postEdit + postId + '/', post);
   }
 }

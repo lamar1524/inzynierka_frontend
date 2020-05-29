@@ -6,4 +6,5 @@ export interface IUrls {
   usersGroups: string;
   friendsList: string;
   allPosts: string;
+  postEdit: string;
 }

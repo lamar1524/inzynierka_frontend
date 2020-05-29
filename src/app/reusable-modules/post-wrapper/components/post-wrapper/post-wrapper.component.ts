@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Inject,
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IPost } from '@core/interfaces';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-post-wrapper',
@@ -13,7 +14,7 @@ import { IPost } from '@core/interfaces';
 export class PostWrapperComponent implements OnInit {
   @Input() post: IPost;
   @Input() isOwnerOrAdmin: boolean;
-  @Output() sendUpdate: EventEmitter<IPost>;
+  @Output() sendUpdate: EventEmitter<{ id: number; data: FormData }>;
   dropdownVisible: boolean;
   editForm: FormGroup;
   formVisibility: boolean;
@@ -21,7 +22,7 @@ export class PostWrapperComponent implements OnInit {
   file: File;
 
   constructor(@Inject(DOCUMENT) private document: Document) {
-    this.sendUpdate = new EventEmitter<IPost>();
+    this.sendUpdate = new EventEmitter<{ id: number; data: FormData }>();
     this.dropdownVisible = false;
   }
 
@@ -75,16 +76,31 @@ export class PostWrapperComponent implements OnInit {
     input.dispatchEvent(new MouseEvent('click'));
   }
 
-  get data(): IPost {
-    return {
-      id: this.post.id,
-      content: this.editForm.get('content').value,
-      file: this.file,
-      image: this.image,
-    };
+  get content() {
+    return this.editForm.get('content');
+  }
+
+  get data(): FormData {
+    const fd = new FormData();
+    fd.append('content', this.content.value);
+    if (this.image) {
+      fd.append('image', this.image);
+    }
+    if (this.file) {
+      fd.append('file', this.file);
+    }
+    return fd;
   }
 
   updatePost() {
-    this.sendUpdate.emit(this.data);
+    this.sendUpdate.emit({ id: this.post.id, data: this.data });
+  }
+
+  imageChange($event) {
+    this.image = $event.target.files[0];
+  }
+
+  fileChange($event) {
+    this.file = $event.target.files[0];
   }
 }

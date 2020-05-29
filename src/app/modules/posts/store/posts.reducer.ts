@@ -10,6 +10,7 @@ export interface PostModuleState {
 export interface PostState {
   allPostsLoading: boolean;
   allPosts: IResponsePosts;
+  postEditing: boolean;
 }
 
 export const initialState: PostState = {
@@ -18,6 +19,7 @@ export const initialState: PostState = {
     next: null,
     posts: null,
   },
+  postEditing: false,
 };
 
 export const POSTS_REDUCER = createReducer(
@@ -29,6 +31,10 @@ export const POSTS_REDUCER = createReducer(
     allPosts: state.allPosts ? posts : { next: posts.next, posts: [...state.allPosts.posts, ...posts.posts] },
   })),
   on(postsActions.loadAllPostsFail, (state) => ({ ...state, allPostsLoading: false })),
+
+  on(postsActions.editPost, (state) => ({ ...state, postEditing: true })),
+  on(postsActions.editPostSuccess, (state) => ({ ...state, postEditing: false })),
+  on(postsActions.editPostFail, (state) => ({ ...state, postEditing: false })),
 );
 
 export function postsReducer(state: PostState | undefined, action: Action) {

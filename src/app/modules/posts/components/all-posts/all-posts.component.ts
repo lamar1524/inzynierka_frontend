@@ -48,8 +48,8 @@ export class AllPostsComponent implements OnDestroy {
     return post.owner.id === this.currentUser.id || this.currentUser.role === USER_ROLE.ADMIN;
   }
 
-  updatePost(post: IPost) {
-    console.log(post);
+  updatePost(data: { id: number; data: FormData }) {
+    this.store.dispatch(postsActions.editPost({ post: data.data, id: data.id }));
   }
 
   ngOnDestroy(): void {
