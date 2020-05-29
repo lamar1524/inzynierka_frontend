@@ -8,7 +8,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { STORE_FEATURES } from '@core/consts';
-import { PostWrapperModule } from '@reusable-modules/post-wrapper';
+import { PostsListModule } from '@reusable-modules/posts-list/posts-list.module';
 import { AllPostsComponent } from './components';
 import { PostsRoutingModule } from './posts-routing.module';
 import { postsReducer, PostsEffects } from './store';
@@ -24,7 +24,7 @@ import { postsReducer, PostsEffects } from './store';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    PostWrapperModule,
+    PostsListModule,
   ],
 })
 export class PostsModule {}

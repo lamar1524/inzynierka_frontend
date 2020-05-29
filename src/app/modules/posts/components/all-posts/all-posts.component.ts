@@ -1,13 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
+import { URLS } from '@core/consts';
+import { IPost, IUser } from '@core/interfaces';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
-import { USER_ROLE } from '@core/enums';
-import { IPost, IUser } from '@core/interfaces';
+import { $e } from 'codelyzer/angular/styles/chars';
+import { Observable, Subscription } from 'rxjs';
 import { selectAllPosts, selectAllPostsLoading, PostModuleState } from '../../store';
-
 import * as postsActions from '../../store/posts.actions';
 
 @Component({
@@ -17,42 +16,36 @@ import * as postsActions from '../../store/posts.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AllPostsComponent implements OnDestroy {
-  next: string;
-  sub$: Subscription;
-  posts: IPost[];
   postsLoading$: Observable<boolean>;
-  currentUser: IUser;
-  readonly adminRole: USER_ROLE;
+  posts: IPost[];
+  posts$: Subscription;
+  next: string;
+  currentUser$: Observable<IUser>;
 
-  constructor(private store: Store<PostModuleState | AuthModuleState>, private cdRef: ChangeDetectorRef) {
-    this.sub$ = new Subscription();
+  constructor(private store: Store<AuthModuleState | PostModuleState>, private cdRef: ChangeDetectorRef) {
     this.store.dispatch(postsActions.loadAllPosts({ url: null }));
-    const posts$ = this.store
-      .select(selectAllPosts)
-      .pipe(filter((res) => res !== null))
-      .subscribe((resPosts) => {
-        this.next = resPosts?.next;
-        this.posts = resPosts?.posts;
-        this.cdRef.markForCheck();
-      });
-    this.sub$.add(posts$);
     this.postsLoading$ = this.store.select(selectAllPostsLoading);
-    const currentUser$ = this.store.select(selectCurrentUser).subscribe((user) => {
-      this.currentUser = user;
+    this.currentUser$ = this.store.select(selectCurrentUser);
+    this.posts$ = this.store.select(selectAllPosts).subscribe((resPosts) => {
+      this.posts = resPosts.posts;
+      this.next = resPosts.next;
+      this.cdRef.markForCheck();
     });
-    this.sub$.add(currentUser$);
-    this.adminRole = USER_ROLE.ADMIN;
   }
 
-  getPerm(post: IPost): boolean {
-    return post.owner.id === this.currentUser.id || this.currentUser.role === USER_ROLE.ADMIN;
+  updatePost($event: { id: number; data: FormData }) {
+    this.store.dispatch(postsActions.editPost({ post: $event.data, id: $event.id }));
   }
 
-  updatePost(data: { id: number; data: FormData }) {
-    this.store.dispatch(postsActions.editPost({ post: data.data, id: data.id }));
+  @HostListener('window:scroll') scrollEvent() {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      if (this.next !== null) {
+        this.store.dispatch(postsActions.loadAllPosts({ url: this.next }));
+      }
+    }
   }
 
   ngOnDestroy(): void {
-    this.sub$.unsubscribe();
+    this.posts$.unsubscribe();
   }
 }
