@@ -2,14 +2,14 @@ import { IBaseGroup } from './group.interface';
 import { IUser } from './user.interface';
 
 export interface IPost {
-  id: number;
+  id?: number;
   content: string;
-  owner: IUser;
-  group: IBaseGroup;
-  date_posted: Date;
-  image?: string;
-  file?: string;
-  comments: IComment[];
+  owner?: IUser;
+  group?: IBaseGroup;
+  date_posted?: Date;
+  image?: string | File;
+  file?: string | File;
+  comments?: IComment[];
 }
 
 export interface IResponsePosts {

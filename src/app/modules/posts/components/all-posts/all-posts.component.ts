@@ -48,6 +48,10 @@ export class AllPostsComponent implements OnDestroy {
     return post.owner.id === this.currentUser.id || this.currentUser.role === USER_ROLE.ADMIN;
   }
 
+  updatePost(post: IPost) {
+    console.log(post);
+  }
+
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
   }

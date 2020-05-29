@@ -138,4 +138,30 @@ $options-wrapper: 35px;
     justify-content: space-between;
     width: 100%;
   }
+
+  .files__wrapper {
+    align-items: flex-end;
+    display: flex;
+    justify-content: flex-start;
+    padding: 5px 0;
+  }
+
+  .image__field {
+    padding-top: 10px;
+  }
+
+  .input--invisible {
+    display: none;
+  }
+
+  .icon {
+    height: 24px;
+    width: 24px;
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    .button__wrapper {
+      justify-content: space-around;
+    }
+  }
 }

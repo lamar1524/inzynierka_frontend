@@ -25,13 +25,43 @@
   </div>
   <ng-template #form>
     <div class="form__wrapper">
-      <form [formGroup]="editForm" class="form-group">
+      <form [formGroup]="editForm" class="form-group" (ngSubmit)="updatePost()">
         <mat-form-field class="form-input">
-          <textarea class="form__textarea" formControlName="content" matInput cdkTextareaAutosize cdkAutosizeMinRows="1"></textarea>
+          <textarea matInput class="form__textarea" formControlName="content" cdkTextareaAutosize cdkAutosizeMinRows="1"></textarea>
         </mat-form-field>
+        <div class="files__wrapper">
+          <div class="image__field">
+            <label>
+              <button (click)="chooseImage()" mat-icon-button>
+                <img class="icon" alt="image" src="../../../../../assets/img/photo.svg" />
+              </button>
+              <input
+                class="input--invisible image__input"
+                type="file"
+                accept="image/*"
+                [(ngModel)]="image"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </label>
+          </div>
+          <div class="file__field">
+            <label>
+              <button mat-icon-button (click)="chooseFile()">
+                <img alt="attachment" class="icon" src="../../../../../assets/img/attach.svg" />
+              </button>
+              <input
+                class="input--invisible file__input"
+                [(ngModel)]="file"
+                [ngModelOptions]="{ standalone: true }"
+                type="file"
+                accept="*"
+              />
+            </label>
+          </div>
+        </div>
         <div class="button__wrapper">
-          <button type="submit" mat-raised-button color="primary">Zapisz</button>
           <button type="button" mat-raised-button color="primary" (click)="hideForm()">Anuluj</button>
+          <button type="submit" mat-raised-button color="primary">Zapisz</button>
         </div>
       </form>
     </div>

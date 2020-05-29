@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostListener, Inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IPost } from '@core/interfaces';
@@ -13,19 +13,21 @@ import { IPost } from '@core/interfaces';
 export class PostWrapperComponent implements OnInit {
   @Input() post: IPost;
   @Input() isOwnerOrAdmin: boolean;
+  @Output() sendUpdate: EventEmitter<IPost>;
   dropdownVisible: boolean;
   editForm: FormGroup;
   formVisibility: boolean;
+  image: File;
+  file: File;
 
   constructor(@Inject(DOCUMENT) private document: Document) {
+    this.sendUpdate = new EventEmitter<IPost>();
     this.dropdownVisible = false;
   }
 
   ngOnInit(): void {
     this.editForm = new FormGroup({
       content: new FormControl(this.post.content, Validators.required),
-      file: new FormControl(this.post.file),
-      image: new FormControl(this.post.image),
     });
   }
 
@@ -59,5 +61,30 @@ export class PostWrapperComponent implements OnInit {
 
   hideForm() {
     this.formVisibility = false;
+    this.editForm.get('content').setValue(this.post.content);
+  }
+
+  chooseImage() {
+    const input = this.document.querySelector('.image__input');
+    input.dispatchEvent(new MouseEvent('click'));
+  }
+
+  chooseFile() {
+    console.log(this.image);
+    const input = this.document.querySelector('.file__input');
+    input.dispatchEvent(new MouseEvent('click'));
+  }
+
+  get data(): IPost {
+    return {
+      id: this.post.id,
+      content: this.editForm.get('content').value,
+      file: this.file,
+      image: this.image,
+    };
+  }
+
+  updatePost() {
+    this.sendUpdate.emit(this.data);
   }
 }
