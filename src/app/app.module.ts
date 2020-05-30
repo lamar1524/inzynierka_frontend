@@ -11,10 +11,11 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AuthorizationModule } from '@authorization/authorization.module';
 import { CoreModule } from '@core/core.module';
+import { MainModule } from '@main/main.module';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MainModule } from './modules/main/main.module';
+import { clearState } from './clear.reducer';
 
 registerLocaleData(localePl, 'pl-PL');
 
@@ -24,7 +25,7 @@ registerLocaleData(localePl, 'pl-PL');
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({}, { metaReducers: [clearState] }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([]),
     HttpClientModule,
