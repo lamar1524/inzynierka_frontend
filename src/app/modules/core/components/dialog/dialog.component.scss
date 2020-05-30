@@ -1,0 +1,19 @@
+@import '../../../../../styles/variables';
+
+.container {
+  background-color: #fff;
+  color: #000;
+  height: 200px;
+  margin: 0;
+  padding: 24px 10px 10px;
+  text-align: center;
+  width: 350px;
+}
+
+.button__wrapper {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding-top: 30px;
+}
