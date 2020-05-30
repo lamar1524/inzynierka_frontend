@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
-import { IPost, IUser } from '@core/interfaces';
 import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
-import { Observable, Subscription } from 'rxjs';
-import { selectAllPosts, selectAllPostsLoading, selectDeletingPost, selectEditingPost, PostModuleState } from '../../store';
+import { IPost, IUser } from '@core/interfaces';
+import { PostModuleState } from '../../store';
 import * as postsActions from '../../store/posts.actions';
+import * as postSelectors from '../../store/posts.selectors';
 
 @Component({
   selector: 'app-all-posts',
@@ -24,15 +25,15 @@ export class AllPostsComponent implements OnDestroy {
 
   constructor(public store: Store<AuthModuleState | PostModuleState>, private cdRef: ChangeDetectorRef) {
     this.store.dispatch(postsActions.loadAllPosts({ url: null }));
-    this.postsLoading$ = this.store.select(selectAllPostsLoading);
-    this.postDeleting$ = this.store.select(selectDeletingPost);
+    this.postsLoading$ = this.store.select(postSelectors.selectAllPostsLoading);
+    this.postDeleting$ = this.store.select(postSelectors.selectDeletingPost);
     this.currentUser$ = this.store.select(selectCurrentUser);
-    this.posts$ = this.store.select(selectAllPosts).subscribe((resPosts) => {
+    this.posts$ = this.store.select(postSelectors.selectAllPosts).subscribe((resPosts) => {
       this.posts = resPosts.posts;
       this.next = resPosts.next;
       this.cdRef.markForCheck();
     });
-    this.postEditing$ = this.store.select(selectEditingPost);
+    this.postEditing$ = this.store.select(postSelectors.selectEditingPost);
   }
 
   updatePost($event: { id: number; data: FormData }) {

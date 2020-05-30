@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { URLS } from '@core/consts';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { URLS } from '../consts';
 import { IPost, IResponsePosts } from '../interfaces';
 
 @Injectable({

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { USER_ROLE } from '@core/enums';
 import { IPost, IUser } from '@core/interfaces';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-posts-list',

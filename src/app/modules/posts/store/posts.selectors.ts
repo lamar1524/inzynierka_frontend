@@ -1,4 +1,5 @@
 import { createSelector } from '@ngrx/store';
+
 import { PostModuleState, PostState } from './posts.reducer';
 
 export const postsSelect = (state: PostModuleState) => state.posts;

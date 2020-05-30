@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { URLS } from '@core/consts';
-import { PopupService, PostsService } from '@core/services';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { PostModuleState } from '@posts/store/posts.reducer';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+
+import { URLS } from '@core/consts';
+import { PopupService, PostsService } from '@core/services';
 import * as postsActions from './posts.actions';
+import { PostModuleState } from './posts.reducer';
 
 @Injectable()
 export class PostsEffects {
