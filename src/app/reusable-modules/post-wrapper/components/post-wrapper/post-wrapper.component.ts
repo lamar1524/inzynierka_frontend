@@ -26,7 +26,6 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   @Input() post: IPost;
   @Input() isOwner: boolean;
   @Input() isOwnerOrAdmin: boolean;
-  @Input() postLoading: boolean;
   @Input() postEditing$: Observable<boolean>;
   @Output() sendUpdate: EventEmitter<{ id: number; data: FormData }>;
   @Input() postDeleting$: Observable<boolean>;

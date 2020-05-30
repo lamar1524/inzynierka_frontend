@@ -11,13 +11,13 @@ import { Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PostsListComponent implements OnInit {
-  @Input() postsLoading: boolean;
   @Input() isOwner: boolean;
-  @Input() postEditing$: Observable<boolean>;
   @Input() posts: IPost[];
   @Input() currentUser: IUser;
-  @Output() sendPostUpdate: EventEmitter<{ id: number; data: FormData }>;
+  @Input() postsLoading$: Observable<boolean>;
+  @Input() postEditing$: Observable<boolean>;
   @Input() postDeleting$: Observable<boolean>;
+  @Output() sendPostUpdate: EventEmitter<{ id: number; data: FormData }>;
   @Output() sendPostDelete: EventEmitter<{ id: number }>;
   readonly adminRole: USER_ROLE;
 

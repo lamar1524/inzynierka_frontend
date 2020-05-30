@@ -3,7 +3,7 @@
     [currentUser]="currentUser$ | async"
     (sendPostUpdate)="updatePost($event)"
     [posts]="posts"
-    [postsLoading]="postsLoading$ | async"
+    [postsLoading$]="postsLoading$"
     [postEditing$]="postEditing$"
     [postDeleting$]="postDeleting$"
     (sendPostDelete)="deletePost($event)"
