@@ -15,7 +15,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IPost } from '@core/interfaces';
 import { Observable, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-post-wrapper',
@@ -29,7 +28,6 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   @Input() postLoading: boolean;
   @Input() postEditing$: Observable<boolean>;
   @Output() sendUpdate: EventEmitter<{ id: number; data: FormData }>;
-  @Output() refreshCallback: EventEmitter<void>;
   dropdownVisible: boolean;
   editForm: FormGroup;
   formVisibility: boolean;
@@ -40,7 +38,6 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
 
   constructor(@Inject(DOCUMENT) private document: Document) {
     this.sendUpdate = new EventEmitter<{ id: number; data: FormData }>();
-    this.refreshCallback = new EventEmitter<void>();
     this.dropdownVisible = false;
   }
 
@@ -48,11 +45,11 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
     this.editForm = new FormGroup({
       content: new FormControl(this.post.content, Validators.required),
     });
+    this.postEditing = false;
     this.subscription = this.postEditing$.subscribe((res) => {
       res ? this.editForm.disable() : this.editForm.enable();
       if (!res && this.postEditing) {
         this.formVisibility = false;
-        this.refreshCallback.emit();
       }
       this.postEditing = res;
     });
@@ -87,8 +84,8 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   }
 
   hideForm() {
-    this.formVisibility = false;
     this.editForm.get('content').setValue(this.post.content);
+    this.formVisibility = false;
   }
 
   chooseImage() {

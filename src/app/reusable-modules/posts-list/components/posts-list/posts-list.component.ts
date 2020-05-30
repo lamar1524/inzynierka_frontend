@@ -16,13 +16,11 @@ export class PostsListComponent implements OnInit {
   @Input() posts: IPost[];
   @Input() currentUser: IUser;
   @Output() sendPostUpdate: EventEmitter<{ id: number; data: FormData }>;
-  @Output() refreshCallback: EventEmitter<void>;
   readonly adminRole: USER_ROLE;
 
   constructor() {
     this.adminRole = USER_ROLE.ADMIN;
     this.sendPostUpdate = new EventEmitter<{ id: number; data: FormData }>();
-    this.refreshCallback = new EventEmitter<void>();
   }
 
   ngOnInit(): void {

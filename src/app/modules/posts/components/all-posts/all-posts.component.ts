@@ -21,7 +21,7 @@ export class AllPostsComponent implements OnDestroy {
   next: string;
   currentUser$: Observable<IUser>;
 
-  constructor(private store: Store<AuthModuleState | PostModuleState>, private cdRef: ChangeDetectorRef) {
+  constructor(public store: Store<AuthModuleState | PostModuleState>, private cdRef: ChangeDetectorRef) {
     this.store.dispatch(postsActions.loadAllPosts({ url: null }));
     this.postsLoading$ = this.store.select(selectAllPostsLoading);
     this.currentUser$ = this.store.select(selectCurrentUser);
@@ -33,12 +33,8 @@ export class AllPostsComponent implements OnDestroy {
     this.postEditing$ = this.store.select(selectEditingPost);
   }
 
-  refreshCallback(store: Store<PostModuleState>) {
-    store.dispatch(postsActions.loadAllPosts({ url: null }));
-  }
-
   updatePost($event: { id: number; data: FormData }) {
-    this.store.dispatch(postsActions.editPost({ post: $event.data, id: $event.id }));
+    this.store.dispatch(postsActions.editPost({ post: $event.data, id: $event.id, action: postsActions.loadAllPosts({ url: null }) }));
   }
 
   @HostListener('window:scroll') scrollEvent() {

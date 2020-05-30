@@ -4,6 +4,6 @@
     (sendPostUpdate)="updatePost($event)"
     [posts]="posts"
     [postsLoading]="postsLoading$ | async"
-    [postEditing$]="postEditing$" (refreshCallback)="refreshCallback(store)"
+    [postEditing$]="postEditing$"
   ></app-posts-list>
 </div>
