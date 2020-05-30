@@ -1,6 +1,8 @@
+import { logoutUser } from '@authorization/store';
+
 export function clearState(reducer) {
   return (state, action) => {
-    if (action.type === '[Authorization] Logout user') {
+    if (action.type === logoutUser.type) {
       state = undefined;
     }
 

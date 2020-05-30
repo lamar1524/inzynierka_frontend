@@ -1,7 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   HostListener,
@@ -14,6 +13,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IPost } from '@core/interfaces';
+import { DialogService } from '@core/services';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
@@ -24,10 +24,13 @@ import { Observable, Subscription } from 'rxjs';
 })
 export class PostWrapperComponent implements OnInit, OnDestroy {
   @Input() post: IPost;
+  @Input() isOwner: boolean;
   @Input() isOwnerOrAdmin: boolean;
   @Input() postLoading: boolean;
   @Input() postEditing$: Observable<boolean>;
   @Output() sendUpdate: EventEmitter<{ id: number; data: FormData }>;
+  @Input() postDeleting$: Observable<boolean>;
+  @Input() sendDelete: EventEmitter<{ id: number }>;
   dropdownVisible: boolean;
   editForm: FormGroup;
   formVisibility: boolean;
@@ -36,7 +39,7 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   postEditing: boolean;
 
-  constructor(@Inject(DOCUMENT) private document: Document) {
+  constructor(@Inject(DOCUMENT) private document: Document, private dialogService: DialogService) {
     this.sendUpdate = new EventEmitter<{ id: number; data: FormData }>();
     this.dropdownVisible = false;
   }
@@ -55,9 +58,9 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
     });
   }
 
-  dropdownReveal(event) {
+  dropdownToggle(event) {
     event.stopPropagation();
-    this.dropdownVisible = true;
+    this.dropdownVisible = !this.dropdownVisible;
   }
 
   @HostListener('window:click', ['$event']) hideDropdown(event) {
@@ -81,6 +84,14 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
 
   deleteButton(event) {
     event.stopPropagation();
+    this.dialogService.showDialog({
+      header: 'Jesteś pewien?',
+      caption: 'Tej operacji nie da sie cofnąć',
+      onAcceptCallback: () => {
+        this.sendDelete.emit({ id: this.post.id });
+      },
+      loadingSelect: this.postDeleting$,
+    });
   }
 
   hideForm() {

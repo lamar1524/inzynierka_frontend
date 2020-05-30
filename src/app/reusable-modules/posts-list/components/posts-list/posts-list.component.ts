@@ -12,22 +12,29 @@ import { Observable } from 'rxjs';
 })
 export class PostsListComponent implements OnInit {
   @Input() postsLoading: boolean;
+  @Input() isOwner: boolean;
   @Input() postEditing$: Observable<boolean>;
   @Input() posts: IPost[];
   @Input() currentUser: IUser;
   @Output() sendPostUpdate: EventEmitter<{ id: number; data: FormData }>;
+  @Input() postDeleting$: Observable<boolean>;
+  @Output() sendPostDelete: EventEmitter<{ id: number }>;
   readonly adminRole: USER_ROLE;
 
   constructor() {
     this.adminRole = USER_ROLE.ADMIN;
     this.sendPostUpdate = new EventEmitter<{ id: number; data: FormData }>();
+    this.sendPostDelete = new EventEmitter<{ id: number }>();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  getPerm(post: IPost): boolean {
+  getDeletePerm(post: IPost): boolean {
     return post.owner.id === this.currentUser.id || this.currentUser.role === USER_ROLE.ADMIN;
+  }
+
+  getEditPerm(post: IPost) {
+    return post.owner.id === this.currentUser.id;
   }
 
   updatePost(data: { id: number; data: FormData }) {

@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { Observable, Subscription } from 'rxjs';
-import { selectAllPosts, selectAllPostsLoading, selectEditingPost, PostModuleState } from '../../store';
+import { selectAllPosts, selectAllPostsLoading, selectDeletingPost, selectEditingPost, PostModuleState } from '../../store';
 import * as postsActions from '../../store/posts.actions';
 
 @Component({
@@ -16,6 +16,7 @@ import * as postsActions from '../../store/posts.actions';
 export class AllPostsComponent implements OnDestroy {
   postsLoading$: Observable<boolean>;
   postEditing$: Observable<boolean>;
+  postDeleting$: Observable<boolean>;
   posts: IPost[];
   posts$: Subscription;
   next: string;
@@ -24,6 +25,7 @@ export class AllPostsComponent implements OnDestroy {
   constructor(public store: Store<AuthModuleState | PostModuleState>, private cdRef: ChangeDetectorRef) {
     this.store.dispatch(postsActions.loadAllPosts({ url: null }));
     this.postsLoading$ = this.store.select(selectAllPostsLoading);
+    this.postDeleting$ = this.store.select(selectDeletingPost);
     this.currentUser$ = this.store.select(selectCurrentUser);
     this.posts$ = this.store.select(selectAllPosts).subscribe((resPosts) => {
       this.posts = resPosts.posts;
@@ -34,7 +36,13 @@ export class AllPostsComponent implements OnDestroy {
   }
 
   updatePost($event: { id: number; data: FormData }) {
-    this.store.dispatch(postsActions.editPost({ post: $event.data, id: $event.id, action: postsActions.loadAllPosts({ url: null }) }));
+    this.store.dispatch(
+      postsActions.editPost({ post: $event.data, id: $event.id, refreshAction: postsActions.loadAllPosts({ url: null }) }),
+    );
+  }
+
+  deletePost($event: { id: number }) {
+    this.store.dispatch(postsActions.deletePost({ id: $event.id, refreshAction: postsActions.loadAllPosts({ url: null }) }));
   }
 
   @HostListener('window:scroll') scrollEvent() {

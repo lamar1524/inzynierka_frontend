@@ -4,5 +4,5 @@ export interface IDialogData {
   header: string;
   caption: string;
   loadingSelect: Observable<boolean>;
-  onAcceptCallback: () => {};
+  onAcceptCallback: () => void;
 }

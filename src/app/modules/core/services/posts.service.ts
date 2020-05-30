@@ -19,4 +19,8 @@ export class PostsService {
   editPost(post: FormData, postId: number): Observable<IPost> {
     return this.http.put<IPost>(URLS.postEdit + postId + '/', post);
   }
+
+  deletePost(id: number): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(URLS.postDelete + id + '/');
+  }
 }

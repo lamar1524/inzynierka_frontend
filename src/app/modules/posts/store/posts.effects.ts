@@ -41,12 +41,31 @@ export class PostsEffects {
         this.postsService.editPost(action.post, action.id).pipe(
           map((res) => {
             this.popupService.success('Pomyślnie edytowano komentarz!');
-            this.store.dispatch(action.action);
+            this.store.dispatch(action.refreshAction);
             return postsActions.editPostSuccess();
           }),
           catchError(() => {
             this.popupService.error('Błąd edycji posta');
             return of(postsActions.editPostFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  deleteUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(postsActions.deletePost),
+      switchMap((action) =>
+        this.postsService.deletePost(action.id).pipe(
+          map((res) => {
+            this.store.dispatch(action.refreshAction);
+            this.popupService.success(res.message);
+            return postsActions.deletePostSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd usuwania posta');
+            return of(postsActions.deletePostFail());
           }),
         ),
       ),

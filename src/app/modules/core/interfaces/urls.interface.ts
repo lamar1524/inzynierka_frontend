@@ -7,4 +7,5 @@ export interface IUrls {
   friendsList: string;
   allPosts: string;
   postEdit: string;
+  postDelete: string;
 }

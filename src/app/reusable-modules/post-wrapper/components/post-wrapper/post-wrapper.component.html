@@ -10,16 +10,16 @@
       <div class="date">{{ post.date_posted | date: 'medium':'+1':'pl-PL' }}</div>
     </div>
     <div class="options__wrapper" *ngIf="isOwnerOrAdmin">
-      <button class="options__button" mat-icon-button (click)="dropdownReveal($event)">
+      <button class="options__button" mat-icon-button (click)="dropdownToggle($event)">
         <img class="options__img" alt="options" src="../../../../../assets/img/options.svg" />
       </button>
     </div>
   </div>
   <div class="post__content" *ngIf="!formVisibility; else form">
     <div class="post__text">{{ post.content }}</div>
-    <div class="post__file">
+    <div class="post__file" *ngIf="post.file">
       <p>Załącznik:</p>
-      <a class="u-text--link" [href]="post.file" target="_blank">{{ post.file.toString().split('/').reverse()[0] }}</a>
+      <a class="u-text--link" [href]="post.file" target="_blank">{{ (post.file?.toString().split('/').reverse())[0] }}</a>
     </div>
     <div class="post__image" *ngIf="post.image"><img class="image" alt="post image" [src]="post.image" /></div>
   </div>
@@ -60,7 +60,13 @@
     </div>
   </ng-template>
   <div class="dropdown" *ngIf="dropdownVisible">
-    <div class="option" (mouseenter)="hoverOption($event)" (mouseleave)="unHoverOption($event)" (click)="editButton($event)">
+    <div
+      *ngIf="isOwner"
+      class="option"
+      (mouseenter)="hoverOption($event)"
+      (mouseleave)="unHoverOption($event)"
+      (click)="editButton($event)"
+    >
       Edytuj
     </div>
     <div class="option" (mouseenter)="hoverOption($event)" (mouseleave)="unHoverOption($event)" (click)="deleteButton($event)">

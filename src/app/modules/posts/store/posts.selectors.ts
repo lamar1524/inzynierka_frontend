@@ -7,3 +7,4 @@ export const selectAllPostsLoading = createSelector(postsSelect, (state: PostSta
 export const selectAllPosts = createSelector(postsSelect, (state: PostState) => state.allPosts);
 
 export const selectEditingPost = createSelector(postsSelect, (state: PostState) => state.postEditing);
+export const selectDeletingPost = createSelector(postsSelect, (state: PostState) => state.postDeleting);

@@ -5,5 +5,7 @@
     [posts]="posts"
     [postsLoading]="postsLoading$ | async"
     [postEditing$]="postEditing$"
+    [postDeleting$]="postDeleting$"
+    (sendPostDelete)="deletePost($event)"
   ></app-posts-list>
 </div>

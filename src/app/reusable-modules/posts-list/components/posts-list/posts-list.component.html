@@ -3,9 +3,12 @@
     <app-post-wrapper
       [post]="post"
       *ngFor="let post of posts"
-      [isOwnerOrAdmin]="getPerm(post)"
+      [isOwnerOrAdmin]="getDeletePerm(post)"
+      [isOwner]="getEditPerm(post)"
       (sendUpdate)="updatePost($event)"
       [postEditing$]="postEditing$"
+      [postDeleting$]="postDeleting$"
+      [sendDelete]="sendPostDelete"
     >
     </app-post-wrapper>
     <div class="error" *ngIf="posts?.length === 0 || posts === null">Brak postów w twoich grupach.</div>
