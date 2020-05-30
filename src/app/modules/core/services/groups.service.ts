@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { URLS } from '@core/consts';
-import { IResponseGroups } from '@core/interfaces/group.interface';
+import { URLS } from '../consts';
+import { IResponseGroups } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',

@@ -1,1 +1,11 @@
-<div class="container"><h2>CENTER PLACEHOLDER</h2></div>
+<div class="container">
+  <app-posts-list
+    [currentUser]="currentUser$ | async"
+    (sendPostUpdate)="updatePost($event)"
+    [posts]="posts"
+    [postsLoading$]="postsLoading$"
+    [postEditing$]="postEditing$"
+    [postDeleting$]="postDeleting$"
+    (sendPostDelete)="deletePost($event)"
+  ></app-posts-list>
+</div>

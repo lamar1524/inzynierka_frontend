@@ -4,11 +4,10 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { selectLoginLoading } from '@authorization/store';
-import { AuthModuleState } from '@authorization/store/authorization.reducer';
 import { ROUTES } from '@core/consts';
 import { IRoutes } from '@core/interfaces';
 import { ILoginUser } from '@core/interfaces/user.interface';
+import { selectLoginLoading, AuthModuleState } from '../../store';
 import * as authActions from '../../store/authorization.actions';
 
 @Component({

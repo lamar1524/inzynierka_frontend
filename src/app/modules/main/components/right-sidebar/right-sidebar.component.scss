@@ -22,7 +22,7 @@
     .friends__header {
       border-bottom: 2px solid $primary;
       font-size: 2rem;
-      margin: 10px 0;
+      padding-top: 15px;
     }
 
     .friend__wrapper {
@@ -36,6 +36,10 @@
       padding: 5px;
       transition: background-color 0.5s ease;
       width: 100%;
+    }
+
+    .error__wrapper {
+      font-size: 2rem;
     }
 
     .friend__image {

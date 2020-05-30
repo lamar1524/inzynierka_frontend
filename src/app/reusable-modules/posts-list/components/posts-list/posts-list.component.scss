@@ -1,0 +1,29 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.container {
+  .posts__wrapper {
+    margin: 0 auto;
+    width: 90%;
+  }
+
+  .error {
+    font-size: 2rem;
+  }
+
+  .spinner__wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    min-height: 100px;
+    width: 100%;
+  }
+
+  @include break(map-get($breakpoints, lg)) {
+    width: 100%;
+
+    .posts__wrapper {
+      width: 80%;
+    }
+  }
+}

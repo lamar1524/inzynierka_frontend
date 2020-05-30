@@ -1,19 +1,17 @@
-@import '../../../../../styles/variables';
 @import '../../../../../styles/mixins';
+@import '../../../../../styles/variables';
 
 .container {
+  left: 0;
   min-height: calc(100vh - #{$nav-height});
+  padding: 15px 25px;
   position: absolute;
   top: $nav-height;
+  width: 100%;
 
   @include break(map-get($breakpoints, lg)) {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - #{$nav-height});
-    justify-content: center;
     left: 25vw;
-    position: absolute;
+    min-height: calc(100vh - #{$nav-height});
     top: $nav-height;
     width: 50vw;
   }
