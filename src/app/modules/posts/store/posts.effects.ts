@@ -138,4 +138,22 @@ export class PostsEffects {
       ),
     ),
   );
+
+  addComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(postsActions.addComment),
+      switchMap((action) =>
+        this.postsService.addComment(action.comment, action.postId).pipe(
+          map((res) => {
+            this.store.dispatch(action.refreshAction);
+            return postsActions.addCommentSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd dodawania komentarza');
+            return of(postsActions.addCommentFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }

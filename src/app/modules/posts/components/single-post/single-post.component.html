@@ -11,6 +11,25 @@
     [withRoute]="false"
   >
   </app-post-wrapper>
+  <div class="form__wrapper" *ngIf="formVisible; else button">
+    <form class="add-form-group" [formGroup]="addForm" (ngSubmit)="submitAdd()">
+      <mat-form-field class="text-area__wrapper">
+        <textarea class="text-area" matInput formControlName="content" cdkTextareaAutosize cdkAutosizeMinRows="1"></textarea>
+      </mat-form-field>
+      <div class="button__wrapper">
+        <button mat-raised-button color="primary" type="button" (click)="cancel()">Anuluj</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="addForm.invalid || addForm.disabled">
+          <span *ngIf="(commentAdding$ | async) === false; else spinner">Dodaj</span>
+          <ng-template #spinner><mat-spinner [diameter]="30"></mat-spinner></ng-template>
+        </button>
+      </div>
+    </form>
+  </div>
+  <ng-template #button>
+    <div class="opening-button__wrapper">
+      <button class="opening-button" mat-button color="primary" (click)="showForm($event)">Dodaj</button>
+    </div>
+  </ng-template>
   <div class="comments__container">
     <div class="comments__wrapper" *ngIf="(commentsLoading$ | async) === false; else spinner">
       <app-comment
@@ -21,6 +40,9 @@
         [isOwner]="isOwner(comment, currentUser)"
         [postId]="postId"
       ></app-comment>
+    </div>
+    <div class="error" *ngIf="comments?.length === 0">
+      Brak komentarzy
     </div>
   </div>
   <ng-template #spinner

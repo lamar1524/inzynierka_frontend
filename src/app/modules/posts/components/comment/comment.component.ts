@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -53,14 +53,17 @@ export class CommentComponent implements OnInit {
   dropdownToggle(event) {
     event.stopPropagation();
     this.dropdownVisible = !this.dropdownVisible;
+    if (this.dropdownVisible) {
+      window.addEventListener('click', this.hideDropdown);
+    }
+    this.cdRef.markForCheck();
   }
 
-  @HostListener('window:click', ['$event']) hideDropdown(event) {
-    const dropdown = this.document.querySelector('.dropdown');
-    if (this.dropdownVisible && event.target !== dropdown) {
-      this.dropdownVisible = false;
-    }
-  }
+  hideDropdown = (event) => {
+    this.dropdownVisible = false;
+    window.removeEventListener('click', this.hideDropdown);
+    this.cdRef.markForCheck();
+  };
 
   hoverOption(event) {
     event.target.classList.add('u-item--hover');
@@ -75,7 +78,6 @@ export class CommentComponent implements OnInit {
   }
 
   deleteButton(event) {
-    event.stopPropagation();
     this.dialogService.showDialog({
       header: 'Jesreś pewien?',
       caption: 'Tej operacji nie da się cofnąć',
@@ -102,6 +104,7 @@ export class CommentComponent implements OnInit {
   }
 
   cancel() {
+    console.log('ll');
     this.editForm.get('content').setValue(this.comment.content);
     this.formVisibility = false;
   }

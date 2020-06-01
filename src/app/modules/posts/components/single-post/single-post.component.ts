@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -9,12 +10,14 @@ import { IComment, IPost, IUser } from '@core/interfaces';
 import {
   selectComments,
   selectCommentsLoading,
+  selectCommentAdding,
   selectDeletingPost,
   selectEditingPost,
   selectSinglePost,
   selectSinglePostLoading,
   PostModuleState,
 } from '@posts/store';
+import { tap } from 'rxjs/operators';
 import * as postsActions from '../../store/posts.actions';
 
 @Component({
@@ -34,6 +37,10 @@ export class SinglePostComponent implements OnDestroy {
   currentUser: IUser;
   postEditing$: Observable<boolean>;
   postDeleting$: Observable<boolean>;
+  commentAdding$: Observable<boolean>;
+  addForm: FormGroup;
+  formVisible: boolean;
+  previousBool: boolean;
 
   constructor(private route: ActivatedRoute, private store: Store<AuthModuleState | PostModuleState>, private cdRef: ChangeDetectorRef) {
     this.sub$ = new Subscription();
@@ -60,6 +67,25 @@ export class SinglePostComponent implements OnDestroy {
     });
     this.sub$.add(comments$);
     this.sub$.add(currentUser$);
+    this.addForm = new FormGroup({
+      content: new FormControl('', Validators.required),
+    });
+    this.commentAdding$ = this.store.select(selectCommentAdding).pipe(
+      tap((res) => {
+        if (res) {
+          this.addForm.disable();
+        } else {
+          this.addForm.enable();
+          this.addForm.reset();
+          if (this.previousBool) {
+            this.cancel();
+          }
+        }
+        this.previousBool = res;
+        this.cdRef.markForCheck();
+      }),
+    );
+    this.formVisible = false;
   }
 
   isOwner(obj: IPost | IComment, user: IUser): boolean {
@@ -84,6 +110,26 @@ export class SinglePostComponent implements OnDestroy {
         this.store.dispatch(postsActions.loadComments({ url: this.next, id: this.postId }));
       }
     }
+  }
+
+  submitAdd() {
+    this.store.dispatch(
+      postsActions.addComment({
+        comment: this.addForm.value,
+        postId: this.postId,
+        refreshAction: postsActions.loadComments({ url: null, id: this.postId }),
+      }),
+    );
+  }
+
+  showForm($event) {
+    this.formVisible = true;
+    this.cdRef.markForCheck();
+  }
+
+  cancel() {
+    this.formVisible = false;
+    this.cdRef.markForCheck();
   }
 
   ngOnDestroy(): void {

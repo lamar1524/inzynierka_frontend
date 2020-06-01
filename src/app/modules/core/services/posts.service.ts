@@ -41,4 +41,8 @@ export class PostsService {
   deleteComment(id: number): Observable<any> {
     return this.http.delete(URLS.commentDelete + id + '/');
   }
+
+  addComment(comment: IComment, postId: number): Observable<IComment> {
+    return this.http.post<IComment>(URLS.commentAdd + postId + '/', comment);
+  }
 }

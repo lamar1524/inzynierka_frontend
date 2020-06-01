@@ -30,6 +30,6 @@ export const deleteComment = createAction('[Posts] Delete comment', props<{ id: 
 export const deleteCommentSuccess = createAction('[Posts] Delete comment success');
 export const deleteCommentFail = createAction('[Posts] Delete comment fail');
 
-export const addComment = createAction('[Posts] Add comment', props<{ comment: IComment; refreshAction: Action }>());
+export const addComment = createAction('[Posts] Add comment', props<{ comment: IComment; postId: number; refreshAction: Action }>());
 export const addCommentSuccess = createAction('[Posts] Add comment success');
 export const addCommentFail = createAction('[Posts] Add comment fail');

@@ -20,10 +20,10 @@ export interface IResponsePosts {
 
 export interface IComment {
   id?: number;
-  owner: IUser;
+  owner?: IUser;
   content: string;
-  date_commented: Date;
-  post: number;
+  date_commented?: Date;
+  post?: number;
 }
 
 export interface IResponseComments {

@@ -20,7 +20,7 @@
         <textarea class="text-area" matInput formControlName="content" cdkTextareaAutosize cdkAutosizeMinRows="1"></textarea>
       </mat-form-field>
       <div class="button__wrapper">
-        <button mat-raised-button color="primary" (click)="cancel()">Anuluj</button>
+        <button mat-raised-button color="primary" type="button" (click)="cancel()">Anuluj</button>
         <button mat-raised-button color="primary" type="submit" [disabled]="editForm.invalid || editForm.disabled">
           <span *ngIf="(commentEditing$ | async) === false; else spinner">Zapisz</span>
           <ng-template #spinner><mat-spinner [diameter]="30"></mat-spinner></ng-template>

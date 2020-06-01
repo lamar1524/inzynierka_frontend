@@ -54,6 +54,8 @@ $options-wrapper: 35px;
     }
 
     .date-route {
+      display: inline-block;
+
       &:hover {
         color: $primary;
         cursor: pointer;

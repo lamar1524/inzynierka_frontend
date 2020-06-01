@@ -18,6 +18,7 @@ export interface PostState {
   comments: IResponseComments;
   commentEditing: boolean;
   commentDeleting: boolean;
+  commentAdding: boolean;
 }
 
 export const initialState: PostState = {
@@ -39,6 +40,7 @@ export const initialState: PostState = {
   },
   commentEditing: false,
   commentDeleting: false,
+  commentAdding: false,
 };
 
 export const POSTS_REDUCER = createReducer(
@@ -78,6 +80,10 @@ export const POSTS_REDUCER = createReducer(
   on(postsActions.deleteComment, (state) => ({ ...state, commentDeleting: true })),
   on(postsActions.deleteCommentSuccess, (state) => ({ ...state, commentDeleting: false })),
   on(postsActions.deleteCommentFail, (state) => ({ ...state, commentDeleting: false })),
+
+  on(postsActions.addComment, (state) => ({ ...state, commentAdding: true })),
+  on(postsActions.addCommentSuccess, (state) => ({ ...state, commentAdding: false })),
+  on(postsActions.addCommentFail, (state) => ({ ...state, commentAdding: false })),
 );
 
 export function postsReducer(state: PostState | undefined, action: Action) {

@@ -104,6 +104,7 @@ $options-wrapper: 35px;
   position: absolute;
   top: 50px;
   width: 80px;
+  z-index: 2;
 
   .option {
     border-radius: 10px;
