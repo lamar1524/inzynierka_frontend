@@ -51,7 +51,9 @@ $options-wrapper: 35px;
 
     .date {
       font-size: 1.2rem;
+    }
 
+    .date-route {
       &:hover {
         color: $primary;
         cursor: pointer;

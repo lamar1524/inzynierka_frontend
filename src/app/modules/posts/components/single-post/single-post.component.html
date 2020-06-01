@@ -8,6 +8,7 @@
     [postDeleting$]="postDeleting$"
     (sendUpdate)="updatePost($event)"
     (sendDelete)="deletePost($event)"
+    [withRoute]="false"
   >
   </app-post-wrapper>
   <div class="comments__wrapper" *ngIf="(commentsLoading$ | async) === false; else spinner">

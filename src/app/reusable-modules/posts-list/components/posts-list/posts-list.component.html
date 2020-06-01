@@ -10,6 +10,7 @@
       [postDeleting$]="postDeleting$"
       (sendDelete)="sendPostDelete.emit($event)"
       [routeToPost]="routeToPost"
+      [withRoute]="true"
     >
     </app-post-wrapper>
     <div class="error" *ngIf="posts?.length === 0 || posts === null">Brak postów w twoich grupach.</div>
