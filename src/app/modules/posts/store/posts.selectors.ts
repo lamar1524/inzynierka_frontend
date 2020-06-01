@@ -17,3 +17,5 @@ export const selectCommentsLoading = createSelector(postsSelect, (state: PostSta
 export const selectComments = createSelector(postsSelect, (state: PostState) => state.comments);
 
 export const selectCommentEditing = createSelector(postsSelect, (state: PostState) => state.commentEditing);
+
+export const selectCommentDeleting = createSelector(postsSelect, (state: PostState) => state.commentDeleting);

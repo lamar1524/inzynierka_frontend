@@ -11,15 +11,17 @@
     [withRoute]="false"
   >
   </app-post-wrapper>
-  <div class="comments__wrapper" *ngIf="(commentsLoading$ | async) === false; else spinner">
-    <app-comment
-      *ngFor="let comment of comments"
-      [comment]="comment"
-      [currentUser]="currentUser"
-      [isOwnerOrAdmin]="isAdminOrIsOwner(comment, currentUser)"
-      [isOwner]="isOwner(comment, currentUser)"
-      [postId]="postId"
-    ></app-comment>
+  <div class="comments__container">
+    <div class="comments__wrapper" *ngIf="(commentsLoading$ | async) === false; else spinner">
+      <app-comment
+        *ngFor="let comment of comments"
+        [comment]="comment"
+        [currentUser]="currentUser"
+        [isOwnerOrAdmin]="isAdminOrIsOwner(comment, currentUser)"
+        [isOwner]="isOwner(comment, currentUser)"
+        [postId]="postId"
+      ></app-comment>
+    </div>
   </div>
   <ng-template #spinner
     ><div class="spinner__wrapper"><mat-spinner [diameter]="50"></mat-spinner></div

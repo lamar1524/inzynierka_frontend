@@ -11,4 +11,5 @@ export interface IUrls {
   postGet: string;
   commentsGet: string;
   commentEdit: string;
+  commentDelete: string;
 }

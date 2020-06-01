@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { IComment, IUser } from '@core/interfaces';
-import { selectCommentEditing, PostModuleState } from '../../store';
+import { DialogService } from '@core/services';
+import { selectCommentDeleting, selectCommentEditing, PostModuleState } from '../../store';
 import * as postsActions from '../../store/posts.actions';
 
 @Component({
@@ -25,8 +26,14 @@ export class CommentComponent implements OnInit {
   formVisibility: boolean;
   editForm: FormGroup;
   commentEditing$: Observable<boolean>;
+  commentDeleting$: Observable<boolean>;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private store: Store<PostModuleState>, private cdRef: ChangeDetectorRef) {
+  constructor(
+    @Inject(DOCUMENT) private document: Document,
+    private store: Store<PostModuleState>,
+    private cdRef: ChangeDetectorRef,
+    private dialogService: DialogService,
+  ) {
     this.dropdownVisible = false;
     this.commentEditing$ = this.store.select(selectCommentEditing).pipe(
       tap((res) => {
@@ -34,6 +41,7 @@ export class CommentComponent implements OnInit {
         this.cdRef.markForCheck();
       }),
     );
+    this.commentDeleting$ = this.store.select(selectCommentDeleting);
   }
 
   ngOnInit(): void {
@@ -68,6 +76,17 @@ export class CommentComponent implements OnInit {
 
   deleteButton(event) {
     event.stopPropagation();
+    this.dialogService.showDialog({
+      header: 'Jesreś pewien?',
+      caption: 'Tej operacji nie da się cofnąć',
+      loadingSelect: this.commentDeleting$,
+      onAcceptCallback: () => {
+        console.log(this.comment);
+        this.store.dispatch(
+          postsActions.deleteComment({ id: this.comment.id, refreshAction: postsActions.loadComments({ url: null, id: this.postId }) }),
+        );
+      },
+    });
   }
 
   submitEdit() {

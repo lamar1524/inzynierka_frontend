@@ -37,4 +37,8 @@ export class PostsService {
   editComment(comment: IComment, id: number): Observable<IComment> {
     return this.http.put<IComment>(URLS.commentEdit + id + '/', comment);
   }
+
+  deleteComment(id: number): Observable<any> {
+    return this.http.delete(URLS.commentDelete + id + '/');
+  }
 }

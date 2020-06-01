@@ -120,4 +120,22 @@ export class PostsEffects {
       ),
     ),
   );
+
+  deleteComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(postsActions.deleteComment),
+      switchMap((action) =>
+        this.postsService.deleteComment(action.id).pipe(
+          map(() => {
+            this.store.dispatch(action.refreshAction);
+            return postsActions.deleteCommentSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd usuwania posta');
+            return of(postsActions.deleteCommentFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }
