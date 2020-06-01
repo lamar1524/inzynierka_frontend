@@ -98,7 +98,7 @@ export class SinglePostComponent implements OnDestroy {
 
   updatePost = ($event: { id: number; data: FormData }) =>
     this.store.dispatch(
-      postsActions.editPost({ post: $event.data, id: $event.id, refreshAction: postsActions.loadAllPosts({ url: null }) }),
+      postsActions.editPost({ post: $event.data, id: $event.id, refreshAction: postsActions.loadPost({ id: this.postId }) }),
     );
 
   deletePost = ($event: { id: number }) =>

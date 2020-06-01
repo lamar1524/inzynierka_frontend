@@ -31,19 +31,18 @@
     </div>
   </ng-template>
   <div class="comments__container">
-    <div class="comments__wrapper" *ngIf="(commentsLoading$ | async) === false; else spinner">
-      <app-comment
-        *ngFor="let comment of comments"
-        [comment]="comment"
-        [currentUser]="currentUser"
-        [isOwnerOrAdmin]="isAdminOrIsOwner(comment, currentUser)"
-        [isOwner]="isOwner(comment, currentUser)"
-        [postId]="postId"
-      ></app-comment>
-    </div>
-    <div class="error" *ngIf="comments?.length === 0">
-      Brak komentarzy
-    </div>
+    <app-comment
+      *ngFor="let comment of comments"
+      [comment]="comment"
+      [currentUser]="currentUser"
+      [isOwnerOrAdmin]="isAdminOrIsOwner(comment, currentUser)"
+      [isOwner]="isOwner(comment, currentUser)"
+      [postId]="postId"
+    ></app-comment>
+    <div *ngIf="(commentsLoading$ | async) === false; else spinner" class="placeholder"></div>
+  </div>
+  <div class="error" *ngIf="comments?.length === 0">
+    Brak komentarzy
   </div>
   <ng-template #spinner
     ><div class="spinner__wrapper"><mat-spinner [diameter]="50"></mat-spinner></div

@@ -83,7 +83,6 @@ export class CommentComponent implements OnInit {
       caption: 'Tej operacji nie da się cofnąć',
       loadingSelect: this.commentDeleting$,
       onAcceptCallback: () => {
-        console.log(this.comment);
         this.store.dispatch(
           postsActions.deleteComment({ id: this.comment.id, refreshAction: postsActions.loadComments({ url: null, id: this.postId }) }),
         );
@@ -104,7 +103,6 @@ export class CommentComponent implements OnInit {
   }
 
   cancel() {
-    console.log('ll');
     this.editForm.get('content').setValue(this.comment.content);
     this.formVisibility = false;
   }
