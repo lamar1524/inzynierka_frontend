@@ -9,12 +9,12 @@ import { StoreModule } from '@ngrx/store';
 
 import { STORE_FEATURES } from '@core/consts';
 import { PostsListModule } from '@reusable-modules/posts-list';
-import { AllPostsComponent } from './components';
+import { AllPostsComponent, SinglePostComponent } from './components';
 import { PostsRoutingModule } from './posts-routing.module';
 import { postsReducer, PostsEffects } from './store';
 
 @NgModule({
-  declarations: [AllPostsComponent],
+  declarations: [AllPostsComponent, SinglePostComponent],
   imports: [
     CommonModule,
     PostsRoutingModule,
