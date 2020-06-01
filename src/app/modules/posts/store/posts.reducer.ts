@@ -16,6 +16,7 @@ export interface PostState {
   singlePost: IPost;
   commentsLoading: boolean;
   comments: IResponseComments;
+  commentEditing: boolean;
 }
 
 export const initialState: PostState = {
@@ -35,6 +36,7 @@ export const initialState: PostState = {
     previous: null,
     next: null,
   },
+  commentEditing: false,
 };
 
 export const POSTS_REDUCER = createReducer(
@@ -66,6 +68,10 @@ export const POSTS_REDUCER = createReducer(
     comments: comments.previous ? { next: comments.next, comments: [...state.comments.comments, comments.comments] } : comments,
   })),
   on(postsActions.loadCommentsFail, (state) => ({ ...state, commentsLoading: false })),
+
+  on(postsActions.editComment, (state) => ({ ...state, commentEditing: true })),
+  on(postsActions.editCommentSuccess, (state) => ({ ...state, commentEditing: false })),
+  on(postsActions.editCommentFail, (state) => ({ ...state, commentEditing: false })),
 );
 
 export function postsReducer(state: PostState | undefined, action: Action) {

@@ -19,6 +19,7 @@ export interface IResponsePosts {
 }
 
 export interface IComment {
+  id?: number;
   owner: IUser;
   content: string;
   date_commented: Date;

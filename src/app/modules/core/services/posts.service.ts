@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { URLS } from '../consts';
-import { IPost, IResponseComments, IResponsePosts } from '../interfaces';
+import { IComment, IPost, IResponseComments, IResponsePosts } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -28,9 +28,13 @@ export class PostsService {
     return this.http.get<IPost>(URLS.postGet + id + '/');
   }
 
-  getComments(postId: number): Observable<IResponseComments> {
+  getComments(url: string): Observable<IResponseComments> {
     return this.http
-      .get<IResponseComments>(URLS.commentsGet + postId + '/')
+      .get<IResponseComments>(url)
       .pipe(map((res: any) => ({ previous: res.previous, next: res.next, comments: res.results })));
+  }
+
+  editComment(comment: IComment, id: number): Observable<IComment> {
+    return this.http.put<IComment>(URLS.commentEdit + id + '/', comment);
   }
 }

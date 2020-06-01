@@ -92,11 +92,29 @@ export class PostsEffects {
     this.actions$.pipe(
       ofType(postsActions.loadComments),
       switchMap((action) =>
-        this.postsService.getComments(action.id).pipe(
+        this.postsService.getComments(action.url ? action.url : URLS.commentsGet + action.id + '/').pipe(
           map((res) => postsActions.loadCommentsSuccess({ comments: res })),
           catchError(() => {
             this.popupService.error('Błąd ładowania komentarzy');
             return of(postsActions.loadCommentsFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  editComment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(postsActions.editComment),
+      switchMap((action) =>
+        this.postsService.editComment(action.comment, action.id).pipe(
+          map(() => {
+            this.store.dispatch(action.refreshAction);
+            return postsActions.editCommentSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd edycji komentarza');
+            return of(postsActions.editCommentFail());
           }),
         ),
       ),

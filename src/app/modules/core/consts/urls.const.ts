@@ -14,4 +14,5 @@ export const URLS: IUrls = {
   postDelete: host + 'posts/delete/',
   postGet: host + 'posts/post/',
   commentsGet: host + 'posts/comments/',
+  commentEdit: host + 'posts/update/comment/'
 };

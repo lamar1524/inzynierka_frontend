@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -41,7 +41,7 @@ export class SinglePostComponent implements OnDestroy {
     this.route.params.subscribe((param) => {
       this.postId = param.id;
       this.store.dispatch(postsActions.loadPost({ id: this.postId }));
-      this.store.dispatch(postsActions.loadComments({ id: this.postId }));
+      this.store.dispatch(postsActions.loadComments({ url: null, id: this.postId }));
       this.cdRef.markForCheck();
     });
     this.post$ = this.store.select(selectSinglePost);
@@ -77,6 +77,14 @@ export class SinglePostComponent implements OnDestroy {
 
   deletePost = ($event: { id: number }) =>
     this.store.dispatch(postsActions.deletePost({ id: $event.id, refreshAction: postsActions.loadAllPosts({ url: null }) }));
+
+  @HostListener('window:scroll') scrollEvent() {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      if (this.next !== null) {
+        this.store.dispatch(postsActions.loadComments({ url: this.next, id: this.postId }));
+      }
+    }
+  }
 
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
