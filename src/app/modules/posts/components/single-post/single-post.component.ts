@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -35,12 +35,14 @@ export class SinglePostComponent implements OnDestroy {
   postEditing$: Observable<boolean>;
   postDeleting$: Observable<boolean>;
 
-  constructor(private route: ActivatedRoute, private store: Store<AuthModuleState | PostModuleState>) {
+  constructor(private route: ActivatedRoute, private store: Store<AuthModuleState | PostModuleState>, private cdRef: ChangeDetectorRef) {
     this.sub$ = new Subscription();
+    this.comments = [];
     this.route.params.subscribe((param) => {
       this.postId = param.id;
       this.store.dispatch(postsActions.loadPost({ id: this.postId }));
       this.store.dispatch(postsActions.loadComments({ id: this.postId }));
+      this.cdRef.markForCheck();
     });
     this.post$ = this.store.select(selectSinglePost);
     this.postEditing$ = this.store.select(selectEditingPost);
@@ -50,9 +52,11 @@ export class SinglePostComponent implements OnDestroy {
     const comments$ = this.store.select(selectComments).subscribe((resComments) => {
       this.next = resComments.next;
       this.comments = resComments.comments;
+      this.cdRef.markForCheck();
     });
     const currentUser$ = this.store.select(selectCurrentUser).subscribe((user) => {
       this.currentUser = user;
+      this.cdRef.markForCheck();
     });
     this.sub$.add(comments$);
     this.sub$.add(currentUser$);

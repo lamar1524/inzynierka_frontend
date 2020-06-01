@@ -63,7 +63,7 @@ export const POSTS_REDUCER = createReducer(
   on(postsActions.loadCommentsSuccess, (state, { comments }) => ({
     ...state,
     commentsLoading: false,
-    comments: comments.previous ? comments : { next: comments.next, comments: [...state.comments.comments, comments.comments] },
+    comments: comments.previous ? { next: comments.next, comments: [...state.comments.comments, comments.comments] } : comments,
   })),
   on(postsActions.loadCommentsFail, (state) => ({ ...state, commentsLoading: false })),
 );

@@ -1,0 +1,61 @@
+@import '../../../../../styles/variables';
+
+$image-wrapper: 60px;
+$options-wrapper: 35px;
+
+.container {
+  min-height: 80px;
+  padding: 10px;
+  width: 100%;
+
+  .header {
+    display: grid;
+    grid-template-areas:
+      'photo credentials options'
+      'photo date options';
+    grid-template-columns: $image-wrapper calc(100% - #{$image-wrapper} - #{$options-wrapper}) $options-wrapper;
+    grid-template-rows: 50% 50%;
+  }
+
+  .photo__wrapper {
+    grid-area: photo;
+  }
+
+  .name__wrapper {
+    grid-area: credentials;
+  }
+
+  .date {
+    font-size: 1.2rem;
+    grid-area: date;
+  }
+
+  .name__wrapper,
+  .date {
+    padding: 0 10px;
+  }
+
+  .options__wrapper {
+    grid-area: options;
+  }
+
+  .photo__wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+
+  .image {
+    border: 1px solid $gray;
+    border-radius: 50%;
+    height: 52px;
+    width: 52px;
+  }
+
+  .content {
+    margin-left: auto;
+    margin-right: 0;
+    padding: 0 10px;
+    width: calc(100% - #{$image-wrapper});
+  }
+}

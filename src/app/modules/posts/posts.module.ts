@@ -11,12 +11,12 @@ import { StoreModule } from '@ngrx/store';
 import { STORE_FEATURES } from '@core/consts';
 import { PostWrapperModule } from '@reusable-modules/post-wrapper';
 import { PostsListModule } from '@reusable-modules/posts-list';
-import { AllPostsComponent, SinglePostComponent } from './components';
+import { AllPostsComponent, CommentComponent, SinglePostComponent } from './components';
 import { PostsRoutingModule } from './posts-routing.module';
 import { postsReducer, PostsEffects } from './store';
 
 @NgModule({
-  declarations: [AllPostsComponent, SinglePostComponent],
+  declarations: [AllPostsComponent, SinglePostComponent, CommentComponent],
   imports: [
     CommonModule,
     PostsRoutingModule,
@@ -28,7 +28,7 @@ import { postsReducer, PostsEffects } from './store';
     MatInputModule,
     PostsListModule,
     PostWrapperModule,
-    MatProgressSpinnerModule
-  ]
+    MatProgressSpinnerModule,
+  ],
 })
 export class PostsModule {}

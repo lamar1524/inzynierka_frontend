@@ -7,10 +7,12 @@
     [postEditing$]="postEditing$"
     [postDeleting$]="postDeleting$"
     (sendUpdate)="updatePost($event)"
-    (sendDelete)="deletePost($event)"
-  ></app-post-wrapper>
+    (sendDelete)="deletePost($event)">
+  </app-post-wrapper>
+  <div class="comments__wrapper" *ngIf="(commentsLoading$ | async) === false; else spinner">
+    <app-comment *ngFor="let comment of comments" [comment]="comment" [currentUser]="currentUser"></app-comment>
+  </div>
   <ng-template #spinner
     ><div class="spinner__wrapper"><mat-spinner [diameter]="50"></mat-spinner></div
   ></ng-template>
-  <div class="comments__wrapper"></div>
 </div>
