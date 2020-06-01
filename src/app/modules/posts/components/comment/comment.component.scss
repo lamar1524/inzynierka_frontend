@@ -6,6 +6,7 @@ $options-wrapper: 35px;
 .container {
   min-height: 80px;
   padding: 10px;
+  position: relative;
   width: 100%;
 
   .header {
@@ -32,11 +33,23 @@ $options-wrapper: 35px;
 
   .name__wrapper,
   .date {
+    align-items: center;
+    display: flex;
     padding: 0 10px;
   }
 
   .options__wrapper {
+    align-items: center;
+    display: flex;
     grid-area: options;
+    height: 100%;
+    justify-content: center;
+    width: $options-wrapper;
+  }
+
+  .options__img {
+    height: 15px;
+    width: 30px;
   }
 
   .photo__wrapper {
@@ -55,7 +68,47 @@ $options-wrapper: 35px;
   .content {
     margin-left: auto;
     margin-right: 0;
-    padding: 0 10px;
+    padding: 10px;
     width: calc(100% - #{$image-wrapper});
+  }
+
+  .form-group {
+    padding: 10px;
+    width: 100%;
+  }
+
+  .text-area__wrapper {
+    width: 100%;
+  }
+
+  .text-area {
+    min-height: 50px;
+    overflow-y: hidden;
+    padding: 10px 5px;
+    width: 100%;
+  }
+
+  .button__wrapper {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+  }
+}
+
+.dropdown {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
+  left: calc(100% - #{$options-wrapper} - 75px);
+  padding: 5px;
+  position: absolute;
+  top: 50px;
+  width: 80px;
+
+  .option {
+    border-radius: 10px;
+    padding: 10px;
+    transition: background-color 0.5s ease;
+    z-index: 2;
   }
 }
