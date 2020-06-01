@@ -17,6 +17,7 @@ export class PostsListComponent implements OnInit {
   @Input() postsLoading$: Observable<boolean>;
   @Input() postEditing$: Observable<boolean>;
   @Input() postDeleting$: Observable<boolean>;
+  @Output() routeToPost: EventEmitter<{ id: number }>;
   @Output() sendPostUpdate: EventEmitter<{ id: number; data: FormData }>;
   @Output() sendPostDelete: EventEmitter<{ id: number }>;
   readonly adminRole: USER_ROLE;
@@ -25,6 +26,7 @@ export class PostsListComponent implements OnInit {
     this.adminRole = USER_ROLE.ADMIN;
     this.sendPostUpdate = new EventEmitter<{ id: number; data: FormData }>();
     this.sendPostDelete = new EventEmitter<{ id: number }>();
+    this.routeToPost = new EventEmitter<{ id: number }>();
   }
 
   ngOnInit(): void {}

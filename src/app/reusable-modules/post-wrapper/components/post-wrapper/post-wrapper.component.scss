@@ -51,6 +51,11 @@ $options-wrapper: 35px;
 
     .date {
       font-size: 1.2rem;
+
+      &:hover {
+        color: $primary;
+        cursor: pointer;
+      }
     }
 
     .name,

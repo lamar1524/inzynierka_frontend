@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Inject,
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 
-import { IPost } from '@core/interfaces';
+import { IPost, IRoutes } from '@core/interfaces';
 import { DialogService } from '@core/services';
 
 @Component({
@@ -17,9 +17,10 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   @Input() isOwner: boolean;
   @Input() isOwnerOrAdmin: boolean;
   @Input() postEditing$: Observable<boolean>;
-  @Output() sendUpdate: EventEmitter<{ id: number; data: FormData }>;
   @Input() postDeleting$: Observable<boolean>;
-  @Input() sendDelete: EventEmitter<{ id: number }>;
+  @Input() routeToPost: EventEmitter<{ id: number }>;
+  @Output() sendDelete: EventEmitter<{ id: number }>;
+  @Output() sendUpdate: EventEmitter<{ id: number; data: FormData }>;
   dropdownVisible: boolean;
   editForm: FormGroup;
   formVisibility: boolean;
@@ -27,9 +28,11 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   file: File;
   subscription: Subscription;
   postEditing: boolean;
+  routes: IRoutes;
 
   constructor(@Inject(DOCUMENT) private document: Document, private dialogService: DialogService) {
     this.sendUpdate = new EventEmitter<{ id: number; data: FormData }>();
+    this.sendDelete = new EventEmitter<{ id: number }>();
     this.dropdownVisible = false;
   }
 

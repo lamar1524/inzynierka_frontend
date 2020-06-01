@@ -8,7 +8,8 @@
       (sendUpdate)="updatePost($event)"
       [postEditing$]="postEditing$"
       [postDeleting$]="postDeleting$"
-      [sendDelete]="sendPostDelete"
+      (sendDelete)="sendPostDelete.emit($event)"
+      [routeToPost]="routeToPost"
     >
     </app-post-wrapper>
     <div class="error" *ngIf="posts?.length === 0 || posts === null">Brak postów w twoich grupach.</div>

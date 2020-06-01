@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { URLS } from '../consts';
-import { IPost, IResponsePosts } from '../interfaces';
+import { IPost, IResponseComments, IResponsePosts } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -22,5 +22,15 @@ export class PostsService {
 
   deletePost(id: number): Observable<{ message: string }> {
     return this.http.delete<{ message: string }>(URLS.postDelete + id + '/');
+  }
+
+  getSinglePost(id: number): Observable<IPost> {
+    return this.http.get<IPost>(URLS.postGet + id + '/');
+  }
+
+  getComments(postId: number): Observable<IResponseComments> {
+    return this.http
+      .get<IResponseComments>(URLS.commentsGet + postId + '/')
+      .pipe(map((res: any) => ({ previous: res.previous, next: res.next, comments: res.results })));
   }
 }

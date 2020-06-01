@@ -1,1 +1,16 @@
-<p>single-post works!</p>
+<div class="container">
+  <app-post-wrapper
+    *ngIf="(postLoading$ | async) === false; else spinner"
+    [post]="post$ | async"
+    [isOwner]="isOwner(post$ | async, currentUser)"
+    [isOwnerOrAdmin]="isAdminOrIsOwner(post$ | async, currentUser)"
+    [postEditing$]="postEditing$"
+    [postDeleting$]="postDeleting$"
+    (sendUpdate)="updatePost($event)"
+    (sendDelete)="deletePost($event)"
+  ></app-post-wrapper>
+  <ng-template #spinner
+    ><div class="spinner__wrapper"><mat-spinner [diameter]="50"></mat-spinner></div
+  ></ng-template>
+  <div class="comments__wrapper"></div>
+</div>

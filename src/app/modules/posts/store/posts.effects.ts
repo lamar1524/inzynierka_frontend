@@ -72,4 +72,34 @@ export class PostsEffects {
       ),
     ),
   );
+
+  loadSinglePost$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(postsActions.loadPost),
+      switchMap((action) =>
+        this.postsService.getSinglePost(action.id).pipe(
+          map((res) => postsActions.loadPostSuccess({ post: res })),
+          catchError(() => {
+            this.popupService.error('Błąd ładowania posta');
+            return of(postsActions.loadPostFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  loadComments$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(postsActions.loadComments),
+      switchMap((action) =>
+        this.postsService.getComments(action.id).pipe(
+          map((res) => postsActions.loadCommentsSuccess({ comments: res })),
+          catchError(() => {
+            this.popupService.error('Błąd ładowania komentarzy');
+            return of(postsActions.loadCommentsFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }

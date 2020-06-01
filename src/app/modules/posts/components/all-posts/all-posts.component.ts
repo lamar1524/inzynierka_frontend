@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { ROUTES } from '@core/consts';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 
@@ -23,7 +25,7 @@ export class AllPostsComponent implements OnDestroy {
   next: string;
   currentUser$: Observable<IUser>;
 
-  constructor(public store: Store<AuthModuleState | PostModuleState>, private cdRef: ChangeDetectorRef) {
+  constructor(public store: Store<AuthModuleState | PostModuleState>, private router: Router, private cdRef: ChangeDetectorRef) {
     this.store.dispatch(postsActions.loadAllPosts({ url: null }));
     this.postsLoading$ = this.store.select(postSelectors.selectAllPostsLoading);
     this.postDeleting$ = this.store.select(postSelectors.selectDeletingPost);
@@ -36,15 +38,13 @@ export class AllPostsComponent implements OnDestroy {
     this.postEditing$ = this.store.select(postSelectors.selectEditingPost);
   }
 
-  updatePost($event: { id: number; data: FormData }) {
+  updatePost = ($event: { id: number; data: FormData }) =>
     this.store.dispatch(
       postsActions.editPost({ post: $event.data, id: $event.id, refreshAction: postsActions.loadAllPosts({ url: null }) }),
     );
-  }
 
-  deletePost($event: { id: number }) {
+  deletePost = ($event: { id: number }) =>
     this.store.dispatch(postsActions.deletePost({ id: $event.id, refreshAction: postsActions.loadAllPosts({ url: null }) }));
-  }
 
   @HostListener('window:scroll') scrollEvent() {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
@@ -52,6 +52,10 @@ export class AllPostsComponent implements OnDestroy {
         this.store.dispatch(postsActions.loadAllPosts({ url: this.next }));
       }
     }
+  }
+
+  routeToPost($event) {
+    this.router.navigate([ROUTES.singlePost.path + $event.id]);
   }
 
   ngOnDestroy(): void {

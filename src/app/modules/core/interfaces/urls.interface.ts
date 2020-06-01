@@ -8,4 +8,6 @@ export interface IUrls {
   allPosts: string;
   postEdit: string;
   postDelete: string;
+  postGet: string;
+  commentsGet: string;
 }

@@ -24,3 +24,9 @@ export interface IComment {
   date_commented: Date;
   post: number;
 }
+
+export interface IResponseComments {
+  next: string;
+  previous?: string;
+  comments: IComment[];
+}

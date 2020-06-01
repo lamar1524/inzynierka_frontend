@@ -1,6 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
 
-import { IResponsePosts } from '@core/interfaces';
+import { IPost, IResponseComments, IResponsePosts } from '@core/interfaces';
 import * as postsActions from '../store/posts.actions';
 
 export interface PostModuleState {
@@ -12,6 +12,10 @@ export interface PostState {
   allPosts: IResponsePosts;
   postEditing: boolean;
   postDeleting: boolean;
+  singlePostLoading: boolean;
+  singlePost: IPost;
+  commentsLoading: boolean;
+  comments: IResponseComments;
 }
 
 export const initialState: PostState = {
@@ -19,10 +23,18 @@ export const initialState: PostState = {
   allPosts: {
     next: null,
     previous: null,
-    posts: null,
+    posts: [],
   },
   postEditing: false,
   postDeleting: false,
+  singlePostLoading: false,
+  singlePost: null,
+  commentsLoading: false,
+  comments: {
+    comments: [],
+    previous: null,
+    next: null,
+  },
 };
 
 export const POSTS_REDUCER = createReducer(
@@ -42,6 +54,18 @@ export const POSTS_REDUCER = createReducer(
   on(postsActions.deletePost, (state) => ({ ...state, postDeleting: true })),
   on(postsActions.deletePostSuccess, (state) => ({ ...state, postDeleting: false })),
   on(postsActions.deletePostFail, (state) => ({ ...state, postDeleting: false })),
+
+  on(postsActions.loadPost, (state) => ({ ...state, singlePostLoading: true })),
+  on(postsActions.loadPostSuccess, (state, { post }) => ({ ...state, singlePostLoading: false, singlePost: post })),
+  on(postsActions.loadPostFail, (state) => ({ ...state, singlePostLoading: false })),
+
+  on(postsActions.loadComments, (state) => ({ ...state, commentsLoading: true })),
+  on(postsActions.loadCommentsSuccess, (state, { comments }) => ({
+    ...state,
+    commentsLoading: false,
+    comments: comments.previous ? comments : { next: comments.next, comments: [...state.comments.comments, comments.comments] },
+  })),
+  on(postsActions.loadCommentsFail, (state) => ({ ...state, commentsLoading: false })),
 );
 
 export function postsReducer(state: PostState | undefined, action: Action) {
