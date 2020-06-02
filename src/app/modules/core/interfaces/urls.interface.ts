@@ -13,4 +13,5 @@ export interface IUrls {
   commentEdit: string;
   commentDelete: string;
   commentAdd: string;
+  groupLoad: string;
 }

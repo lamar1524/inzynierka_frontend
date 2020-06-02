@@ -7,6 +7,7 @@ export interface IRoutes {
   singlePost: IRoute;
   groupsModule: IRoute;
   privateGroups: IRoute;
+  singleGroup: IRoute;
 }
 
 export interface IRoute {

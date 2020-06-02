@@ -33,4 +33,8 @@ export const ROUTES: IRoutes = {
     name: '',
     path: '/home/groups/',
   },
+  singleGroup: {
+    name: '',
+    path: '/home/groups/',
+  },
 };

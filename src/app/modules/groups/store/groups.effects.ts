@@ -25,4 +25,19 @@ export class GroupsEffects {
       ),
     ),
   );
+
+  loadGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.loadGroup),
+      switchMap((action) =>
+        this.groupsService.getGroup(action.id).pipe(
+          map((res) => groupsActions.loadGroupSuccess({ group: res })),
+          catchError(() => {
+            this.popupService.error('Błąd ładowania grupy');
+            return of(groupsActions.loadGroupFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }
