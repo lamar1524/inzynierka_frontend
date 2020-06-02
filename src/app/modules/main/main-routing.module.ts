@@ -11,6 +11,7 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: ROUTES.posts.path, pathMatch: 'full' },
       { path: ROUTES.posts.name, loadChildren: () => import('../posts/posts.module').then((mod) => mod.PostsModule) },
+      { path: ROUTES.groupsModule.name, loadChildren: () => import('../groups/groups.module').then((mod) => mod.GroupsModule) },
     ],
   },
 ];

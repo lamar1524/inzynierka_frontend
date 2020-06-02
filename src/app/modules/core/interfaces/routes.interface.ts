@@ -5,6 +5,8 @@ export interface IRoutes {
   posts: IRoute;
   allPosts: IRoute;
   singlePost: IRoute;
+  groupsModule: IRoute;
+  privateGroups: IRoute;
 }
 
 export interface IRoute {

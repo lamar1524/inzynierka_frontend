@@ -25,4 +25,12 @@ export const ROUTES: IRoutes = {
     name: '',
     path: '/home/posts/',
   },
+  groupsModule: {
+    name: 'groups',
+    path: '/home/groups/',
+  },
+  privateGroups: {
+    name: '',
+    path: '/home/groups/',
+  },
 };
