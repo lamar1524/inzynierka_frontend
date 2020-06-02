@@ -15,9 +15,9 @@ $options-wrapper: 35px;
 
   .post__header {
     border-bottom: 1px solid $primary;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-areas: 'image credentials options';
+    grid-template-columns: $image-wrapper calc(100% - #{$image-wrapper} - #{$options-wrapper}) $options-wrapper;
     min-height: 40px;
     padding: 5px 10px;
     width: 100%;
@@ -26,8 +26,8 @@ $options-wrapper: 35px;
   .image__wrapper {
     align-items: center;
     display: flex;
+    grid-area: image;
     justify-content: center;
-    width: $image-wrapper;
 
     .image {
       border: 1px solid $gray;
@@ -40,9 +40,9 @@ $options-wrapper: 35px;
   .text__wrapper {
     display: flex;
     flex-direction: column;
+    grid-area: credentials;
     justify-content: center;
     padding: 0 10px;
-    width: calc(100% - #{$image-wrapper} - #{$options-wrapper});
 
     .credentials,
     .date {
@@ -72,9 +72,9 @@ $options-wrapper: 35px;
   .options__wrapper {
     align-items: center;
     display: flex;
+    grid-area: options;
     height: 100%;
     justify-content: center;
-    width: $options-wrapper;
   }
 
   .options__img {
