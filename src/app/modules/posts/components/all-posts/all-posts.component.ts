@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { ROUTES } from '@core/consts';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
+import { ROUTES } from '@core/consts';
 import { IPost, IUser } from '@core/interfaces';
 import { PostModuleState } from '../../store';
 import * as postsActions from '../../store/posts.actions';
