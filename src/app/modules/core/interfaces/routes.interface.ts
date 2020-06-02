@@ -4,6 +4,7 @@ export interface IRoutes {
   home: IRoute;
   posts: IRoute;
   allPosts: IRoute;
+  singlePost: IRoute;
 }
 
 export interface IRoute {

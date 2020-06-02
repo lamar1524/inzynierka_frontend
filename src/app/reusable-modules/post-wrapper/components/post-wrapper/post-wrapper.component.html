@@ -7,7 +7,11 @@
         <img src="../../../../../assets/img/next.svg" alt="" class="arrow" />
         <div class="group">{{ post.group.name }}</div>
       </div>
-      <div class="date">{{ post.date_posted | date: 'medium':'+1':'pl-PL' }}</div>
+      <div class="date" (click)="routeToPost?.emit({ id: post.id })">
+        <div [className]="withRoute ? 'date-route' : ''">
+          {{ post.date_posted | date: 'medium':'+1':'pl-PL' }}
+        </div>
+      </div>
     </div>
     <div class="options__wrapper" *ngIf="isOwnerOrAdmin">
       <button class="options__button" mat-icon-button (click)="dropdownToggle($event)">

@@ -1,9 +1,20 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Inject, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  HostListener,
+  Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 
-import { IPost } from '@core/interfaces';
+import { IPost, IRoutes } from '@core/interfaces';
 import { DialogService } from '@core/services';
 
 @Component({
@@ -17,9 +28,11 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   @Input() isOwner: boolean;
   @Input() isOwnerOrAdmin: boolean;
   @Input() postEditing$: Observable<boolean>;
-  @Output() sendUpdate: EventEmitter<{ id: number; data: FormData }>;
   @Input() postDeleting$: Observable<boolean>;
-  @Input() sendDelete: EventEmitter<{ id: number }>;
+  @Input() withRoute: boolean;
+  @Input() routeToPost: EventEmitter<{ id: number }> | null;
+  @Output() sendDelete: EventEmitter<{ id: number }>;
+  @Output() sendUpdate: EventEmitter<{ id: number; data: FormData }>;
   dropdownVisible: boolean;
   editForm: FormGroup;
   formVisibility: boolean;
@@ -27,9 +40,11 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   file: File;
   subscription: Subscription;
   postEditing: boolean;
+  routes: IRoutes;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private dialogService: DialogService) {
+  constructor(@Inject(DOCUMENT) private document: Document, private dialogService: DialogService, private cdRef: ChangeDetectorRef) {
     this.sendUpdate = new EventEmitter<{ id: number; data: FormData }>();
+    this.sendDelete = new EventEmitter<{ id: number }>();
     this.dropdownVisible = false;
   }
 
@@ -50,14 +65,17 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   dropdownToggle(event) {
     event.stopPropagation();
     this.dropdownVisible = !this.dropdownVisible;
+    if (this.dropdownVisible) {
+      window.addEventListener('click', this.hideDropdown);
+    }
+    this.cdRef.markForCheck();
   }
 
-  @HostListener('window:click', ['$event']) hideDropdown(event) {
-    const dropdown = this.document.querySelector('.dropdown');
-    if (this.dropdownVisible && event.target !== dropdown) {
-      this.dropdownVisible = false;
-    }
-  }
+  hideDropdown = (event) => {
+    this.dropdownVisible = false;
+    window.removeEventListener('click', this.hideDropdown);
+    this.cdRef.markForCheck();
+  };
 
   hoverOption(event) {
     event.target.classList.add('u-item--hover');
@@ -72,7 +90,6 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   }
 
   deleteButton(event) {
-    event.stopPropagation();
     this.dialogService.showDialog({
       header: 'Jesteś pewien?',
       caption: 'Tej operacji nie da sie cofnąć',

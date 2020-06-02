@@ -19,6 +19,10 @@ export const ROUTES: IRoutes = {
   },
   allPosts: {
     name: '',
-    path: '/home/posts'
-  }
+    path: '/home/posts',
+  },
+  singlePost: {
+    name: '',
+    path: '/home/posts/',
+  },
 };

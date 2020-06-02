@@ -12,4 +12,9 @@ export const URLS: IUrls = {
   allPosts: host + 'posts/user_posts_list/',
   postEdit: host + 'posts/update/',
   postDelete: host + 'posts/delete/',
+  postGet: host + 'posts/post/',
+  commentsGet: host + 'posts/comments/',
+  commentEdit: host + 'posts/update/comment/',
+  commentDelete: host + 'posts/delete/comment/',
+  commentAdd: host + 'posts/create/comment/'
 };
