@@ -15,7 +15,7 @@ import {
   selectEditingPost,
   selectSinglePost,
   selectSinglePostLoading,
-  PostModuleState,
+  PostsModuleState,
 } from '@posts/store';
 import { tap } from 'rxjs/operators';
 import * as postsActions from '../../store/posts.actions';
@@ -42,7 +42,7 @@ export class SinglePostComponent implements OnDestroy {
   formVisible: boolean;
   previousBool: boolean;
 
-  constructor(private route: ActivatedRoute, private store: Store<AuthModuleState | PostModuleState>, private cdRef: ChangeDetectorRef) {
+  constructor(private route: ActivatedRoute, private store: Store<AuthModuleState | PostsModuleState>, private cdRef: ChangeDetectorRef) {
     this.sub$ = new Subscription();
     this.comments = [];
     this.route.params.subscribe((param) => {

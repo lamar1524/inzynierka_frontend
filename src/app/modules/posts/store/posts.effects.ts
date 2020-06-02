@@ -7,14 +7,14 @@ import { catchError, map, switchMap } from 'rxjs/operators';
 import { URLS } from '@core/consts';
 import { PopupService, PostsService } from '@core/services';
 import * as postsActions from './posts.actions';
-import { PostModuleState } from './posts.reducer';
+import { PostsModuleState } from './posts.reducer';
 
 @Injectable()
 export class PostsEffects {
   constructor(
     private postsService: PostsService,
     private popupService: PopupService,
-    private store: Store<PostModuleState>,
+    private store: Store<PostsModuleState>,
     private actions$: Actions,
   ) {}
 

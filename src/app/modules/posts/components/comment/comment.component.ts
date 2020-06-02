@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
 
 import { IComment, IUser } from '@core/interfaces';
 import { DialogService } from '@core/services';
-import { selectCommentDeleting, selectCommentEditing, PostModuleState } from '../../store';
+import { selectCommentDeleting, selectCommentEditing, PostsModuleState } from '../../store';
 import * as postsActions from '../../store/posts.actions';
 
 @Component({
@@ -30,7 +30,7 @@ export class CommentComponent implements OnInit {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private store: Store<PostModuleState>,
+    private store: Store<PostsModuleState>,
     private cdRef: ChangeDetectorRef,
     private dialogService: DialogService,
   ) {

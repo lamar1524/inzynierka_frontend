@@ -13,6 +13,8 @@ export class GroupsService {
   constructor(private http: HttpClient) {}
 
   getGroups(): Observable<IResponseGroups> {
-    return this.http.get<IResponseGroups>(URLS.usersGroups).pipe(map((res: any) => ({ next: res.next, groups: res.results })));
+    return this.http
+      .get<IResponseGroups>(URLS.usersGroups)
+      .pipe(map((res: any) => ({ previous: res.previous, next: res.next, groups: res.results })));
   }
 }

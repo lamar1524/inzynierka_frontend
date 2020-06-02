@@ -1,0 +1,27 @@
+import { Injectable } from '@angular/core';
+import { createEffect, ofType, Actions } from '@ngrx/effects';
+import { of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
+
+import { GroupsService, PopupService } from '@core/services';
+import * as groupsActions from './groups.actions';
+
+@Injectable()
+export class GroupsEffects {
+  constructor(private actions$: Actions, private groupsService: GroupsService, private popupService: PopupService) {}
+
+  loadPrivateGroups$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.loadPrivateGroups),
+      switchMap((action) =>
+        this.groupsService.getGroups().pipe(
+          map((res) => groupsActions.loadPrivateGroupsSuccess({ groups: res })),
+          catchError(() => {
+            this.popupService.error('Błąd ładowania grup');
+            return of(groupsActions.loadPrivateGroupsFail());
+          }),
+        ),
+      ),
+    ),
+  );
+}

@@ -6,7 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { ROUTES } from '@core/consts';
 import { IPost, IUser } from '@core/interfaces';
-import { PostModuleState } from '../../store';
+import { PostsModuleState } from '../../store';
 import * as postsActions from '../../store/posts.actions';
 import * as postSelectors from '../../store/posts.selectors';
 
@@ -25,7 +25,7 @@ export class AllPostsComponent implements OnDestroy {
   next: string;
   currentUser$: Observable<IUser>;
 
-  constructor(public store: Store<AuthModuleState | PostModuleState>, private router: Router, private cdRef: ChangeDetectorRef) {
+  constructor(public store: Store<AuthModuleState | PostsModuleState>, private router: Router, private cdRef: ChangeDetectorRef) {
     this.store.dispatch(postsActions.loadAllPosts({ url: null }));
     this.postsLoading$ = this.store.select(postSelectors.selectAllPostsLoading);
     this.postDeleting$ = this.store.select(postSelectors.selectDeletingPost);

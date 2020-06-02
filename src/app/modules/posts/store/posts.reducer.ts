@@ -3,11 +3,11 @@ import { createReducer, on, Action } from '@ngrx/store';
 import { IPost, IResponseComments, IResponsePosts } from '@core/interfaces';
 import * as postsActions from '../store/posts.actions';
 
-export interface PostModuleState {
-  posts: PostState;
+export interface PostsModuleState {
+  posts: PostsState;
 }
 
-export interface PostState {
+export interface PostsState {
   allPostsLoading: boolean;
   allPosts: IResponsePosts;
   postEditing: boolean;
@@ -21,7 +21,7 @@ export interface PostState {
   commentAdding: boolean;
 }
 
-export const initialState: PostState = {
+export const initialState: PostsState = {
   allPostsLoading: false,
   allPosts: {
     next: null,
@@ -86,6 +86,6 @@ export const POSTS_REDUCER = createReducer(
   on(postsActions.addCommentFail, (state) => ({ ...state, commentAdding: false })),
 );
 
-export function postsReducer(state: PostState | undefined, action: Action) {
+export function postsReducer(state: PostsState | undefined, action: Action) {
   return POSTS_REDUCER(state, action);
 }

@@ -7,6 +7,7 @@ export interface IGroup {
   moderator: IUser;
   image: string;
   members: IUser[];
+  members_count?: number;
 }
 
 export interface IBaseGroup {
@@ -16,5 +17,6 @@ export interface IBaseGroup {
 
 export interface IResponseGroups {
   next: string;
+  previous?: string;
   groups: IGroup[];
 }
