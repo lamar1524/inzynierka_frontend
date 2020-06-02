@@ -1,0 +1,85 @@
+@import '../../../../../styles/mixins';
+@import '../../../../../styles/variables';
+
+.container {
+  height: 100%;
+
+  .header {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    height: 20%;
+    justify-content: center;
+  }
+
+  .header__logo {
+    .logo {
+      height: 65px;
+      width: 65px;
+    }
+  }
+
+  .header__text {
+    font-size: 7.2rem;
+    padding-left: 10px;
+  }
+
+  .login__wrapper {
+    height: 80%;
+  }
+
+  .login__header {
+    font-size: 3.6rem;
+    height: 20%;
+    text-align: center;
+  }
+
+  .form-group {
+    height: 80%;
+    margin: 0 auto;
+    width: 80%;
+  }
+
+  .mat-form-field {
+    display: block;
+    font-size: 2.2rem;
+  }
+
+  .button__wrapper {
+    text-align: center;
+  }
+
+  .form__button {
+    font-size: 2.2rem;
+    padding: 10px 30px;
+  }
+
+  .caption__wrapper {
+    padding-top: 25px;
+    text-align: center;
+
+    .register__caption {
+      display: inline-block;
+      font-size: 2rem;
+    }
+  }
+
+  .errors {
+    padding: 10px 0;
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    margin: 0 auto;
+    width: 50%;
+
+    .mat-form-field {
+      display: block;
+      font-size: 1.8rem;
+    }
+  }
+
+  @include break(map-get($breakpoints, lg)) {
+    margin: 0 auto;
+    width: 40%;
+  }
+}

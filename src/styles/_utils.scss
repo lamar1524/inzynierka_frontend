@@ -1,0 +1,23 @@
+@import './variables';
+
+.u-text--bold {
+  font-weight: 700;
+}
+
+.u-text--primary {
+  color: $primary;
+}
+
+.u-text--red {
+  color: $warn;
+}
+
+.u-text--link {
+  cursor: pointer;
+}
+
+
+.u-item--hover {
+  background-color: rgb(0, 0, 0, 0.1);
+  cursor: pointer;
+}

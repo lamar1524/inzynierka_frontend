@@ -1,0 +1,12 @@
+<div class="container">
+  <app-posts-list
+    [currentUser]="currentUser$ | async"
+    (sendPostUpdate)="updatePost($event)"
+    [posts]="posts"
+    [postsLoading$]="postsLoading$"
+    [postEditing$]="postEditing$"
+    [postDeleting$]="postDeleting$"
+    (sendPostDelete)="deletePost($event)"
+    (routeToPost)="routeToPost($event)"
+  ></app-posts-list>
+</div>

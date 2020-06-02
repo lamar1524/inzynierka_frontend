@@ -1,0 +1,70 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+.container {
+  display: none;
+
+  @include break(map-get($breakpoints, lg)) {
+    display: block;
+    height: calc(100vh - #{$nav-height});
+    left: 75vw;
+    overflow-y: auto;
+    position: fixed;
+    top: $nav-height;
+    width: 25vw;
+
+    .friends__wrapper {
+      margin: 0 0 auto;
+      min-height: 100%;
+      width: 75%;
+    }
+
+    .friends__header {
+      border-bottom: 2px solid $primary;
+      font-size: 2rem;
+      padding-top: 15px;
+    }
+
+    .friend__wrapper {
+      align-items: center;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: row;
+      height: 45px;
+      justify-content: flex-start;
+      padding: 5px;
+      transition: background-color 0.5s ease;
+      width: 100%;
+    }
+
+    .error__wrapper {
+      font-size: 2rem;
+    }
+
+    .friend__image {
+      height: 100%;
+      margin-right: 10px;
+      width: 40px;
+    }
+
+    .image {
+      border: 1px solid $gray;
+      border-radius: 50%;
+      height: 36px;
+      width: 36px;
+    }
+  }
+
+  .spinner__wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  @include break(map-get($breakpoints, xl)) {
+    .friends__wrapper {
+      width: 70%;
+    }
+  }
+}

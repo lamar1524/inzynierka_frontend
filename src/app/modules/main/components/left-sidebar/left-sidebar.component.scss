@@ -1,0 +1,101 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+$image-size: 48px;
+
+.container {
+  display: none;
+
+  @include break(map-get($breakpoints, lg)) {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - #{$nav-height});
+    justify-content: flex-start;
+    left: 0;
+    position: fixed;
+    top: $nav-height;
+    width: 25vw;
+
+    .groups__wrapper {
+      grid-area: groups;
+      height: 50%;
+      margin: 0 0 0 auto;
+      user-select: none;
+      width: 90%;
+    }
+
+    .groups__header,
+    .search__header {
+      border-bottom: 2px solid $primary;
+      font-size: 2rem;
+      margin-bottom: 5px;
+    }
+
+    .group {
+      align-items: center;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: row;
+      height: 56px;
+      justify-content: center;
+      margin: 5px auto 5px 0;
+      transition: background-color 0.5s ease;
+      width: 95%;
+
+      .group-image__wrapper {
+        border: 1px solid $gray;
+        border-radius: 50%;
+        height: $image-size;
+        width: $image-size;
+      }
+
+      .group-image {
+        border-radius: 50%;
+        height: $image-size;
+        width: $image-size;
+      }
+
+      .group__name {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        width: calc(100% - #{$image-size} - 5px);
+      }
+    }
+
+    .groups__caption {
+      padding-top: 5px;
+    }
+
+    .search__wrapper {
+      margin: 15px 0 15px auto;
+      min-height: 25%;
+      width: 90%;
+
+      .form-group {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        margin: 15px auto 0 0;
+        width: 95%;
+      }
+
+      .form-button {
+        max-width: 30%;
+      }
+
+      .mat-form-field {
+        max-width: 60%;
+      }
+    }
+  }
+
+  @include break(map-get($breakpoints, xl)) {
+    .groups__wrapper,
+    .search__wrapper {
+      width: 80%;
+    }
+  }
+}
