@@ -20,7 +20,7 @@ export class MainEffects {
     this.actions$.pipe(
       ofType(mainActions.loadBaseGroups),
       switchMap(() =>
-        this.groupsService.getGroups().pipe(
+        this.groupsService.getGroups(URLS.usersGroups).pipe(
           map((res) => mainActions.loadBaseGroupsSuccess({ baseGroups: res.groups.slice(0, 5) })),
           catchError(() => {
             this.popupService.error('Błąd ładowania grup');

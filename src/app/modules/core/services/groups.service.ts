@@ -12,9 +12,7 @@ import { IResponseGroups } from '../interfaces';
 export class GroupsService {
   constructor(private http: HttpClient) {}
 
-  getGroups(): Observable<IResponseGroups> {
-    return this.http
-      .get<IResponseGroups>(URLS.usersGroups)
-      .pipe(map((res: any) => ({ previous: res.previous, next: res.next, groups: res.results })));
+  getGroups(url: string): Observable<IResponseGroups> {
+    return this.http.get<IResponseGroups>(url).pipe(map((res: any) => ({ previous: res.previous, next: res.next, groups: res.results })));
   }
 }

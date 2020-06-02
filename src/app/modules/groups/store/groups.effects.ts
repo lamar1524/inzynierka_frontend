@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { URLS } from '@core/consts';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -14,7 +15,7 @@ export class GroupsEffects {
     this.actions$.pipe(
       ofType(groupsActions.loadPrivateGroups),
       switchMap((action) =>
-        this.groupsService.getGroups().pipe(
+        this.groupsService.getGroups(action.url ? action.url : URLS.usersGroups).pipe(
           map((res) => groupsActions.loadPrivateGroupsSuccess({ groups: res })),
           catchError(() => {
             this.popupService.error('Błąd ładowania grup');
