@@ -16,20 +16,22 @@
   <div class="content__wrapper">
     <mat-tab-group>
       <mat-tab>
-        <ng-template class="lol" mat-tab-label>
+        <ng-template mat-tab-label>
           Dyskusja
         </ng-template>
-        <app-posts-list
-          [withRoute]="true"
-          [withGroup]="false"
-          [currentUser]="currentUser"
-          [posts]="posts"
-          [postDeleting$]="postDeleting$"
-          [postEditing$]="postEditing$"
-          (routeToPost)="routeToPost($event)"
-          (sendPostUpdate)="updatePost($event)"
-          (sendPostDelete)="deletePost($event)"
-        ></app-posts-list>
+        <div class="posts">
+          <app-posts-list
+            [withRoute]="true"
+            [withGroup]="false"
+            [currentUser]="currentUser"
+            [posts]="posts"
+            [postDeleting$]="postDeleting$"
+            [postEditing$]="postEditing$"
+            (routeToPost)="routeToPost($event)"
+            (sendPostUpdate)="updatePost($event)"
+            (sendPostDelete)="deletePost($event)"
+          ></app-posts-list>
+        </div>
       </mat-tab>
       <mat-tab [label]="'Członkowie(' + group?.members_count + ')'"> Content 2 </mat-tab>
       <mat-tab label="Oczekujący"> Content 3 </mat-tab>

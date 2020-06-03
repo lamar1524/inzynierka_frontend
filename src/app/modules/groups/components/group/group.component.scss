@@ -45,6 +45,10 @@ $info-wrapper: 80px;
     min-height: calc(100vh - #{$nav-height} - #{$image-wrapper} - #{$info-wrapper});
   }
 
+  .posts {
+    padding: 0 25px;
+  }
+
   ::ng-deep.mat-tab-label,
   ::ng-deep.mat-tab-label-active {
     color: #000;
@@ -55,7 +59,7 @@ $info-wrapper: 80px;
     background-color: #fff;
   }
 
-  @include break(map-get($breakpoints, md)) {
+  @include break(map-get($breakpoints, lg)) {
     margin-left: auto;
     margin-right: auto;
     min-height: calc(100vh - #{$nav-height} - 15px);
@@ -70,6 +74,10 @@ $info-wrapper: 80px;
     .image {
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
+    }
+
+    .posts {
+      padding: 0;
     }
 
     .content__wrapper {

@@ -1,4 +1,6 @@
 @import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
 $image-wrapper: 80px;
 
 .container {
@@ -7,7 +9,7 @@ $image-wrapper: 80px;
   display: flex;
   height: 150px;
   margin: 15px auto;
-  width: 80%;
+  width: 100%;
 
   .image__wrapper {
     align-items: center;
@@ -44,5 +46,9 @@ $image-wrapper: 80px;
   .owner,
   .members-count {
     font-size: 1.8rem;
+  }
+
+  @include break(map-get($breakpoints, lg)) {
+    width: 80%;
   }
 }
