@@ -18,4 +18,5 @@ export const URLS: IUrls = {
   commentDelete: host + 'posts/delete/comment/',
   commentAdd: host + 'posts/create/comment/',
   groupLoad: host + 'groups/',
+  groupsPosts: host + 'posts/',
 };

@@ -14,4 +14,5 @@ export interface IUrls {
   commentDelete: string;
   commentAdd: string;
   groupLoad: string;
+  groupsPosts: string;
 }

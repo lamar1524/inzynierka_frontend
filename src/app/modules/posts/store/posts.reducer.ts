@@ -53,14 +53,6 @@ export const POSTS_REDUCER = createReducer(
   })),
   on(postsActions.loadAllPostsFail, (state) => ({ ...state, allPostsLoading: false })),
 
-  on(postsActions.editPost, (state) => ({ ...state, postEditing: true })),
-  on(postsActions.editPostSuccess, (state) => ({ ...state, postEditing: false })),
-  on(postsActions.editPostFail, (state) => ({ ...state, postEditing: false })),
-
-  on(postsActions.deletePost, (state) => ({ ...state, postDeleting: true })),
-  on(postsActions.deletePostSuccess, (state) => ({ ...state, postDeleting: false })),
-  on(postsActions.deletePostFail, (state) => ({ ...state, postDeleting: false })),
-
   on(postsActions.loadPost, (state) => ({ ...state, singlePostLoading: true })),
   on(postsActions.loadPostSuccess, (state, { post }) => ({ ...state, singlePostLoading: false, singlePost: post })),
   on(postsActions.loadPostFail, (state) => ({ ...state, singlePostLoading: false })),

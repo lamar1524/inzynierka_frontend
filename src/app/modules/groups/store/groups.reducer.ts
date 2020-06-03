@@ -1,4 +1,4 @@
-import { IGroup, IResponseGroups } from '@core/interfaces';
+import { IGroup, IResponseGroups, IResponsePosts } from '@core/interfaces';
 import { createReducer, on, Action } from '@ngrx/store';
 
 import * as groupsActions from './groups.actions';
@@ -12,6 +12,8 @@ export interface GroupsState {
   privateGroups: IResponseGroups;
   groupLoading: boolean;
   group: IGroup;
+  groupsPostsLoading: boolean;
+  groupsPosts: IResponsePosts;
 }
 
 export const initialState: GroupsState = {
@@ -19,6 +21,8 @@ export const initialState: GroupsState = {
   privateGroups: null,
   groupLoading: false,
   group: null,
+  groupsPostsLoading: false,
+  groupsPosts: null,
 };
 
 export const GROUPS_REDUCER = createReducer(
@@ -36,6 +40,16 @@ export const GROUPS_REDUCER = createReducer(
   on(groupsActions.loadGroup, (state) => ({ ...state, groupLoading: true })),
   on(groupsActions.loadGroupSuccess, (state, { group }) => ({ ...state, groupLoading: false, group })),
   on(groupsActions.loadGroupFail, (state) => ({ ...state, groupLoading: false })),
+
+  on(groupsActions.loadGroupsPosts, (state) => ({ ...state, groupsPostsLoading: true })),
+  on(groupsActions.loadGroupsPostsSuccess, (state, { posts }) => ({
+    ...state,
+    groupsPostsLoading: false,
+    groupsPosts: posts.previous
+      ? { next: posts.next, previous: posts.previous, posts: [...state.groupsPosts.posts, ...posts.posts] }
+      : posts,
+  })),
+  on(groupsActions.loadGroupsPostsFail, (state) => ({ ...state, groupsPostsLoading: false })),
 );
 
 export function groupsReducer(state: GroupsState | undefined, action: Action) {

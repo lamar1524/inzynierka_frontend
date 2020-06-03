@@ -5,4 +5,5 @@ export const STORE_FEATURES: IStoreFeatures = {
   main: 'main',
   posts: 'posts',
   groups: 'groups',
+  core: 'core',
 };

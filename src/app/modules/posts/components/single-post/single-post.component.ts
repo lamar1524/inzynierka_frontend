@@ -3,21 +3,20 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { USER_ROLE } from '@core/enums';
 import { IComment, IPost, IUser } from '@core/interfaces';
+import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModuleState } from '@core/store';
 import {
   selectComments,
   selectCommentsLoading,
   selectCommentAdding,
-  selectDeletingPost,
-  selectEditingPost,
   selectSinglePost,
   selectSinglePostLoading,
   PostsModuleState,
 } from '@posts/store';
-import { tap } from 'rxjs/operators';
 import * as postsActions from '../../store/posts.actions';
 
 @Component({
@@ -42,7 +41,11 @@ export class SinglePostComponent implements OnDestroy {
   formVisible: boolean;
   previousBool: boolean;
 
-  constructor(private route: ActivatedRoute, private store: Store<AuthModuleState | PostsModuleState>, private cdRef: ChangeDetectorRef) {
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<AuthModuleState | PostsModuleState | CoreModuleState>,
+    private cdRef: ChangeDetectorRef,
+  ) {
     this.sub$ = new Subscription();
     this.comments = [];
     this.route.params.subscribe((param) => {
@@ -97,12 +100,10 @@ export class SinglePostComponent implements OnDestroy {
   }
 
   updatePost = ($event: { id: number; data: FormData }) =>
-    this.store.dispatch(
-      postsActions.editPost({ post: $event.data, id: $event.id, refreshAction: postsActions.loadPost({ id: this.postId }) }),
-    );
+    this.store.dispatch(editPost({ post: $event.data, id: $event.id, refreshAction: postsActions.loadPost({ id: this.postId }) }));
 
   deletePost = ($event: { id: number }) =>
-    this.store.dispatch(postsActions.deletePost({ id: $event.id, refreshAction: postsActions.loadAllPosts({ url: null }) }));
+    this.store.dispatch(deletePost({ id: $event.id, refreshAction: postsActions.loadAllPosts({ url: null }) }));
 
   @HostListener('window:scroll') scrollEvent() {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {

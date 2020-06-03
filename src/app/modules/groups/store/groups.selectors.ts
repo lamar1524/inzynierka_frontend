@@ -8,3 +8,6 @@ export const selectPrivateGroups = createSelector(selectGroups, (state: GroupsSt
 
 export const selectGroupLoading = createSelector(selectGroups, (state: GroupsState) => state.groupLoading);
 export const selectGroup = createSelector(selectGroups, (state: GroupsState) => state.group);
+
+export const selectGroupPostsLoading = createSelector(selectGroups, (state: GroupsState) => state.groupsPostsLoading);
+export const selectGroupPosts = createSelector(selectGroups, (state: GroupsState) => state.groupsPosts);

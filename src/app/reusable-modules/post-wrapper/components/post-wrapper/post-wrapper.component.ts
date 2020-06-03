@@ -30,7 +30,7 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   @Input() postEditing$: Observable<boolean>;
   @Input() postDeleting$: Observable<boolean>;
   @Input() withRoute: boolean;
-  @Input() routeToPost: EventEmitter<{ id: number }> | null;
+  @Output() routeToPost: EventEmitter<{ id: number }> | null;
   @Output() sendDelete: EventEmitter<{ id: number }>;
   @Output() sendUpdate: EventEmitter<{ id: number; data: FormData }>;
   dropdownVisible: boolean;
@@ -45,6 +45,7 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   constructor(@Inject(DOCUMENT) private document: Document, private dialogService: DialogService, private cdRef: ChangeDetectorRef) {
     this.sendUpdate = new EventEmitter<{ id: number; data: FormData }>();
     this.sendDelete = new EventEmitter<{ id: number }>();
+    this.routeToPost = new EventEmitter<{ id: number }>();
     this.dropdownVisible = false;
   }
 

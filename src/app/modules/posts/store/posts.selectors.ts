@@ -7,9 +7,6 @@ export const postsSelect = (state: PostsModuleState) => state.posts;
 export const selectAllPostsLoading = createSelector(postsSelect, (state: PostsState) => state.allPostsLoading);
 export const selectAllPosts = createSelector(postsSelect, (state: PostsState) => state.allPosts);
 
-export const selectEditingPost = createSelector(postsSelect, (state: PostsState) => state.postEditing);
-export const selectDeletingPost = createSelector(postsSelect, (state: PostsState) => state.postDeleting);
-
 export const selectSinglePostLoading = createSelector(postsSelect, (state: PostsState) => state.singlePostLoading);
 export const selectSinglePost = createSelector(postsSelect, (state: PostsState) => state.singlePost);
 

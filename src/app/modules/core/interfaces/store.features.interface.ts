@@ -3,4 +3,5 @@ export interface IStoreFeatures {
   main: string;
   posts: string;
   groups: string;
+  core: string;
 }
