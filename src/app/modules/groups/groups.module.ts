@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTabsModule } from '@angular/material/tabs';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
@@ -19,7 +21,9 @@ import { GroupsEffects } from './store/groups.effects';
     StoreModule.forFeature(STORE_FEATURES.groups, groupsReducer),
     EffectsModule.forFeature([GroupsEffects]),
     GroupWrapperModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatTabsModule
   ]
 })
 export class GroupsModule {}

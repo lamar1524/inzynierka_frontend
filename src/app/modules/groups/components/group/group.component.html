@@ -1,1 +1,28 @@
-<p>group works!</p>
+<div class="container">
+  <div class="group__header">
+    <div class="image__wrapper">
+      <img class="image" alt="Group image" [src]="group?.image" />
+    </div>
+    <div class="info__wrapper">
+      <div class="info">
+        <div class="name">{{ group?.name }}</div>
+        <div class="owner">{{ group?.owner.first_name }} {{ group?.owner.last_name }}</div>
+      </div>
+      <div class="manage-button__wrapper" *ngIf="ownerOrAdmin">
+        <button class="manage-button" mat-raised-button color="primary">Zarządzaj</button>
+      </div>
+    </div>
+  </div>
+  <div class="content__wrapper">
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template class="lol" mat-tab-label>
+          Dyskusja
+        </ng-template>
+        Content 1
+      </mat-tab>
+      <mat-tab [label]="'Członkowie(' + group?.members_count + ')'"> Content 2 </mat-tab>
+      <mat-tab label="Oczekujący"> Content 3 </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

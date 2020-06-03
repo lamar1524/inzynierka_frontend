@@ -1,0 +1,79 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+$image-wrapper: 140px;
+$info-wrapper: 80px;
+
+.container {
+  min-height: calc(100vh - #{$nav-height});
+  width: 100%;
+
+  .group__header {
+    background-color: #fff;
+  }
+
+  .image__wrapper {
+    height: $image-wrapper;
+    text-align: center;
+
+    .image {
+      height: $image-wrapper;
+      object-fit: fill;
+      object-position: center;
+      width: 100%;
+    }
+  }
+
+  .info__wrapper {
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+    min-height: $info-wrapper;
+    padding: 10px;
+    width: 100%;
+
+    .name {
+      font-size: 2.2rem;
+    }
+
+    .owner {
+      font-size: 1.8rem;
+    }
+  }
+
+  .content__wrapper {
+    min-height: calc(100vh - #{$nav-height} - #{$image-wrapper} - #{$info-wrapper});
+  }
+
+  ::ng-deep.mat-tab-label,
+  ::ng-deep.mat-tab-label-active {
+    color: #000;
+    min-width: 33%;
+  }
+
+  ::ng-deep.mat-tab-labels {
+    background-color: #fff;
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    margin-left: auto;
+    margin-right: auto;
+    min-height: calc(100vh - #{$nav-height} - 15px);
+    padding-top: 15px;
+    width: 90%;
+
+    .group__header {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .image {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .content__wrapper {
+      min-height: calc(100vh - #{$nav-height} - #{$image-wrapper} - #{$info-wrapper} - 15px);
+    }
+  }
+}
