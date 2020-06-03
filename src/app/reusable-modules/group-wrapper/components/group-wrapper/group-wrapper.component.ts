@@ -10,6 +10,7 @@ import { IGroup } from '@core/interfaces';
 })
 export class GroupWrapperComponent implements OnInit {
   @Input() group: IGroup;
+  @Input() route: string;
 
   constructor() {}
 

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { IGroup } from '@core/interfaces';
+import { ROUTES } from '@core/consts';
+import { IGroup, IRoutes } from '@core/interfaces';
 import { Store } from '@ngrx/store';
 import * as postsActions from '@posts/store/posts.actions';
 import { Observable, Subscription } from 'rxjs';
@@ -19,6 +20,7 @@ export class PrivateGroupsComponent implements OnDestroy {
   next: string;
   groupsLoading$: Observable<boolean>;
   sub$: Subscription;
+  readonly routes: IRoutes;
 
   constructor(private store: Store<GroupsModuleState>, private cdRef: ChangeDetectorRef) {
     this.groups = [];
@@ -34,6 +36,7 @@ export class PrivateGroupsComponent implements OnDestroy {
       });
     this.groupsLoading$ = this.store.select(selectPrivateGroupsLoading);
     this.sub$.add(groups$);
+    this.routes = ROUTES;
   }
   @HostListener('window:scroll') scroll() {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
