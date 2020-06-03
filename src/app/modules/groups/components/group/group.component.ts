@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
@@ -74,16 +74,16 @@ export class GroupComponent implements OnDestroy {
     return this.group?.owner.id === this.currentUser?.id || this.currentUser?.role === USER_ROLE.ADMIN;
   }
 
-  postOwner(post: IPost) {
-    return post?.owner.id === this.currentUser?.id;
-  }
-
-  postOwnerOrAdmin(post: IPost) {
-    return post?.owner.id === this.currentUser?.id || this.currentUser?.role === USER_ROLE.ADMIN;
-  }
-
   routeToPost(event: { id: number }) {
     this.router.navigate([ROUTES.singlePost.path + event.id + '/']);
+  }
+
+  @HostListener('window:scroll') scrollEvent() {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      if (this.next !== null) {
+        this.store.dispatch(groupsActions.loadGroupsPosts({ url: this.next, id: this.group.id }));
+      }
+    }
   }
 
   updatePost = ($event: { id: number; data: FormData }) =>
