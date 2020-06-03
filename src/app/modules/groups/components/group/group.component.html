@@ -32,6 +32,9 @@
             (sendPostDelete)="deletePost($event)"
           ></app-posts-list>
         </div>
+        <div class="error" *ngIf="posts?.length === 0 && (postsLoading$ | async) === false">
+          Brak Postów
+        </div>
       </mat-tab>
       <mat-tab [label]="'Członkowie(' + group?.members_count + ')'"> Content 2 </mat-tab>
       <mat-tab label="Oczekujący"> Content 3 </mat-tab>
