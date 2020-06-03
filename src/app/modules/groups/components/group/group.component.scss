@@ -90,6 +90,7 @@ $info-wrapper: 80px;
 
     .content__wrapper {
       min-height: calc(100vh - #{$nav-height} - #{$image-wrapper} - #{$info-wrapper} - 15px);
+      z-index: 0;
     }
   }
 }
