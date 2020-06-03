@@ -67,6 +67,12 @@ $options-wrapper: 35px;
     .group {
       display: inline-block;
     }
+
+    .group {
+      &:hover {
+        color: $primary;
+      }
+    }
   }
 
   .options__wrapper {

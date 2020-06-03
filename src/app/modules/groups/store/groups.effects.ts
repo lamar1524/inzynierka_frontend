@@ -46,10 +46,7 @@ export class GroupsEffects {
       ofType(groupsActions.loadGroupsPosts),
       switchMap((action) =>
         this.groupsService.groupsPost(action.url ? action.url : URLS.groupsPosts + action.id + '/').pipe(
-          map((res) => {
-            console.log(res);
-            return groupsActions.loadGroupsPostsSuccess({ posts: res });
-          }),
+          map((res) => groupsActions.loadGroupsPostsSuccess({ posts: res })),
           catchError(() => {
             this.popupService.error('Błąd ładowania postów');
             return of(groupsActions.loadGroupsPostsFail());

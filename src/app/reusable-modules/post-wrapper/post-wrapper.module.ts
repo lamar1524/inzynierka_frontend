@@ -5,12 +5,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router';
 
 import { PostWrapperComponent } from './components';
 
 @NgModule({
   declarations: [PostWrapperComponent],
-  imports: [CommonModule, MatFormFieldModule, ReactiveFormsModule, MatButtonModule, MatInputModule, FormsModule, MatProgressSpinnerModule],
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatInputModule,
+    FormsModule,
+    MatProgressSpinnerModule,
+    RouterModule,
+  ],
   exports: [PostWrapperComponent],
 })
 export class PostWrapperModule {}

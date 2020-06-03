@@ -19,18 +19,17 @@
         <ng-template class="lol" mat-tab-label>
           Dyskusja
         </ng-template>
-        <app-post-wrapper
-          *ngFor="let post of posts"
-          [withRoute]="false"
-          [isOwner]="postOwner(post)"
-          [isOwnerOrAdmin]="postOwnerOrAdmin(post)"
-          [post]="post"
+        <app-posts-list
+          [withRoute]="true"
+          [withGroup]="false"
+          [currentUser]="currentUser"
+          [posts]="posts"
           [postDeleting$]="postDeleting$"
           [postEditing$]="postEditing$"
           (routeToPost)="routeToPost($event)"
-          (sendUpdate)="updatePost($event)"
-          (sendDelete)="deletePost($event)"
-        ></app-post-wrapper>
+          (sendPostUpdate)="updatePost($event)"
+          (sendPostDelete)="deletePost($event)"
+        ></app-posts-list>
       </mat-tab>
       <mat-tab [label]="'Członkowie(' + group?.members_count + ')'"> Content 2 </mat-tab>
       <mat-tab label="Oczekujący"> Content 3 </mat-tab>

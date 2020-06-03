@@ -10,10 +10,13 @@
       [postDeleting$]="postDeleting$"
       (sendDelete)="sendPostDelete.emit($event)"
       (routeToPost)="routeToPost.emit({ id: post.id })"
-      [withRoute]="true"
+      [withRoute]="withRoute"
+      [withGroup]="withGroup"
     >
     </app-post-wrapper>
-    <div class="error" *ngIf="(posts?.length === 0 || posts === null) && (postsLoading$ | async) === false">Brak postów w twoich grupach.</div>
+    <div class="error" *ngIf="(posts?.length === 0 || posts === null) && (postsLoading$ | async) === false">
+      Brak postów w twoich grupach.
+    </div>
     <div class="spinner__wrapper" *ngIf="postsLoading$ | async">
       <mat-spinner [diameter]="75"></mat-spinner>
     </div>

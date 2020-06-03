@@ -12,6 +12,7 @@ import {
   Output,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ROUTES } from '@core/consts';
 import { Observable, Subscription } from 'rxjs';
 
 import { IPost, IRoutes } from '@core/interfaces';
@@ -30,6 +31,7 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   @Input() postEditing$: Observable<boolean>;
   @Input() postDeleting$: Observable<boolean>;
   @Input() withRoute: boolean;
+  @Input() withGroup: boolean;
   @Output() routeToPost: EventEmitter<{ id: number }> | null;
   @Output() sendDelete: EventEmitter<{ id: number }>;
   @Output() sendUpdate: EventEmitter<{ id: number; data: FormData }>;
@@ -40,13 +42,14 @@ export class PostWrapperComponent implements OnInit, OnDestroy {
   file: File;
   subscription: Subscription;
   postEditing: boolean;
-  routes: IRoutes;
+  readonly routes: IRoutes;
 
   constructor(@Inject(DOCUMENT) private document: Document, private dialogService: DialogService, private cdRef: ChangeDetectorRef) {
     this.sendUpdate = new EventEmitter<{ id: number; data: FormData }>();
     this.sendDelete = new EventEmitter<{ id: number }>();
     this.routeToPost = new EventEmitter<{ id: number }>();
     this.dropdownVisible = false;
+    this.routes = ROUTES;
   }
 
   ngOnInit(): void {

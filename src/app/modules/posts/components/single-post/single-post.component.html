@@ -9,6 +9,7 @@
     (sendUpdate)="updatePost($event)"
     (sendDelete)="deletePost($event)"
     [withRoute]="false"
+    [withGroup]="true"
   >
   </app-post-wrapper>
   <div class="form__wrapper" *ngIf="formVisible; else button">

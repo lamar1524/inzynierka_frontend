@@ -39,6 +39,7 @@ export class GroupComponent implements OnDestroy {
     const route$ = this.route.params.subscribe((params) => {
       this.store.dispatch(groupsActions.loadGroup({ id: params.id }));
       this.store.dispatch(groupsActions.loadGroupsPosts({ url: null, id: params.id }));
+      this.cdRef.markForCheck();
     });
     const group$ = this.store
       .select(selectGroup)
@@ -57,6 +58,7 @@ export class GroupComponent implements OnDestroy {
       .subscribe((resPosts) => {
         this.posts = resPosts.posts;
         this.next = resPosts.next;
+        this.cdRef.markForCheck();
       });
     this.sub$.add(route$);
     this.sub$.add(group$);
