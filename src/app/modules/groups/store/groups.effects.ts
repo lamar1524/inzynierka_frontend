@@ -82,4 +82,19 @@ export class GroupsEffects {
       ),
     ),
   );
+
+  loadMembers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.loadGroupMembers),
+      switchMap((action) =>
+        this.groupsService.loadMembers(action.url ? action.url : URLS.loadGroupMembers + action.groupId + '/').pipe(
+          map((res) => groupsActions.loadGroupMembersSuccess({ members: res })),
+          catchError(() => {
+            this.popupService.error('Błąd ładowania członków');
+            return of(groupsActions.loadGroupMembersFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }

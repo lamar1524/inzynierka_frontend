@@ -15,6 +15,8 @@ import {
   selectGroupLoading,
   selectGroupPosts,
   selectGroupPostsLoading,
+  selectMembers,
+  selectMembersLoading,
   selectPostAdding,
   GroupsModuleState,
 } from '../../store';
@@ -36,8 +38,11 @@ export class GroupComponent implements OnDestroy {
   postDeleting$: Observable<boolean>;
   postAdding$: Observable<boolean>;
   formVisibility$: Observable<boolean>;
+  membersLoading$: Observable<boolean>;
+  members: IUser[];
   posts: IPost[];
-  next: string;
+  postsNext: string;
+  membersNext: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,6 +61,7 @@ export class GroupComponent implements OnDestroy {
       .pipe(filter((group) => group !== null))
       .subscribe((group) => {
         this.group = group;
+        this.store.dispatch(groupsActions.loadGroupMembers({ url: null, groupId: this.group.id }));
         this.cdRef.markForCheck();
       });
     const currentUser$ = this.store.select(selectCurrentUser).subscribe((user) => {
@@ -67,19 +73,28 @@ export class GroupComponent implements OnDestroy {
       .pipe(filter((res) => res !== null))
       .subscribe((resPosts) => {
         this.posts = resPosts.posts;
-        this.next = resPosts.next;
+        this.postsNext = resPosts.next;
         this.cdRef.markForCheck();
+      });
+    const members$ = this.store
+      .select(selectMembers)
+      .pipe(filter((res) => res !== null))
+      .subscribe((res) => {
+        this.members = res.users;
+        this.membersNext = res.next;
       });
     this.sub$.add(route$);
     this.sub$.add(group$);
     this.sub$.add(currentUser$);
     this.sub$.add(posts$);
+    this.sub$.add(members$);
     this.groupLoading$ = this.store.select(selectGroupLoading);
     this.postsLoading$ = this.store.select(selectGroupPostsLoading);
     this.postEditing$ = this.store.select(selectEditingPost);
     this.postDeleting$ = this.store.select(selectDeletingPost);
     this.postAdding$ = this.store.select(selectPostAdding);
     this.formVisibility$ = this.store.select(selectAddingPostVisibility);
+    this.membersLoading$ = this.store.select(selectMembersLoading);
   }
 
   get ownerOrAdmin() {
@@ -92,8 +107,8 @@ export class GroupComponent implements OnDestroy {
 
   @HostListener('window:scroll') scrollEvent() {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      if (this.next !== null) {
-        this.store.dispatch(groupsActions.loadGroupsPosts({ url: this.next, id: this.group.id }));
+      if (this.postsNext !== null) {
+        this.store.dispatch(groupsActions.loadGroupsPosts({ url: this.postsNext, id: this.group.id }));
       }
     }
   }

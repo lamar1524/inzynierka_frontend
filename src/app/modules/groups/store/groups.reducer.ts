@@ -1,4 +1,5 @@
-import { IGroup, IResponseGroups, IResponsePosts } from '@core/interfaces';
+import { IGroup, IResponseGroups, IResponsePosts, IResponseUsers } from '@core/interfaces';
+import { IUser } from '@core/interfaces/user.interface';
 import { createReducer, on, Action } from '@ngrx/store';
 
 import * as groupsActions from './groups.actions';
@@ -16,6 +17,8 @@ export interface GroupsState {
   groupsPosts: IResponsePosts;
   postAdding: boolean;
   addingPostFormVisibility: boolean;
+  membersLoading: boolean;
+  members: IResponseUsers;
 }
 
 export const initialState: GroupsState = {
@@ -27,6 +30,8 @@ export const initialState: GroupsState = {
   groupsPosts: null,
   postAdding: false,
   addingPostFormVisibility: false,
+  membersLoading: false,
+  members: null,
 };
 
 export const GROUPS_REDUCER = createReducer(
@@ -45,7 +50,11 @@ export const GROUPS_REDUCER = createReducer(
   on(groupsActions.loadGroupSuccess, (state, { group }) => ({ ...state, groupLoading: false, group })),
   on(groupsActions.loadGroupFail, (state) => ({ ...state, groupLoading: false })),
 
-  on(groupsActions.loadGroupsPosts, (state) => ({ ...state, groupsPostsLoading: true })),
+  on(groupsActions.loadGroupsPosts, (state, { url }) => ({
+    ...state,
+    groupsPostsLoading: true,
+    groupsPosts: url ? state.groupsPosts : null,
+  })),
   on(groupsActions.loadGroupsPostsSuccess, (state, { posts }) => ({
     ...state,
     groupsPostsLoading: false,
@@ -61,6 +70,14 @@ export const GROUPS_REDUCER = createReducer(
 
   on(groupsActions.showAddingPostForm, (state) => ({ ...state, addingPostFormVisibility: true })),
   on(groupsActions.hideAddingPostForm, (state) => ({ ...state, addingPostFormVisibility: false })),
+
+  on(groupsActions.loadGroupMembers, (state) => ({ ...state, membersLoading: true })),
+  on(groupsActions.loadGroupMembersSuccess, (state, { members }) => ({
+    ...state,
+    membersLoading: false,
+    members: members.previous ? { next: members.next, previous: members.previous, members: members.users } : members,
+  })),
+  on(groupsActions.loadGroupMembersFail, (state) => ({ ...state, membersLoading: false })),
 );
 
 export function groupsReducer(state: GroupsState | undefined, action: Action) {

@@ -57,6 +57,60 @@ $info-wrapper: 80px;
     padding: 10px 25px;
   }
 
+  .members__wrapper {
+    padding: 20px 25px;
+  }
+
+  .member {
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    margin: 10px 0;
+    min-height: 80px;
+    padding: 5px 10px;
+    width: 100%;
+
+    .member-image__wrapper {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      min-height: 100%;
+      width: 60px;
+    }
+
+    .member-image {
+      border: 1px solid $gray;
+      border-radius: 50%;
+      height: 52px;
+      width: 52px;
+    }
+
+    .name__wrapper {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 10px;
+      width: 70%;
+    }
+
+    .buttons__wrapper {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      font-size: 1.4rem;
+      justify-content: space-around;
+      min-height: 100%;
+      width: calc(100% - 70% - 60px);
+    }
+
+    .option {
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+
   ::ng-deep.mat-tab-label,
   ::ng-deep.mat-tab-label-active {
     color: #000;
@@ -99,6 +153,10 @@ $info-wrapper: 80px;
 
     .button__wrapper {
       padding: 10px 0;
+    }
+
+    .members__wrapper {
+      padding: 20px 0;
     }
   }
 }

@@ -4,7 +4,7 @@ export interface IGroup {
   id: number;
   name: string;
   owner: IUser;
-  moderator: IUser;
+  moderator?: IUser;
   image: string;
   members: IUser[];
   members_count?: number;

@@ -57,7 +57,7 @@ export const POSTS_REDUCER = createReducer(
   on(postsActions.loadPostSuccess, (state, { post }) => ({ ...state, singlePostLoading: false, singlePost: post })),
   on(postsActions.loadPostFail, (state) => ({ ...state, singlePostLoading: false })),
 
-  on(postsActions.loadComments, (state) => ({ ...state, commentsLoading: true })),
+  on(postsActions.loadComments, (state, { url }) => ({ ...state, commentsLoading: true, comments: url ? state.comments : null })),
   on(postsActions.loadCommentsSuccess, (state, { comments }) => ({
     ...state,
     commentsLoading: false,

@@ -15,3 +15,6 @@ export const selectGroupPosts = createSelector(selectGroups, (state: GroupsState
 export const selectPostAdding = createSelector(selectGroups, (state: GroupsState) => state.postAdding);
 
 export const selectAddingPostVisibility = createSelector(selectGroups, (state: GroupsState) => state.addingPostFormVisibility);
+
+export const selectMembersLoading = createSelector(selectGroups, (state: GroupsState) => state.membersLoading);
+export const selectMembers = createSelector(selectGroups, (state: GroupsState) => state.members);

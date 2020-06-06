@@ -1,6 +1,6 @@
 import { createAction, props, Action } from '@ngrx/store';
 
-import { IGroup, IResponseGroups, IResponsePosts } from '@core/interfaces';
+import { IGroup, IResponseGroups, IResponsePosts, IResponseUsers } from '@core/interfaces';
 
 export const loadPrivateGroups = createAction('[Groups] Load private groups', props<{ url: string | null }>());
 export const loadPrivateGroupsSuccess = createAction('[Groups] Load private groups success', props<{ groups: IResponseGroups }>());
@@ -20,3 +20,7 @@ export const addPostFail = createAction('[Groups] Add post fail');
 
 export const showAddingPostForm = createAction('[Groups] Show adding post form');
 export const hideAddingPostForm = createAction('[Groups] Hide adding post form');
+
+export const loadGroupMembers = createAction('[Groups] Load groups members', props<{ groupId: number; url: string | null }>());
+export const loadGroupMembersSuccess = createAction('[Groups] Load groups members success', props<{ members: IResponseUsers }>());
+export const loadGroupMembersFail = createAction('[Groups] Load groups members fail');

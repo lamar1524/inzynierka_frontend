@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { URLS } from '../consts';
-import { IGroup, IPost, IResponseGroups, IResponsePosts } from '../interfaces';
+import { IGroup, IPost, IResponseGroups, IResponsePosts, IResponseUsers } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -28,5 +28,9 @@ export class GroupsService {
 
   addPost(post: FormData, groupId: number): Observable<IPost> {
     return this.http.post<IPost>(URLS.addPost + groupId + '/', post);
+  }
+
+  loadMembers(url: string): Observable<IResponseUsers> {
+    return this.http.get<IResponseUsers>(url).pipe(map((res: any) => ({ previous: res.previous, next: res.next, users: res.results })));
   }
 }
