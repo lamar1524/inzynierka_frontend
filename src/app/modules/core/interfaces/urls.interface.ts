@@ -15,4 +15,5 @@ export interface IUrls {
   commentAdd: string;
   groupLoad: string;
   groupsPosts: string;
+  addPost: string;
 }

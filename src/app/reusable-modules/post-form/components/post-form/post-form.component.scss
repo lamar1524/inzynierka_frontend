@@ -1,44 +1,55 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
 .form__wrapper {
   font-size: 1.4rem;
-  padding: 15px 10px 0;
-}
+  padding: 15px 25px;
 
-.form-group {
-  width: 100%;
+  .form-group {
+    width: 100%;
 
-  .form-input {
-    height: auto;
+    .form-input {
+      height: auto;
+      width: 100%;
+    }
+  }
+
+  .form__textarea {
+    min-height: 100px;
+    overflow-y: hidden;
+  }
+
+  .button__wrapper {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
   }
-}
 
-.form__textarea {
-  min-height: 100px;
-  overflow-y: hidden;
-}
+  .files__wrapper {
+    align-items: flex-end;
+    display: flex;
+    justify-content: flex-start;
+    padding: 5px 0;
+  }
 
-.button__wrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-}
+  .image__field {
+    padding-top: 10px;
+  }
 
-.files__wrapper {
-  align-items: flex-end;
-  display: flex;
-  justify-content: flex-start;
-  padding: 5px 0;
-}
+  .input--invisible {
+    display: none;
+  }
 
-.image__field {
-  padding-top: 10px;
-}
+  .icon {
+    height: 24px;
+    width: 24px;
+  }
 
-.input--invisible {
-  display: none;
-}
+  @include break(map-get($breakpoints, lg)) {
+    padding: 15px 0;
 
-.icon {
-  height: 24px;
-  width: 24px;
+    .button__wrapper {
+      justify-content: space-around;
+    }
+  }
 }

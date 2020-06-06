@@ -14,6 +14,8 @@ export interface GroupsState {
   group: IGroup;
   groupsPostsLoading: boolean;
   groupsPosts: IResponsePosts;
+  postAdding: boolean;
+  addingPostFormVisibility: boolean;
 }
 
 export const initialState: GroupsState = {
@@ -23,6 +25,8 @@ export const initialState: GroupsState = {
   group: null,
   groupsPostsLoading: false,
   groupsPosts: null,
+  postAdding: false,
+  addingPostFormVisibility: false,
 };
 
 export const GROUPS_REDUCER = createReducer(
@@ -50,6 +54,13 @@ export const GROUPS_REDUCER = createReducer(
       : posts,
   })),
   on(groupsActions.loadGroupsPostsFail, (state) => ({ ...state, groupsPostsLoading: false })),
+
+  on(groupsActions.addPost, (state) => ({ ...state, postAdding: true })),
+  on(groupsActions.addPostSuccess, (state) => ({ ...state, postAdding: false })),
+  on(groupsActions.addPostFail, (state) => ({ ...state, postAdding: false })),
+
+  on(groupsActions.showAddingPostForm, (state) => ({ ...state, addingPostFormVisibility: true })),
+  on(groupsActions.hideAddingPostForm, (state) => ({ ...state, addingPostFormVisibility: false })),
 );
 
 export function groupsReducer(state: GroupsState | undefined, action: Action) {

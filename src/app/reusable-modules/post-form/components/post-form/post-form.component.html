@@ -1,5 +1,5 @@
 <div class="form__wrapper">
-  <form [formGroup]="form" class="form-group" (ngSubmit)="submitPost.emit({ data: data, id: this.postId ? this.postId : null })">
+  <form [formGroup]="form" class="form-group" (ngSubmit)="submitPost.emit({ data: data })">
     <mat-form-field class="form-input">
       <textarea matInput class="form__textarea" formControlName="content" cdkTextareaAutosize cdkAutosizeMinRows="1"></textarea>
     </mat-form-field>

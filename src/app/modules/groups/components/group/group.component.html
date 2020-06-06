@@ -19,6 +19,17 @@
         <ng-template mat-tab-label>
           Dyskusja
         </ng-template>
+        <div class="button__wrapper">
+          <button *ngIf="(formVisibility$ | async) === false" mat-raised-button color="primary" (click)="showForm()">Dodaj post</button>
+        </div>
+        <app-post-form
+          *ngIf="(formVisibility$ | async) === true"
+          [postId]="null"
+          [postProcessing$]="postAdding$"
+          [startContent]="null"
+          (submitPost)="addPost($event)"
+          (hideForm)="hideForm()"
+        ></app-post-form>
         <div class="posts">
           <app-posts-list
             [withRoute]="true"

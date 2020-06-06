@@ -19,4 +19,5 @@ export const URLS: IUrls = {
   commentAdd: host + 'posts/create/comment/',
   groupLoad: host + 'groups/',
   groupsPosts: host + 'posts/',
+  addPost: host + 'posts/create/',
 };

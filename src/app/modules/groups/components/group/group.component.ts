@@ -9,7 +9,15 @@ import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModule
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { selectGroup, selectGroupLoading, selectGroupPosts, selectGroupPostsLoading, GroupsModuleState } from '../../store';
+import {
+  selectAddingPostVisibility,
+  selectGroup,
+  selectGroupLoading,
+  selectGroupPosts,
+  selectGroupPostsLoading,
+  selectPostAdding,
+  GroupsModuleState,
+} from '../../store';
 import * as groupsActions from '../../store/groups.actions';
 
 @Component({
@@ -26,6 +34,8 @@ export class GroupComponent implements OnDestroy {
   postsLoading$: Observable<boolean>;
   postEditing$: Observable<boolean>;
   postDeleting$: Observable<boolean>;
+  postAdding$: Observable<boolean>;
+  formVisibility$: Observable<boolean>;
   posts: IPost[];
   next: string;
 
@@ -68,6 +78,8 @@ export class GroupComponent implements OnDestroy {
     this.postsLoading$ = this.store.select(selectGroupPostsLoading);
     this.postEditing$ = this.store.select(selectEditingPost);
     this.postDeleting$ = this.store.select(selectDeletingPost);
+    this.postAdding$ = this.store.select(selectPostAdding);
+    this.formVisibility$ = this.store.select(selectAddingPostVisibility);
   }
 
   get ownerOrAdmin() {
@@ -86,6 +98,16 @@ export class GroupComponent implements OnDestroy {
     }
   }
 
+  addPost = ($event: { data: FormData }) => {
+    this.store.dispatch(
+      groupsActions.addPost({
+        groupId: this.group.id,
+        post: $event.data,
+        refreshAction: groupsActions.loadGroupsPosts({ id: this.group.id, url: null }),
+      }),
+    );
+  };
+
   updatePost = ($event: { id: number; data: FormData }) =>
     this.store.dispatch(
       editPost({ post: $event.data, id: $event.id, refreshAction: groupsActions.loadGroupsPosts({ url: null, id: this.group.id }) }),
@@ -93,6 +115,14 @@ export class GroupComponent implements OnDestroy {
 
   deletePost = ($event: { id: number }) =>
     this.store.dispatch(deletePost({ id: $event.id, refreshAction: groupsActions.loadGroupsPosts({ url: null, id: this.group.id }) }));
+
+  showForm = () => {
+    this.store.dispatch(groupsActions.showAddingPostForm());
+  };
+
+  hideForm = () => {
+    this.store.dispatch(groupsActions.hideAddingPostForm());
+  };
 
   ngOnDestroy(): void {
     this.sub$.unsubscribe();

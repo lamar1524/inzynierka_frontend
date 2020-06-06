@@ -1,15 +1,22 @@
 import { Injectable } from '@angular/core';
-import { URLS } from '@core/consts';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
+import { URLS } from '@core/consts';
 import { GroupsService, PopupService } from '@core/services';
 import * as groupsActions from './groups.actions';
+import { GroupsModuleState } from './groups.reducer';
 
 @Injectable()
 export class GroupsEffects {
-  constructor(private actions$: Actions, private groupsService: GroupsService, private popupService: PopupService) {}
+  constructor(
+    private actions$: Actions,
+    private groupsService: GroupsService,
+    private popupService: PopupService,
+    private store: Store<GroupsModuleState>,
+  ) {}
 
   loadPrivateGroups$ = createEffect(() =>
     this.actions$.pipe(
@@ -50,6 +57,26 @@ export class GroupsEffects {
           catchError(() => {
             this.popupService.error('Błąd ładowania postów');
             return of(groupsActions.loadGroupsPostsFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  addPost$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.addPost),
+      switchMap((action) =>
+        this.groupsService.addPost(action.post, action.groupId).pipe(
+          map(() => {
+            this.store.dispatch(action.refreshAction);
+            this.store.dispatch(groupsActions.hideAddingPostForm());
+            this.popupService.success('Pomyślnie dodano post');
+            return groupsActions.addPostSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd dodawania posta');
+            return of(groupsActions.addPostFail());
           }),
         ),
       ),

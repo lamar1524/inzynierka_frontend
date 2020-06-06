@@ -1,4 +1,4 @@
-import { createAction, props } from '@ngrx/store';
+import { createAction, props, Action } from '@ngrx/store';
 
 import { IGroup, IResponseGroups, IResponsePosts } from '@core/interfaces';
 
@@ -13,3 +13,10 @@ export const loadGroupFail = createAction('[Groups] Load group fail');
 export const loadGroupsPosts = createAction('[Groups] Load groups posts', props<{ url: string | null; id: number }>());
 export const loadGroupsPostsSuccess = createAction('[Groups] Load groups posts success', props<{ posts: IResponsePosts }>());
 export const loadGroupsPostsFail = createAction('[Groups] Load groups posts fail');
+
+export const addPost = createAction('[Groups] Add post', props<{ post: FormData; groupId: number; refreshAction: Action }>());
+export const addPostSuccess = createAction('[Groups] Add post success');
+export const addPostFail = createAction('[Groups] Add post fail');
+
+export const showAddingPostForm = createAction('[Groups] Show adding post form');
+export const hideAddingPostForm = createAction('[Groups] Hide adding post form');

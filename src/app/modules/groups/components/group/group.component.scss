@@ -53,6 +53,10 @@ $info-wrapper: 80px;
     padding: 0 25px;
   }
 
+  .button__wrapper {
+    padding: 10px 25px;
+  }
+
   ::ng-deep.mat-tab-label,
   ::ng-deep.mat-tab-label-active {
     color: #000;
@@ -91,6 +95,10 @@ $info-wrapper: 80px;
     .content__wrapper {
       min-height: calc(100vh - #{$nav-height} - #{$image-wrapper} - #{$info-wrapper} - 15px);
       z-index: 0;
+    }
+
+    .button__wrapper {
+      padding: 10px 0;
     }
   }
 }
