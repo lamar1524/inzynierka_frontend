@@ -8,6 +8,7 @@ import { StoreModule } from '@ngrx/store';
 
 import { STORE_FEATURES } from '@core/consts';
 import { GroupWrapperModule } from '@reusable-modules/group-wrapper';
+import { PostFormModule } from '@reusable-modules/post-form';
 import { PostsListModule } from '@reusable-modules/posts-list';
 import { GroupComponent, PrivateGroupsComponent } from './components';
 import { GroupsRoutingModule } from './groups-routing.module';
@@ -26,6 +27,7 @@ import { GroupsEffects } from './store/groups.effects';
     MatButtonModule,
     MatTabsModule,
     PostsListModule,
-  ],
+    PostFormModule
+  ]
 })
 export class GroupsModule {}

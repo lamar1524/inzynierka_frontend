@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
+import { PostFormModule } from '@reusable-modules/post-form';
 
 import { PostWrapperComponent } from './components';
 
@@ -20,6 +21,7 @@ import { PostWrapperComponent } from './components';
     FormsModule,
     MatProgressSpinnerModule,
     RouterModule,
+    PostFormModule
   ],
   exports: [PostWrapperComponent],
 })

@@ -1,0 +1,44 @@
+.form__wrapper {
+  font-size: 1.4rem;
+  padding: 15px 10px 0;
+}
+
+.form-group {
+  width: 100%;
+
+  .form-input {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.form__textarea {
+  min-height: 100px;
+  overflow-y: hidden;
+}
+
+.button__wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.files__wrapper {
+  align-items: flex-end;
+  display: flex;
+  justify-content: flex-start;
+  padding: 5px 0;
+}
+
+.image__field {
+  padding-top: 10px;
+}
+
+.input--invisible {
+  display: none;
+}
+
+.icon {
+  height: 24px;
+  width: 24px;
+}

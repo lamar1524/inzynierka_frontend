@@ -1,8 +1,9 @@
 @import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
 
 .container {
   margin: 0 auto;
-  padding: 15px 25px;
+  padding-top: 15px;
   width: 90%;
 
   .spinner__wrapper {
@@ -52,5 +53,9 @@
   .caption {
     font-size: 2rem;
     margin-bottom: 15px;
+  }
+
+  @include break(map-get($breakpoints, lg)) {
+    padding: 15px 25px;
   }
 }
