@@ -58,7 +58,7 @@
               <p *ngIf="group.moderator?.id === member.id">Moderator</p>
               <p *ngIf="group.owner?.id === member.id">Właściciel</p>
             </div>
-            <div class="buttons__wrapper" *ngIf="group?.owner.id === currentUser?.id || group?.moderator.id === currentUser?.id">
+            <div class="buttons__wrapper" *ngIf="ownerOrAdmin || group?.moderator.id === currentUser?.id">
               <span class="u-text--link option">Mod</span>
               <span class="u-text--link option" *ngIf="group.owner.id !== member.id">Usuń</span>
             </div>

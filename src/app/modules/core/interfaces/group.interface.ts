@@ -13,6 +13,8 @@ export interface IGroup {
 export interface IBaseGroup {
   id: number;
   name: string;
+  owner?: number;
+  moderator?: number;
 }
 
 export interface IResponseGroups {

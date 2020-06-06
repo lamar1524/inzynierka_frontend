@@ -34,7 +34,9 @@ export class PostsListComponent implements OnInit {
   ngOnInit(): void {}
 
   getDeletePerm(post: IPost): boolean {
-    return post.owner?.id === this.currentUser?.id || this.currentUser?.role === USER_ROLE.ADMIN;
+    return (
+      post.owner?.id === this.currentUser?.id || this.currentUser?.role === USER_ROLE.ADMIN || post.group.moderator === this.currentUser?.id
+    );
   }
 
   getEditPerm(post: IPost) {

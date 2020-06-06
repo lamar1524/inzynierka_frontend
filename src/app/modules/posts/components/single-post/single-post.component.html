@@ -3,7 +3,7 @@
     *ngIf="(postLoading$ | async) === false; else spinner"
     [post]="post$ | async"
     [isOwner]="isOwner(post$ | async, currentUser)"
-    [isOwnerOrAdmin]="isAdminOrIsOwner(post$ | async, currentUser)"
+    [isOwnerOrAdmin]="isAdminOrIsOwner(post$ | async, currentUser) || (post$ | async).group.moderator === currentUser?.id"
     [postEditing$]="postEditing$"
     [postDeleting$]="postDeleting$"
     (sendUpdate)="updatePost($event)"
@@ -37,7 +37,7 @@
       *ngFor="let comment of comments"
       [comment]="comment"
       [currentUser]="currentUser"
-      [isOwnerOrAdmin]="isAdminOrIsOwner(comment, currentUser)"
+      [isOwnerOrAdmin]="isAdminOrIsOwner(comment, currentUser) || (post$ | async).group.moderator === currentUser?.id"
       [isOwner]="isOwner(comment, currentUser)"
       [postId]="postId"
     ></app-comment>
