@@ -8,16 +8,16 @@ $options-wrapper: 35px;
   background-color: #fff;
   border-radius: 10px;
   margin: 15px 0;
-  min-height: 80px;
+  min-height: 100px;
   padding: 5px 0;
   position: relative;
   width: 100%;
 
   .post__header {
     border-bottom: 1px solid $primary;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-areas: 'image credentials options';
+    grid-template-columns: $image-wrapper calc(100% - #{$image-wrapper} - #{$options-wrapper}) $options-wrapper;
     min-height: 40px;
     padding: 5px 10px;
     width: 100%;
@@ -26,8 +26,8 @@ $options-wrapper: 35px;
   .image__wrapper {
     align-items: center;
     display: flex;
+    grid-area: image;
     justify-content: center;
-    width: $image-wrapper;
 
     .image {
       border: 1px solid $gray;
@@ -40,9 +40,9 @@ $options-wrapper: 35px;
   .text__wrapper {
     display: flex;
     flex-direction: column;
+    grid-area: credentials;
     justify-content: center;
     padding: 0 10px;
-    width: calc(100% - #{$image-wrapper} - #{$options-wrapper});
 
     .credentials,
     .date {
@@ -67,14 +67,20 @@ $options-wrapper: 35px;
     .group {
       display: inline-block;
     }
+
+    .group {
+      &:hover {
+        color: $primary;
+      }
+    }
   }
 
   .options__wrapper {
     align-items: center;
     display: flex;
+    grid-area: options;
     height: 100%;
     justify-content: center;
-    width: $options-wrapper;
   }
 
   .options__img {
@@ -127,51 +133,5 @@ $options-wrapper: 35px;
   .form__wrapper {
     font-size: 1.4rem;
     padding: 15px 10px 0;
-  }
-
-  .form-group {
-    width: 100%;
-
-    .form-input {
-      height: auto;
-      width: 100%;
-    }
-  }
-
-  .form__textarea {
-    min-height: 100px;
-    overflow-y: hidden;
-  }
-
-  .button__wrapper {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .files__wrapper {
-    align-items: flex-end;
-    display: flex;
-    justify-content: flex-start;
-    padding: 5px 0;
-  }
-
-  .image__field {
-    padding-top: 10px;
-  }
-
-  .input--invisible {
-    display: none;
-  }
-
-  .icon {
-    height: 24px;
-    width: 24px;
-  }
-
-  @include break(map-get($breakpoints, md)) {
-    .button__wrapper {
-      justify-content: space-around;
-    }
   }
 }

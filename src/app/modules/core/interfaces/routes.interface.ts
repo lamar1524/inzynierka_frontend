@@ -5,6 +5,10 @@ export interface IRoutes {
   posts: IRoute;
   allPosts: IRoute;
   singlePost: IRoute;
+  groupsModule: IRoute;
+  privateGroups: IRoute;
+  singleGroup: IRoute;
+  error403: IRoute;
 }
 
 export interface IRoute {

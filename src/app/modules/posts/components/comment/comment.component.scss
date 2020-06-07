@@ -4,7 +4,7 @@ $image-wrapper: 60px;
 $options-wrapper: 35px;
 
 .container {
-  min-height: 80px;
+  min-height: 100px;
   padding: 10px;
   position: relative;
   width: 100%;
@@ -66,6 +66,7 @@ $options-wrapper: 35px;
   }
 
   .content {
+    font-size: 1.4rem;
     margin-left: auto;
     margin-right: 0;
     padding: 10px;

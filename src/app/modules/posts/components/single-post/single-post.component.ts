@@ -3,21 +3,20 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { filter, tap } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { USER_ROLE } from '@core/enums';
 import { IComment, IPost, IUser } from '@core/interfaces';
+import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModuleState } from '@core/store';
 import {
   selectComments,
   selectCommentsLoading,
   selectCommentAdding,
-  selectDeletingPost,
-  selectEditingPost,
   selectSinglePost,
   selectSinglePostLoading,
-  PostModuleState,
+  PostsModuleState,
 } from '@posts/store';
-import { tap } from 'rxjs/operators';
 import * as postsActions from '../../store/posts.actions';
 
 @Component({
@@ -42,7 +41,11 @@ export class SinglePostComponent implements OnDestroy {
   formVisible: boolean;
   previousBool: boolean;
 
-  constructor(private route: ActivatedRoute, private store: Store<AuthModuleState | PostModuleState>, private cdRef: ChangeDetectorRef) {
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<AuthModuleState | PostsModuleState | CoreModuleState>,
+    private cdRef: ChangeDetectorRef,
+  ) {
     this.sub$ = new Subscription();
     this.comments = [];
     this.route.params.subscribe((param) => {
@@ -56,11 +59,14 @@ export class SinglePostComponent implements OnDestroy {
     this.postLoading$ = this.store.select(selectSinglePostLoading);
     this.commentsLoading$ = this.store.select(selectCommentsLoading);
     this.postDeleting$ = this.store.select(selectDeletingPost);
-    const comments$ = this.store.select(selectComments).subscribe((resComments) => {
-      this.next = resComments.next;
-      this.comments = resComments.comments;
-      this.cdRef.markForCheck();
-    });
+    const comments$ = this.store
+      .select(selectComments)
+      .pipe(filter((res) => res !== null))
+      .subscribe((resComments) => {
+        this.next = resComments.next;
+        this.comments = resComments.comments;
+        this.cdRef.markForCheck();
+      });
     const currentUser$ = this.store.select(selectCurrentUser).subscribe((user) => {
       this.currentUser = user;
       this.cdRef.markForCheck();
@@ -97,12 +103,10 @@ export class SinglePostComponent implements OnDestroy {
   }
 
   updatePost = ($event: { id: number; data: FormData }) =>
-    this.store.dispatch(
-      postsActions.editPost({ post: $event.data, id: $event.id, refreshAction: postsActions.loadPost({ id: this.postId }) }),
-    );
+    this.store.dispatch(editPost({ post: $event.data, id: $event.id, refreshAction: postsActions.loadPost({ id: this.postId }) }));
 
   deletePost = ($event: { id: number }) =>
-    this.store.dispatch(postsActions.deletePost({ id: $event.id, refreshAction: postsActions.loadAllPosts({ url: null }) }));
+    this.store.dispatch(deletePost({ id: $event.id, refreshAction: postsActions.loadAllPosts({ url: null }) }));
 
   @HostListener('window:scroll') scrollEvent() {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {

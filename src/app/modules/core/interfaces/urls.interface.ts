@@ -13,4 +13,12 @@ export interface IUrls {
   commentEdit: string;
   commentDelete: string;
   commentAdd: string;
+  groupLoad: string;
+  groupsPosts: string;
+  addPost: string;
+  loadGroupMembers: string;
+  groupUpdate: string;
+  dropMember: string;
+  loadPendingMembers: string;
+  managePending: string;
 }

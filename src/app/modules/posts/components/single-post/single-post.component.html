@@ -3,12 +3,13 @@
     *ngIf="(postLoading$ | async) === false; else spinner"
     [post]="post$ | async"
     [isOwner]="isOwner(post$ | async, currentUser)"
-    [isOwnerOrAdmin]="isAdminOrIsOwner(post$ | async, currentUser)"
+    [isOwnerOrAdmin]="isAdminOrIsOwner(post$ | async, currentUser) || (post$ | async).group.moderator === currentUser?.id"
     [postEditing$]="postEditing$"
     [postDeleting$]="postDeleting$"
     (sendUpdate)="updatePost($event)"
     (sendDelete)="deletePost($event)"
     [withRoute]="false"
+    [withGroup]="true"
   >
   </app-post-wrapper>
   <div class="form__wrapper" *ngIf="formVisible; else button">
@@ -25,9 +26,10 @@
       </div>
     </form>
   </div>
+  <div class="caption">Komentarze</div>
   <ng-template #button>
     <div class="opening-button__wrapper">
-      <button class="opening-button" mat-button color="primary" (click)="showForm($event)">Dodaj</button>
+      <button class="opening-button" mat-raised-button color="primary" (click)="showForm($event)">Dodaj</button>
     </div>
   </ng-template>
   <div class="comments__container">
@@ -35,7 +37,7 @@
       *ngFor="let comment of comments"
       [comment]="comment"
       [currentUser]="currentUser"
-      [isOwnerOrAdmin]="isAdminOrIsOwner(comment, currentUser)"
+      [isOwnerOrAdmin]="isAdminOrIsOwner(comment, currentUser) || (post$ | async).group.moderator === currentUser?.id"
       [isOwner]="isOwner(comment, currentUser)"
       [postId]="postId"
     ></app-comment>

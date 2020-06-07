@@ -16,5 +16,13 @@ export const URLS: IUrls = {
   commentsGet: host + 'posts/comments/',
   commentEdit: host + 'posts/update/comment/',
   commentDelete: host + 'posts/delete/comment/',
-  commentAdd: host + 'posts/create/comment/'
+  commentAdd: host + 'posts/create/comment/',
+  groupLoad: host + 'groups/',
+  groupsPosts: host + 'posts/',
+  addPost: host + 'posts/create/',
+  loadGroupMembers: host + 'groups/members/',
+  groupUpdate: host + 'groups/update/',
+  dropMember: host + 'groups/drop/',
+  loadPendingMembers: host + 'groups/pending_list/',
+  managePending: host + 'groups/manage-pending/',
 };

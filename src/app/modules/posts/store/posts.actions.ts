@@ -14,14 +14,6 @@ export const loadComments = createAction('[Posts] Load comments', props<{ url: s
 export const loadCommentsSuccess = createAction('[Posts] Load comments success', props<{ comments: IResponseComments }>());
 export const loadCommentsFail = createAction('[Posts] Load comments fail');
 
-export const editPost = createAction('[Posts] Edit post', props<{ post: FormData; id: number; refreshAction: Action }>());
-export const editPostSuccess = createAction('[Posts] Edit post success');
-export const editPostFail = createAction('[Posts] Edit post fail');
-
-export const deletePost = createAction('[Posts] Delete post', props<{ id: number; refreshAction: Action }>());
-export const deletePostSuccess = createAction('[Posts] Delete post success');
-export const deletePostFail = createAction('[Posts] Delete post fail');
-
 export const editComment = createAction('[Posts] Edit comment', props<{ comment: IComment; id: number; refreshAction: Action }>());
 export const editCommentSuccess = createAction('[Posts] Edit comment success');
 export const editCommentFail = createAction('[Posts] Edit comment fail');

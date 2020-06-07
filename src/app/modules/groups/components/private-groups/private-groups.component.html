@@ -1,0 +1,6 @@
+<div class="container">
+  <app-group-wrapper *ngFor="let group of groups" [group]="group" [route]="routes.singleGroup.path + group.id + '/'"></app-group-wrapper>
+  <div class="spinner__wrapper" *ngIf="(groupsLoading$ | async) === true">
+    <mat-spinner [diameter]="70"></mat-spinner>
+  </div>
+</div>

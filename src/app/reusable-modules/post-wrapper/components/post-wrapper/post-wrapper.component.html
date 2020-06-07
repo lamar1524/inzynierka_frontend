@@ -4,11 +4,18 @@
     <div class="text__wrapper">
       <div class="credentials">
         <div class="name">{{ post.owner.first_name }} {{ post.owner.last_name }}</div>
-        <img src="../../../../../assets/img/next.svg" alt="" class="arrow" />
-        <div class="group">{{ post.group.name }}</div>
+        <img src="../../../../../assets/img/next.svg" alt="" class="arrow" *ngIf="withGroup" />
+        <div class="group u-text--link" *ngIf="withGroup" [routerLink]="[routes.singleGroup.path + post.group.id + '/']">
+          {{ post.group.name }}
+        </div>
       </div>
-      <div class="date" (click)="routeToPost?.emit({ id: post.id })">
-        <div [className]="withRoute ? 'date-route' : ''">
+      <div class="date" *ngIf="withRoute">
+        <div [className]="withRoute ? 'date-route' : ''" (click)="routeToPost?.emit({ id: post.id })">
+          {{ post.date_posted | date: 'medium':'+1':'pl-PL' }}
+        </div>
+      </div>
+      <div class="date" *ngIf="!withRoute">
+        <div>
           {{ post.date_posted | date: 'medium':'+1':'pl-PL' }}
         </div>
       </div>
@@ -28,52 +35,13 @@
     <div class="post__image" *ngIf="post.image"><img class="image" alt="post image" [src]="post.image" /></div>
   </div>
   <ng-template #form>
-    <div class="form__wrapper">
-      <form [formGroup]="editForm" class="form-group" (ngSubmit)="updatePost()">
-        <mat-form-field class="form-input">
-          <textarea matInput class="form__textarea" formControlName="content" cdkTextareaAutosize cdkAutosizeMinRows="1"></textarea>
-        </mat-form-field>
-        <div class="files__wrapper">
-          <div class="image__field">
-            <label>
-              <button type="button" (click)="chooseImage()" mat-icon-button>
-                <img class="icon" alt="image" src="../../../../../assets/img/photo.svg" />
-              </button>
-              <input class="input--invisible image__input" type="file" accept="image/*" (change)="imageChange($event)" />
-            </label>
-          </div>
-          <div class="file__field">
-            <label>
-              <button type="button" mat-icon-button (click)="chooseFile()">
-                <img alt="attachment" class="icon" src="../../../../../assets/img/attach.svg" />
-              </button>
-              <input class="input--invisible file__input" (change)="fileChange($event)" type="file" accept="*" />
-            </label>
-          </div>
-          <div class="button__wrapper">
-            <button type="button" mat-raised-button color="primary" (click)="hideForm()">Anuluj</button>
-            <button type="submit" mat-raised-button color="primary" [disabled]="editForm.invalid || editForm.disabled">
-              <span *ngIf="postEditing === false; else spinner">Zapisz</span>
-              <ng-template #spinner>
-                <span><mat-spinner [diameter]="30"></mat-spinner></span>
-              </ng-template>
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
+    <app-post-form [postProcessing$]="postEditing$" [postId]="post.id" (hideForm)="hideForm()" (submitPost)="updatePost($event)" [startContent]="post.content"></app-post-form>
   </ng-template>
   <div class="dropdown" *ngIf="dropdownVisible">
-    <div
-      *ngIf="isOwner"
-      class="option"
-      (mouseenter)="hoverOption($event)"
-      (mouseleave)="unHoverOption($event)"
-      (click)="editButton($event)"
-    >
+    <div *ngIf="isOwner" class="option" (mouseenter)="hoverOption($event)" (mouseleave)="unHoverOption($event)" (click)="editButton()">
       Edytuj
     </div>
-    <div class="option" (mouseenter)="hoverOption($event)" (mouseleave)="unHoverOption($event)" (click)="deleteButton($event)">
+    <div class="option" (mouseenter)="hoverOption($event)" (mouseleave)="unHoverOption($event)" (click)="deleteButton()">
       Usuń
     </div>
   </div>

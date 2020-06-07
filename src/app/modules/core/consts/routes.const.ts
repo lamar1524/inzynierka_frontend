@@ -25,4 +25,20 @@ export const ROUTES: IRoutes = {
     name: '',
     path: '/home/posts/',
   },
+  groupsModule: {
+    name: 'groups',
+    path: '/home/groups/',
+  },
+  privateGroups: {
+    name: '',
+    path: '/home/groups/',
+  },
+  singleGroup: {
+    name: '',
+    path: '/home/groups/',
+  },
+  error403: {
+    name: '403',
+    path: '/403',
+  },
 };

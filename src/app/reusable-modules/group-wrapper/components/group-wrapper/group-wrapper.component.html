@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="image__wrapper">
+    <img class="image" [src]="group.image" alt="Group image" />
+  </div>
+  <div class="info__wrapper">
+    <div class="name u-text--link" [routerLink]="[route]">{{ group.name }}</div>
+    <div class="owner">{{ group.owner.first_name }} {{ group.owner.last_name }}</div>
+    <div class="members-count">Członkowie: {{ group.members_count }}</div>
+  </div>
+</div>

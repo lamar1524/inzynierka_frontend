@@ -10,7 +10,13 @@
   </div>
   <div class="groups__wrapper" *ngIf="(groupsLoading$ | async) === false; else spinner">
     <div class="groups__header">Grupy</div>
-    <div class="group" (mouseenter)="hover($event)" (mouseleave)="unHover($event)" *ngFor="let group of groups$ | async; index as i">
+    <div
+      class="group u-text--link"
+      [routerLink]="[routes.singleGroup.path + group.id]"
+      (mouseenter)="hover($event)"
+      (mouseleave)="unHover($event)"
+      *ngFor="let group of groups$ | async; index as i"
+    >
       <div class="group-image__wrapper">
         <img class="group-image" alt="image" [src]="group.image" />
       </div>
@@ -18,7 +24,9 @@
         <span>{{ group.name.length >= 20 ? (group.name | slice: 0:17) + '...' : group.name }}</span>
       </div>
     </div>
-    <div class="groups__caption u-text--link u-text--primary" *ngIf="(groups$ | async) && (groups$ | async).length === 5; else error">Zobacz więcej...</div>
+    <div class="groups__caption u-text--link u-text--primary" [routerLink]="[routes.privateGroups.path]" *ngIf="(groups$ | async) && (groups$ | async).length === 5; else error">
+      Zobacz więcej...
+    </div>
     <ng-template #error>
       <div class="groups__caption u-text--link">Brak grup.</div>
     </ng-template>
