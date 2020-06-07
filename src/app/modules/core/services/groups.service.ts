@@ -45,4 +45,12 @@ export class GroupsService {
   loadPendingMembersList(url: string): Observable<IResponseUsers> {
     return this.http.get<IResponseUsers>(url).pipe(map((res: any) => ({ previous: res.previous, next: res.next, users: res.results })));
   }
+
+  acceptPending(groupId: number, userId: number): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(URLS.managePending + groupId + '/', { userId });
+  }
+
+  rejectPending(groupId: number, userId: number): Observable<{ message: string }> {
+    return this.http.request<{ message: string }>('delete', URLS.managePending + groupId + '/', { body: { userId } });
+  }
 }

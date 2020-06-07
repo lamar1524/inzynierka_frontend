@@ -23,6 +23,7 @@ export interface GroupsState {
   droppingUser: boolean;
   loadingPendingMembers: boolean;
   pendingMembers: IResponseUsers;
+  pendingProcessing: boolean;
 }
 
 export const initialState: GroupsState = {
@@ -40,6 +41,7 @@ export const initialState: GroupsState = {
   droppingUser: false,
   loadingPendingMembers: false,
   pendingMembers: null,
+  pendingProcessing: false,
 };
 
 export const GROUPS_REDUCER = createReducer(
@@ -83,7 +85,9 @@ export const GROUPS_REDUCER = createReducer(
   on(groupsActions.loadGroupMembersSuccess, (state, { members }) => ({
     ...state,
     membersLoading: false,
-    members: members.previous ? { next: members.next, previous: members.previous, members: members.users } : members,
+    members: members.previous
+      ? { next: members.next, previous: members.previous, members: [...state.members.users, ...members.users] }
+      : members,
   })),
   on(groupsActions.loadGroupMembersFail, (state) => ({ ...state, membersLoading: false })),
 
@@ -104,6 +108,14 @@ export const GROUPS_REDUCER = createReducer(
       : pendingMembers,
   })),
   on(groupsActions.loadPendingMembersFail, (state) => ({ ...state, loadingPendingMembers: false })),
+
+  on(groupsActions.acceptPendingMember, (state) => ({ ...state, pendingProcessing: true })),
+  on(groupsActions.acceptPendingMemberSuccess, (state) => ({ ...state, pendingProcessing: false })),
+  on(groupsActions.acceptPendingMemberFail, (state) => ({ ...state, pendingProcessing: false })),
+
+  on(groupsActions.rejectPendingMember, (state) => ({ ...state, pendingProcessing: true })),
+  on(groupsActions.rejectPendingMemberSuccess, (state) => ({ ...state, pendingProcessing: false })),
+  on(groupsActions.rejectPendingMemberFail, (state) => ({ ...state, pendingProcessing: false })),
 );
 
 export function groupsReducer(state: GroupsState | undefined, action: Action) {

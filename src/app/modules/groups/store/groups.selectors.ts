@@ -25,3 +25,5 @@ export const selectDroppingUser = createSelector(selectGroups, (state: GroupsSta
 
 export const selectPendingMembersLoading = createSelector(selectGroups, (state: GroupsState) => state.loadingPendingMembers);
 export const selectPendingMembers = createSelector(selectGroups, (state: GroupsState) => state.pendingMembers);
+
+export const selectPendingProcessing = createSelector(selectGroups, (state: GroupsState) => state.pendingProcessing);

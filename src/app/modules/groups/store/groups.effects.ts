@@ -104,8 +104,9 @@ export class GroupsEffects {
       switchMap((action) =>
         this.groupsService.makeModerator(action.moderatorId, action.groupId).pipe(
           map(() => {
+            this.store.dispatch(groupsActions.loadGroupMembers({ groupId: action.groupId, url: null }));
+            this.store.dispatch(groupsActions.loadGroup({ id: action.groupId }));
             this.popupService.success('Pomyślnie ustalono moderatora');
-            this.store.dispatch(action.refreshAction);
             return groupsActions.makeModeratorSuccess();
           }),
           catchError(() => {
@@ -124,7 +125,8 @@ export class GroupsEffects {
         this.groupsService.dropMember(action.memberId, action.groupId).pipe(
           map(() => {
             this.popupService.success('Pomyślnie usunięto użytkownika');
-            this.store.dispatch(action.refreshAction);
+            this.store.dispatch(groupsActions.loadGroupMembers({ groupId: action.groupId, url: null }));
+            this.store.dispatch(groupsActions.loadGroup({ id: action.groupId }));
             return groupsActions.dropMemberSuccess();
           }),
           catchError(() => {
@@ -140,11 +142,52 @@ export class GroupsEffects {
     this.actions$.pipe(
       ofType(groupsActions.loadPendingMembers),
       switchMap((action) =>
-        this.groupsService.loadPendingMembersList(action.url ? action.url : (URLS.loadPendingMembers + action.groupId + '/')).pipe(
+        this.groupsService.loadPendingMembersList(action.url ? action.url : URLS.loadPendingMembers + action.groupId + '/').pipe(
           map((res) => groupsActions.loadPendingMembersSuccess({ pendingMembers: res })),
           catchError((res) => {
             this.popupService.error('Błąd ładowania oczekujących');
             return of(groupsActions.loadPendingMembersFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  acceptPending$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.acceptPendingMember),
+      switchMap((action) =>
+        this.groupsService.acceptPending(action.groupId, action.userId).pipe(
+          map((res) => {
+            this.popupService.success(res.message);
+            this.store.dispatch(groupsActions.loadPendingMembers({ url: null, groupId: action.groupId }));
+            this.store.dispatch(groupsActions.loadGroupMembers({ url: null, groupId: action.groupId }));
+            this.store.dispatch(groupsActions.loadGroup({ id: action.groupId }));
+            return groupsActions.acceptPendingMemberSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd akceptowania użytkownika');
+            return of(groupsActions.acceptPendingMemberFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  rejectPending$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.rejectPendingMember),
+      switchMap((action) =>
+        this.groupsService.rejectPending(action.groupId, action.userId).pipe(
+          map((res) => {
+            this.popupService.success(res.message);
+            this.store.dispatch(groupsActions.loadPendingMembers({ url: null, groupId: action.groupId }));
+            this.store.dispatch(groupsActions.loadGroup({ id: action.groupId }));
+            return groupsActions.rejectPendingMemberSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd akceptowania użytkownika');
+            return of(groupsActions.rejectPendingMemberFail());
           }),
         ),
       ),

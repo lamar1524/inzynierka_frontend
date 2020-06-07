@@ -22,6 +22,7 @@ import {
   selectMembersLoading,
   selectPendingMembers,
   selectPendingMembersLoading,
+  selectPendingProcessing,
   selectPostAdding,
   GroupsModuleState,
 } from '../../store';
@@ -175,7 +176,6 @@ export class GroupComponent implements OnDestroy {
           groupsActions.makeModerator({
             groupId: this.group.id,
             moderatorId: member.id,
-            refreshAction: groupsActions.loadGroup({ id: this.group.id }),
           }),
         );
       },
@@ -192,11 +192,42 @@ export class GroupComponent implements OnDestroy {
           groupsActions.dropMember({
             memberId: member.id,
             groupId: this.group.id,
-            refreshAction: groupsActions.loadGroup({ id: this.group.id }),
           }),
         );
       },
       loadingSelect: this.store.select(selectDroppingUser),
+    });
+  }
+
+  showAcceptDialog(pendingMember: IUser) {
+    this.dialogService.showDialog({
+      header: 'Akceptacja',
+      caption: 'Na pewno chcesz akceptować użytkownika?',
+      onAcceptCallback: () => {
+        this.store.dispatch(
+          groupsActions.acceptPendingMember({
+            userId: pendingMember.id,
+            groupId: this.group.id,
+          }),
+        );
+      },
+      loadingSelect: this.store.select(selectPendingProcessing),
+    });
+  }
+
+  showRejectDialog(pendingMember: IUser) {
+    this.dialogService.showDialog({
+      header: 'Akceptacja',
+      caption: 'Na pewno chcesz odrzucić użytkownika?',
+      onAcceptCallback: () => {
+        this.store.dispatch(
+          groupsActions.rejectPendingMember({
+            userId: pendingMember.id,
+            groupId: this.group.id,
+          }),
+        );
+      },
+      loadingSelect: this.store.select(selectPendingProcessing),
     });
   }
 

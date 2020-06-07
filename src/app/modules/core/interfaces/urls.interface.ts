@@ -20,4 +20,5 @@ export interface IUrls {
   groupUpdate: string;
   dropMember: string;
   loadPendingMembers: string;
+  managePending: string;
 }

@@ -79,6 +79,10 @@
             <div class="name__wrapper">
               <p>{{ pendingMember.first_name }} {{ pendingMember.last_name }}</p>
             </div>
+            <div class="buttons__wrapper" *ngIf="group?.moderator.id === currentUser?.id || group?.owner.id === currentUser?.id">
+              <span class="u-text--link option" (click)="showAcceptDialog(pendingMember)">Akceptuj</span>
+              <span class="u-text--link option" (click)="showRejectDialog(pendingMember)">Usuń</span>
+            </div>
           </div>
         </div>
       </mat-tab>
