@@ -20,6 +20,7 @@ export interface GroupsState {
   membersLoading: boolean;
   members: IResponseUsers;
   makingModerator: boolean;
+  droppingUser: boolean;
 }
 
 export const initialState: GroupsState = {
@@ -34,6 +35,7 @@ export const initialState: GroupsState = {
   membersLoading: false,
   members: null,
   makingModerator: false,
+  droppingUser: false,
 };
 
 export const GROUPS_REDUCER = createReducer(
@@ -84,6 +86,10 @@ export const GROUPS_REDUCER = createReducer(
   on(groupsActions.makeModerator, (state) => ({ ...state, makingModerator: true })),
   on(groupsActions.makeModeratorSuccess, (state) => ({ ...state, makingModerator: false })),
   on(groupsActions.makeModeratorFail, (state) => ({ ...state, makingModerator: false })),
+
+  on(groupsActions.dropMember, (state) => ({ ...state, droppingUser: true })),
+  on(groupsActions.dropMemberSuccess, (state) => ({ ...state, droppingUser: false })),
+  on(groupsActions.dropMemberFail, (state) => ({ ...state, droppingUser: false })),
 );
 
 export function groupsReducer(state: GroupsState | undefined, action: Action) {

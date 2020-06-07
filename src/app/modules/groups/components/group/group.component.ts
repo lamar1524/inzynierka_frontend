@@ -12,6 +12,7 @@ import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import {
   selectAddingPostVisibility,
+  selectDroppingUser,
   selectGroup,
   selectGroupLoading,
   selectGroupPosts,
@@ -156,6 +157,23 @@ export class GroupComponent implements OnDestroy {
         );
       },
       loadingSelect: this.store.select(selectMakingModerator),
+    });
+  }
+
+  showDeleteDialog(member: IUser) {
+    this.dialogService.showDialog({
+      header: 'Usuwanie',
+      caption: 'Czy usunąć tego użytkownika',
+      onAcceptCallback: () => {
+        this.store.dispatch(
+          groupsActions.dropMember({
+            memberId: member.id,
+            groupId: this.group.id,
+            refreshAction: groupsActions.loadGroup({ id: this.group.id }),
+          }),
+        );
+      },
+      loadingSelect: this.store.select(selectDroppingUser),
     });
   }
 

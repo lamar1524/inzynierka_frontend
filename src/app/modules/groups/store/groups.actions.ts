@@ -31,3 +31,11 @@ export const makeModerator = createAction(
 );
 export const makeModeratorSuccess = createAction('[Groups] Make moderator success');
 export const makeModeratorFail = createAction('[Groups] Make moderator fail');
+
+export const dropMember = createAction('[Groups] Drop member', props<{ memberId: number; groupId: number; refreshAction: Action }>());
+export const dropMemberSuccess = createAction('[Groups] Drop member success');
+export const dropMemberFail = createAction('[Groups] Drop member fail');
+
+export const loadPendingMembers = createAction('[Groups] Load pending members', props<{ groupId: number; url: string | null }>());
+export const loadPendingMembersSuccess = createAction('[Groups] Load pending members success');
+export const loadPendingMembersFail = createAction('[Groups] Load pending members fail');

@@ -37,4 +37,8 @@ export class GroupsService {
   makeModerator(moderatorId: number, groupId: number): Observable<IGroup> {
     return this.http.put<IGroup>(URLS.groupUpdate + groupId + '/', { moderator: moderatorId });
   }
+
+  dropMember(memberId: number, groupId: number): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(URLS.dropMember + groupId + '/', { id: memberId });
+  }
 }

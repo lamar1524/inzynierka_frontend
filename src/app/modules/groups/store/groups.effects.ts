@@ -116,4 +116,23 @@ export class GroupsEffects {
       ),
     ),
   );
+
+  dropUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.dropMember),
+      switchMap((action) =>
+        this.groupsService.dropMember(action.memberId, action.groupId).pipe(
+          map(() => {
+            this.popupService.success('Pomyślnie usunięto użytkownika');
+            this.store.dispatch(action.refreshAction);
+            return groupsActions.dropMemberSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd usuwania użytkownika');
+            return of(groupsActions.dropMemberSuccess());
+          }),
+        ),
+      ),
+    ),
+  );
 }

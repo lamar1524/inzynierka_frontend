@@ -20,3 +20,5 @@ export const selectMembersLoading = createSelector(selectGroups, (state: GroupsS
 export const selectMembers = createSelector(selectGroups, (state: GroupsState) => state.members);
 
 export const selectMakingModerator = createSelector(selectGroups, (state: GroupsState) => state.makingModerator);
+
+export const selectDroppingUser = createSelector(selectGroups, (state: GroupsState) => state.droppingUser);

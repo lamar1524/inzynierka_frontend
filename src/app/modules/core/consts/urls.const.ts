@@ -22,4 +22,5 @@ export const URLS: IUrls = {
   addPost: host + 'posts/create/',
   loadGroupMembers: host + 'groups/members/',
   groupUpdate: host + 'groups/update/',
+  dropMember: host + 'groups/drop/',
 };
