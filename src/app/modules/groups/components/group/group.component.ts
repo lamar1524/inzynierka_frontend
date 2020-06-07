@@ -20,6 +20,8 @@ import {
   selectMakingModerator,
   selectMembers,
   selectMembersLoading,
+  selectPendingMembers,
+  selectPendingMembersLoading,
   selectPostAdding,
   GroupsModuleState,
 } from '../../store';
@@ -46,6 +48,9 @@ export class GroupComponent implements OnDestroy {
   posts: IPost[];
   postsNext: string;
   membersNext: string;
+  pendingMembers: IUser[];
+  pendingMembersLoading$: Observable<boolean>;
+  pendingMembersNext: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -58,6 +63,8 @@ export class GroupComponent implements OnDestroy {
     const route$ = this.route.params.subscribe((params) => {
       this.store.dispatch(groupsActions.loadGroup({ id: params.id }));
       this.store.dispatch(groupsActions.loadGroupsPosts({ url: null, id: params.id }));
+      this.store.dispatch(groupsActions.loadGroupMembers({ url: null, groupId: params.id }));
+      this.store.dispatch(groupsActions.loadPendingMembers({ groupId: params.id, url: null }));
       this.cdRef.markForCheck();
     });
     const group$ = this.store
@@ -65,7 +72,6 @@ export class GroupComponent implements OnDestroy {
       .pipe(filter((group) => group !== null))
       .subscribe((group) => {
         this.group = group;
-        this.store.dispatch(groupsActions.loadGroupMembers({ url: null, groupId: this.group.id }));
         this.cdRef.markForCheck();
       });
     const currentUser$ = this.store.select(selectCurrentUser).subscribe((user) => {
@@ -86,12 +92,22 @@ export class GroupComponent implements OnDestroy {
       .subscribe((res) => {
         this.members = res.users;
         this.membersNext = res.next;
+        this.cdRef.markForCheck();
+      });
+    const pendingMembers$ = this.store
+      .select(selectPendingMembers)
+      .pipe(filter((res) => res !== null))
+      .subscribe((resPending) => {
+        this.pendingMembers = resPending.users;
+        this.pendingMembersNext = resPending.next;
+        this.cdRef.markForCheck();
       });
     this.sub$.add(route$);
     this.sub$.add(group$);
     this.sub$.add(currentUser$);
     this.sub$.add(posts$);
     this.sub$.add(members$);
+    this.sub$.add(pendingMembers$);
     this.groupLoading$ = this.store.select(selectGroupLoading);
     this.postsLoading$ = this.store.select(selectGroupPostsLoading);
     this.postEditing$ = this.store.select(selectEditingPost);
@@ -99,6 +115,7 @@ export class GroupComponent implements OnDestroy {
     this.postAdding$ = this.store.select(selectPostAdding);
     this.formVisibility$ = this.store.select(selectAddingPostVisibility);
     this.membersLoading$ = this.store.select(selectMembersLoading);
+    this.pendingMembersLoading$ = this.store.select(selectPendingMembersLoading);
   }
 
   get ownerOrAdmin() {
@@ -113,6 +130,12 @@ export class GroupComponent implements OnDestroy {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
       if (this.postsNext !== null) {
         this.store.dispatch(groupsActions.loadGroupsPosts({ url: this.postsNext, id: this.group.id }));
+      }
+      if (this.membersNext !== null) {
+        this.store.dispatch(groupsActions.loadGroupMembers({ groupId: this.group.id, url: this.membersNext }));
+      }
+      if (this.pendingMembersNext !== null) {
+        this.store.dispatch(groupsActions.loadPendingMembers({ groupId: this.group.id, url: this.pendingMembersNext }));
       }
     }
   }

@@ -135,4 +135,19 @@ export class GroupsEffects {
       ),
     ),
   );
+
+  loadPendingMembers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.loadPendingMembers),
+      switchMap((action) =>
+        this.groupsService.loadPendingMembersList(action.url ? action.url : (URLS.loadPendingMembers + action.groupId + '/')).pipe(
+          map((res) => groupsActions.loadPendingMembersSuccess({ pendingMembers: res })),
+          catchError((res) => {
+            this.popupService.error('Błąd ładowania oczekujących');
+            return of(groupsActions.loadPendingMembersFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }

@@ -41,4 +41,8 @@ export class GroupsService {
   dropMember(memberId: number, groupId: number): Observable<{ message: string }> {
     return this.http.post<{ message: string }>(URLS.dropMember + groupId + '/', { id: memberId });
   }
+
+  loadPendingMembersList(url: string): Observable<IResponseUsers> {
+    return this.http.get<IResponseUsers>(url).pipe(map((res: any) => ({ previous: res.previous, next: res.next, users: res.results })));
+  }
 }

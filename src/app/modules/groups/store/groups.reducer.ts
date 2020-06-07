@@ -21,6 +21,8 @@ export interface GroupsState {
   members: IResponseUsers;
   makingModerator: boolean;
   droppingUser: boolean;
+  loadingPendingMembers: boolean;
+  pendingMembers: IResponseUsers;
 }
 
 export const initialState: GroupsState = {
@@ -36,6 +38,8 @@ export const initialState: GroupsState = {
   members: null,
   makingModerator: false,
   droppingUser: false,
+  loadingPendingMembers: false,
+  pendingMembers: null,
 };
 
 export const GROUPS_REDUCER = createReducer(
@@ -90,6 +94,16 @@ export const GROUPS_REDUCER = createReducer(
   on(groupsActions.dropMember, (state) => ({ ...state, droppingUser: true })),
   on(groupsActions.dropMemberSuccess, (state) => ({ ...state, droppingUser: false })),
   on(groupsActions.dropMemberFail, (state) => ({ ...state, droppingUser: false })),
+
+  on(groupsActions.loadPendingMembers, (state) => ({ ...state, loadingPendingMembers: true })),
+  on(groupsActions.loadPendingMembersSuccess, (state, { pendingMembers }) => ({
+    ...state,
+    loadingPendingMembers: false,
+    pendingMembers: pendingMembers.previous
+      ? { next: pendingMembers.next, users: [...state.pendingMembers.users, ...pendingMembers.users] }
+      : pendingMembers,
+  })),
+  on(groupsActions.loadPendingMembersFail, (state) => ({ ...state, loadingPendingMembers: false })),
 );
 
 export function groupsReducer(state: GroupsState | undefined, action: Action) {

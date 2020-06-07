@@ -37,5 +37,5 @@ export const dropMemberSuccess = createAction('[Groups] Drop member success');
 export const dropMemberFail = createAction('[Groups] Drop member fail');
 
 export const loadPendingMembers = createAction('[Groups] Load pending members', props<{ groupId: number; url: string | null }>());
-export const loadPendingMembersSuccess = createAction('[Groups] Load pending members success');
+export const loadPendingMembersSuccess = createAction('[Groups] Load pending members success', props<{ pendingMembers: IResponseUsers }>());
 export const loadPendingMembersFail = createAction('[Groups] Load pending members fail');
