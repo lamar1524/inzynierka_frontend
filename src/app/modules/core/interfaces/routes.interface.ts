@@ -8,6 +8,7 @@ export interface IRoutes {
   groupsModule: IRoute;
   privateGroups: IRoute;
   singleGroup: IRoute;
+  error403: IRoute;
 }
 
 export interface IRoute {

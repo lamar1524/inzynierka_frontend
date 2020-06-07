@@ -1,6 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ROUTES } from '@core/consts';
 import { of, throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -18,6 +19,9 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error) => {
         if (error.status === 401) {
           this.handle401Error(request, next, error);
+        } else if (error.status === 403) {
+          this.router.navigate([ROUTES.error403.path]);
+          return of({});
         }
         return throwError(error);
       }),

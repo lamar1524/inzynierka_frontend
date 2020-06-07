@@ -37,4 +37,8 @@ export const ROUTES: IRoutes = {
     name: '',
     path: '/home/groups/',
   },
+  error403: {
+    name: '403',
+    path: '/403',
+  },
 };
