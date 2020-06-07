@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { ROUTES } from '@core/consts';
@@ -7,9 +10,6 @@ import { USER_ROLE } from '@core/enums';
 import { IGroup, IPost, IUser } from '@core/interfaces';
 import { DialogService } from '@core/services';
 import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModuleState } from '@core/store';
-import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
 import {
   selectAddingPostVisibility,
   selectDroppingUser,

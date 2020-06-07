@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { PostsModuleState } from '@posts/store';
-import { catchError, map, switchMap } from 'rxjs/operators';
 import { GroupsModuleState } from '../../groups/store';
 import { PopupService, PostsService } from '../services';
 import * as coreActions from './core.actions';

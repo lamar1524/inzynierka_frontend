@@ -1,4 +1,5 @@
 import { createSelector } from '@ngrx/store';
+
 import { GroupsModuleState, GroupsState } from './groups.reducer';
 
 export const selectGroups = (state: GroupsModuleState) => state.groups;

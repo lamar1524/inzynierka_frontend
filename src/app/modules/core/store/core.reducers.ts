@@ -1,4 +1,5 @@
 import { createReducer, on, Action } from '@ngrx/store';
+
 import * as coreActions from './core.actions';
 
 export interface CoreModuleState {

@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { ROUTES } from '@core/consts';
-import { IGroup, IRoutes } from '@core/interfaces';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as postsActions from '@posts/store/posts.actions';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import { ROUTES } from '@core/consts';
+import { IGroup, IRoutes } from '@core/interfaces';
 import { selectPrivateGroups, selectPrivateGroupsLoading, GroupsModuleState } from '../../store';
 import * as groupsActions from '../../store/groups.actions';
 

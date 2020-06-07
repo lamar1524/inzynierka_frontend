@@ -1,20 +1,9 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  HostListener,
-  Inject,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ROUTES } from '@core/consts';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
+import { ROUTES } from '@core/consts';
 import { IPost, IRoutes } from '@core/interfaces';
 import { DialogService } from '@core/services';
 
