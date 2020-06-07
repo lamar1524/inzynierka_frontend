@@ -8,6 +8,7 @@ export interface IGroup {
   image: string;
   members: IUser[];
   members_count?: number;
+  pending_count?: number;
 }
 
 export interface IBaseGroup {

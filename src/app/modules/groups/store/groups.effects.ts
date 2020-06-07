@@ -97,4 +97,23 @@ export class GroupsEffects {
       ),
     ),
   );
+
+  makeModerator$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.makeModerator),
+      switchMap((action) =>
+        this.groupsService.makeModerator(action.moderatorId, action.groupId).pipe(
+          map(() => {
+            this.popupService.success('Pomyślnie ustalono moderatora');
+            this.store.dispatch(action.refreshAction);
+            return groupsActions.makeModeratorSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd ustalania moderatora');
+            return of(groupsActions.makeModeratorFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }

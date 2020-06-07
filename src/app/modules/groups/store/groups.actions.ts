@@ -24,3 +24,10 @@ export const hideAddingPostForm = createAction('[Groups] Hide adding post form')
 export const loadGroupMembers = createAction('[Groups] Load groups members', props<{ groupId: number; url: string | null }>());
 export const loadGroupMembersSuccess = createAction('[Groups] Load groups members success', props<{ members: IResponseUsers }>());
 export const loadGroupMembersFail = createAction('[Groups] Load groups members fail');
+
+export const makeModerator = createAction(
+  '[Groups] Make moderator',
+  props<{ moderatorId: number; groupId: number; refreshAction: Action }>(),
+);
+export const makeModeratorSuccess = createAction('[Groups] Make moderator success');
+export const makeModeratorFail = createAction('[Groups] Make moderator fail');

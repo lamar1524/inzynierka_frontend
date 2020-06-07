@@ -5,6 +5,7 @@ import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { ROUTES } from '@core/consts';
 import { USER_ROLE } from '@core/enums';
 import { IGroup, IPost, IUser } from '@core/interfaces';
+import { DialogService } from '@core/services';
 import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModuleState } from '@core/store';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -15,6 +16,7 @@ import {
   selectGroupLoading,
   selectGroupPosts,
   selectGroupPostsLoading,
+  selectMakingModerator,
   selectMembers,
   selectMembersLoading,
   selectPostAdding,
@@ -49,6 +51,7 @@ export class GroupComponent implements OnDestroy {
     private store: Store<GroupsModuleState | AuthModuleState | CoreModuleState>,
     private cdRef: ChangeDetectorRef,
     private router: Router,
+    private dialogService: DialogService,
   ) {
     this.sub$ = new Subscription();
     const route$ = this.route.params.subscribe((params) => {
@@ -138,6 +141,23 @@ export class GroupComponent implements OnDestroy {
   hideForm = () => {
     this.store.dispatch(groupsActions.hideAddingPostForm());
   };
+
+  showModDialog(member: IUser) {
+    this.dialogService.showDialog({
+      header: 'Moderator',
+      caption: 'Czy ustawić tego użytkownika moderatorem?',
+      onAcceptCallback: () => {
+        this.store.dispatch(
+          groupsActions.makeModerator({
+            groupId: this.group.id,
+            moderatorId: member.id,
+            refreshAction: groupsActions.loadGroup({ id: this.group.id }),
+          }),
+        );
+      },
+      loadingSelect: this.store.select(selectMakingModerator),
+    });
+  }
 
   ngOnDestroy(): void {
     this.sub$.unsubscribe();

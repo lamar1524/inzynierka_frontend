@@ -19,6 +19,7 @@ export interface GroupsState {
   addingPostFormVisibility: boolean;
   membersLoading: boolean;
   members: IResponseUsers;
+  makingModerator: boolean;
 }
 
 export const initialState: GroupsState = {
@@ -32,6 +33,7 @@ export const initialState: GroupsState = {
   addingPostFormVisibility: false,
   membersLoading: false,
   members: null,
+  makingModerator: false,
 };
 
 export const GROUPS_REDUCER = createReducer(
@@ -78,6 +80,10 @@ export const GROUPS_REDUCER = createReducer(
     members: members.previous ? { next: members.next, previous: members.previous, members: members.users } : members,
   })),
   on(groupsActions.loadGroupMembersFail, (state) => ({ ...state, membersLoading: false })),
+
+  on(groupsActions.makeModerator, (state) => ({ ...state, makingModerator: true })),
+  on(groupsActions.makeModeratorSuccess, (state) => ({ ...state, makingModerator: false })),
+  on(groupsActions.makeModeratorFail, (state) => ({ ...state, makingModerator: false })),
 );
 
 export function groupsReducer(state: GroupsState | undefined, action: Action) {

@@ -59,13 +59,18 @@
               <p *ngIf="group.owner?.id === member.id">Właściciel</p>
             </div>
             <div class="buttons__wrapper" *ngIf="ownerOrAdmin || group?.moderator.id === currentUser?.id">
-              <span class="u-text--link option">Mod</span>
+              <span
+                class="u-text--link option"
+                *ngIf="group.owner.id !== member.id && group.moderator.id !== member.id && group.owner.id === currentUser?.id"
+                (click)="showModDialog(member)"
+                >Mod</span
+              >
               <span class="u-text--link option" *ngIf="group.owner.id !== member.id">Usuń</span>
             </div>
           </div>
         </div>
       </mat-tab>
-      <mat-tab label="Oczekujący"> Content 3 </mat-tab>
+      <mat-tab [label]="'Oczekujący(' + group.pending_count + ')'"> Content 3 </mat-tab>
     </mat-tab-group>
   </div>
 </div>

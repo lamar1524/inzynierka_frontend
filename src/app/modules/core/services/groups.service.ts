@@ -33,4 +33,8 @@ export class GroupsService {
   loadMembers(url: string): Observable<IResponseUsers> {
     return this.http.get<IResponseUsers>(url).pipe(map((res: any) => ({ previous: res.previous, next: res.next, users: res.results })));
   }
+
+  makeModerator(moderatorId: number, groupId: number): Observable<IGroup> {
+    return this.http.put<IGroup>(URLS.groupUpdate + groupId + '/', { moderator: moderatorId });
+  }
 }

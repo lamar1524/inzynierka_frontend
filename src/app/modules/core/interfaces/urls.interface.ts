@@ -17,4 +17,5 @@ export interface IUrls {
   groupsPosts: string;
   addPost: string;
   loadGroupMembers: string;
+  groupUpdate: string;
 }

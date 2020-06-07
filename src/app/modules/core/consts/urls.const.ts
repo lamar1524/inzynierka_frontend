@@ -21,4 +21,5 @@ export const URLS: IUrls = {
   groupsPosts: host + 'posts/',
   addPost: host + 'posts/create/',
   loadGroupMembers: host + 'groups/members/',
+  groupUpdate: host + 'groups/update/',
 };
