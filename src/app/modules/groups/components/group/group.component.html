@@ -1,11 +1,17 @@
-<div class="container" *ngIf="(groupLoading$ | async) === false; else spinner">
+<div class="container" *ngIf="(groupLoading$ | async) === false && (groupLoading$ | async) === false; else spinner">
   <div class="group__header">
     <div class="image__wrapper">
-      <img class="image" alt="Group image" [src]="group?.image" />
+      <img class="image" [ngClass]="{ 'image-choose': ownerOrAdmin }" alt="Group image" [src]="group?.image" (click)="pickImage()" />
+      <input type="file" accept="image/*" class="image-input" (change)="chooseImage($event)" />
     </div>
     <div class="info__wrapper">
       <div class="info">
-        <div class="name">{{ group?.name }}</div>
+        <div class="name" [ngClass]="{ 'image-choose': ownerOrAdmin }" *ngIf="!nameEdit" (click)="showNameEdit()">{{ group?.name }}</div>
+        <div class="name" *ngIf="nameEdit">
+          <mat-form-field class="name__input">
+            <input matInput type="text" [value]="group?.name" (keyup)="sendName($event)" />
+          </mat-form-field>
+        </div>
         <div class="owner">{{ group?.owner.first_name }} {{ group?.owner.last_name }}</div>
       </div>
       <div class="manage-button__wrapper">
@@ -85,7 +91,7 @@
               <span class="u-text--link option" (click)="showRejectDialog(pendingMember)">Usuń</span>
             </div>
           </div>
-          <div class="error" *ngIf="pendingMembers.length == 0">Brak oczekujących</div>
+          <div class="error" *ngIf="pendingMembers?.length == 0">Brak oczekujących</div>
         </div>
       </mat-tab>
     </mat-tab-group>

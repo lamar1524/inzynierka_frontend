@@ -233,4 +233,23 @@ export class GroupsEffects {
       ),
     ),
   );
+
+  editGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.editGroup),
+      switchMap((action) =>
+        this.groupsService.editGroup(action.group, action.groupId).pipe(
+          map((res) => {
+            this.popupService.success('Dane zostały zachowane');
+            this.store.dispatch(groupsActions.loadGroup({ id: action.groupId }));
+            return groupsActions.editGroupSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd edycji');
+            return of(groupsActions.editGroupFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }

@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -14,6 +15,7 @@ import {
   selectAddingPostVisibility,
   selectDeletingGroup,
   selectDroppingUser,
+  selectEditingGroup,
   selectGroup,
   selectGroupLoading,
   selectGroupPosts,
@@ -41,6 +43,7 @@ export class GroupComponent implements OnDestroy {
   group: IGroup;
   currentUser: IUser;
   groupLoading$: Observable<boolean>;
+  groupEditing$: Observable<boolean>;
   postsLoading$: Observable<boolean>;
   postEditing$: Observable<boolean>;
   postDeleting$: Observable<boolean>;
@@ -56,6 +59,7 @@ export class GroupComponent implements OnDestroy {
   pendingMembers: IUser[];
   pendingMembersLoading$: Observable<boolean>;
   pendingMembersNext: string;
+  nameEdit: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -63,8 +67,10 @@ export class GroupComponent implements OnDestroy {
     private cdRef: ChangeDetectorRef,
     private router: Router,
     private dialogService: DialogService,
+    @Inject(DOCUMENT) private document: Document,
   ) {
     this.sub$ = new Subscription();
+    this.nameEdit = false;
     const route$ = this.route.params.subscribe((params) => {
       this.store.dispatch(groupsActions.loadGroup({ id: params.id }));
       this.store.dispatch(groupsActions.loadGroupsPosts({ url: null, id: params.id }));
@@ -123,6 +129,7 @@ export class GroupComponent implements OnDestroy {
     this.pendingMembersLoading$ = this.store.select(selectPendingMembersLoading);
     this.deletingGroup$ = this.store.select(selectDeletingGroup);
     this.leavingGroup$ = this.store.select(selectLeavingGroup);
+    this.groupEditing$ = this.store.select(selectEditingGroup);
   }
 
   get ownerOrAdmin() {
@@ -257,6 +264,40 @@ export class GroupComponent implements OnDestroy {
       },
       loadingSelect: this.leavingGroup$,
     });
+  }
+
+  pickImage() {
+    if (this.ownerOrAdmin) {
+      const input = this.document.querySelector('.image-input');
+      input.dispatchEvent(new MouseEvent('click'));
+    }
+  }
+
+  chooseImage($event) {
+    if (this.ownerOrAdmin) {
+      const imageToChange = $event.target.files[0];
+      const fd = new FormData();
+      fd.append('image', imageToChange);
+      this.store.dispatch(groupsActions.editGroup({ group: fd, groupId: this.group.id }));
+    }
+  }
+
+  showNameEdit() {
+    if (this.ownerOrAdmin) {
+      this.nameEdit = true;
+    }
+  }
+
+  sendName($event) {
+    if ($event.key === 'Enter' && this.ownerOrAdmin) {
+      const text = $event.target.value;
+      if (text !== '' && text !== null && text !== this.group.name) {
+        const fd = new FormData();
+        fd.append('name', text);
+        this.store.dispatch(groupsActions.editGroup({ group: fd, groupId: this.group.id }));
+        this.nameEdit = false;
+      }
+    }
   }
 
   ngOnDestroy(): void {

@@ -61,4 +61,8 @@ export class GroupsService {
   leaveGroup(groupId: number): Observable<{ message: string }> {
     return this.http.post<{ message: string }>(URLS.leaveGroup + groupId + '/', {});
   }
+
+  editGroup(group: FormData, groupId: number): Observable<IGroup> {
+    return this.http.put<IGroup>(URLS.groupUpdate + groupId + '/', group);
+  }
 }

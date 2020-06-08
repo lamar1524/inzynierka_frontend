@@ -8,6 +8,18 @@ $info-wrapper: 80px;
   min-height: calc(100vh - #{$nav-height});
   width: 100%;
 
+  .image-input {
+    display: none;
+  }
+
+  .image-choose {
+    cursor: pointer;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
   .group__header {
     background-color: #fff;
   }
@@ -17,10 +29,10 @@ $info-wrapper: 80px;
     text-align: center;
 
     .image {
-      height: $image-wrapper;
+      max-height: $image-wrapper;
       object-fit: fill;
       object-position: center;
-      width: 100%;
+      width: auto;
     }
   }
 
@@ -38,6 +50,11 @@ $info-wrapper: 80px;
 
     .name {
       font-size: 2.2rem;
+      min-width: 300px;
+    }
+
+    .name__input {
+      width: 100%;
     }
 
     .owner {

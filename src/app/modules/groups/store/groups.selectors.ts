@@ -32,3 +32,5 @@ export const selectPendingProcessing = createSelector(selectGroups, (state: Grou
 export const selectDeletingGroup = createSelector(selectGroups, (state: GroupsState) => state.deletingGroup);
 
 export const selectLeavingGroup = createSelector(selectGroups, (state: GroupsState) => state.leavingGroup);
+
+export const selectEditingGroup = createSelector(selectGroups, (state: GroupsState) => state.editingGroup);
