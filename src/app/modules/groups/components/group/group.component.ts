@@ -12,6 +12,7 @@ import { DialogService } from '@core/services';
 import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModuleState } from '@core/store';
 import {
   selectAddingPostVisibility,
+  selectDeletingGroup,
   selectDroppingUser,
   selectGroup,
   selectGroupLoading,
@@ -45,6 +46,7 @@ export class GroupComponent implements OnDestroy {
   postAdding$: Observable<boolean>;
   formVisibility$: Observable<boolean>;
   membersLoading$: Observable<boolean>;
+  deletingGroup$: Observable<boolean>;
   members: IUser[];
   posts: IPost[];
   postsNext: string;
@@ -117,6 +119,7 @@ export class GroupComponent implements OnDestroy {
     this.formVisibility$ = this.store.select(selectAddingPostVisibility);
     this.membersLoading$ = this.store.select(selectMembersLoading);
     this.pendingMembersLoading$ = this.store.select(selectPendingMembersLoading);
+    this.deletingGroup$ = this.store.select(selectDeletingGroup);
   }
 
   get ownerOrAdmin() {
@@ -230,6 +233,19 @@ export class GroupComponent implements OnDestroy {
       loadingSelect: this.store.select(selectPendingProcessing),
     });
   }
+
+  deleteGroup() {
+    this.dialogService.showDialog({
+      header: 'Usuwanie grupy',
+      caption: 'Tego nie da się cofnąć!',
+      onAcceptCallback: () => {
+        this.store.dispatch(groupsActions.deleteGroup({ groupId: this.group.id }));
+      },
+      loadingSelect: this.deletingGroup$,
+    });
+  }
+
+  leaveGroup() {}
 
   ngOnDestroy(): void {
     this.sub$.unsubscribe();

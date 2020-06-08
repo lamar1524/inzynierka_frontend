@@ -8,8 +8,9 @@
         <div class="name">{{ group?.name }}</div>
         <div class="owner">{{ group?.owner.first_name }} {{ group?.owner.last_name }}</div>
       </div>
-      <div class="manage-button__wrapper" *ngIf="ownerOrAdmin">
-        <button class="manage-button" mat-raised-button color="primary">Zarządzaj</button>
+      <div class="manage-button__wrapper">
+        <button class="manage-button" mat-raised-button color="warn" (click)="deleteGroup()" *ngIf="ownerOrAdmin">Usuń</button>
+        <button class="manage-button" mat-raised-button color="warn" (click)="leaveGroup()" *ngIf="!ownerOrAdmin">Opuść</button>
       </div>
     </div>
   </div>
