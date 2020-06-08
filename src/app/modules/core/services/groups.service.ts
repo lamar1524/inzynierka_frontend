@@ -65,4 +65,8 @@ export class GroupsService {
   editGroup(group: FormData, groupId: number): Observable<IGroup> {
     return this.http.put<IGroup>(URLS.groupUpdate + groupId + '/', group);
   }
+
+  searchForGroups(url: string): Observable<IResponseGroups> {
+    return this.http.get(url).pipe(map((res: any) => ({ previous: res.previous, next: res.next, groups: res.results })));
+  }
 }

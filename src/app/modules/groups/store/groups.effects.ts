@@ -252,4 +252,19 @@ export class GroupsEffects {
       ),
     ),
   );
+
+  searchForGroups = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.searchForGroup),
+      switchMap((action) =>
+        this.groupsService.searchForGroups(action.url ? action.url : URLS.searchForGroups + '?phrase=' + action.phrase).pipe(
+          map((res) => groupsActions.searchForGroupSuccess({ results: res })),
+          catchError(() => {
+            this.popupService.error('Błąd szukania grup');
+            return of(groupsActions.searchForGroupFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }

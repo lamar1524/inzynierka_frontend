@@ -15,8 +15,7 @@ import { PostFormModule } from '@reusable-modules/post-form';
 import { PostsListModule } from '@reusable-modules/posts-list';
 import { GroupComponent, PrivateGroupsComponent, SearchComponent } from './components';
 import { GroupsRoutingModule } from './groups-routing.module';
-import { groupsReducer } from './store';
-import { GroupsEffects } from './store/groups.effects';
+import { groupsReducer, GroupsEffects } from './store';
 
 @NgModule({
   declarations: [PrivateGroupsComponent, GroupComponent, SearchComponent],
@@ -33,7 +32,7 @@ import { GroupsEffects } from './store/groups.effects';
     PostFormModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+  ],
 })
 export class GroupsModule {}

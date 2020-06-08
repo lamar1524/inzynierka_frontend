@@ -1,6 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -21,7 +22,7 @@ export class LeftSidebarComponent {
   searchForm: FormGroup;
   readonly routes: IRoutes;
 
-  constructor(private store: Store<MainModuleState>, @Inject(DOCUMENT) private document: Document) {
+  constructor(private store: Store<MainModuleState>, @Inject(DOCUMENT) private document: Document, private router: Router) {
     this.store.dispatch(loadBaseGroups());
     this.groups$ = this.store.select(selectBaseGroups);
     this.groupsLoading$ = this.store.select(selectBaseGroupsLoading);
@@ -34,6 +35,8 @@ export class LeftSidebarComponent {
   navigateToSearch() {
     const data = this.searchForm.value;
     if (data.phrase !== null && data.phrase !== '') {
+      this.router.navigate([this.routes.search.path + data.phrase]);
+      this.searchForm.reset();
     }
   }
 

@@ -56,3 +56,9 @@ export const leaveGroupFail = createAction('[Groups] Leave group fail');
 export const editGroup = createAction('[Groups] Edit group', props<{ group: FormData; groupId: number }>());
 export const editGroupSuccess = createAction('[Groups] Edit group success');
 export const editGroupFail = createAction('[Groups] Edit group fail');
+
+export const searchForGroup = createAction('[Groups] Search for group', props<{ phrase: string; url: string | null }>());
+export const searchForGroupSuccess = createAction('[Groups] Search for group success', props<{ results: IResponseGroups }>());
+export const searchForGroupFail = createAction('[Groups] Search for group fail');
+
+export const clearResults = createAction('[Groups] Clear results');

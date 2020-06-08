@@ -23,4 +23,5 @@ export interface IUrls {
   managePending: string;
   deleteGroup: string;
   leaveGroup: string;
+  searchForGroups: string;
 }

@@ -7,7 +7,7 @@
       <button [disabled]="searchForm.invalid || searchForm.disabled" mat-raised-button color="primary" type="submit">Szukaj</button>
     </form>
   </div>
-  <div class="results">
+  <div class="results" *ngIf="!loading; else spinner">
     <div class="result" *ngFor="let group of results">
       <div class="image__wrapper">
         <img class="image" [src]="group.image" alt="Group image" />
@@ -19,5 +19,11 @@
         <div class="name u-text--link">Dołącz!</div>
       </div>
     </div>
+    <div class="lack">Brak wyników</div>
   </div>
+  <ng-template #spinner>
+    <div class="spinner__wrapper">
+      <mat-spinner [diameter]="75"></mat-spinner>
+    </div>
+  </ng-template>
 </div>

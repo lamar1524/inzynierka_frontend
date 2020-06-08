@@ -12,6 +12,13 @@ $image-wrapper: 80px;
     justify-content: space-between;
     width: 300px;
   }
+
+  .spinner__wrapper {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    min-height: 150px;
+  }
 }
 
 .result {
