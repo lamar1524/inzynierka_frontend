@@ -24,6 +24,7 @@ export interface GroupsState {
   pendingMembers: IResponseUsers;
   pendingProcessing: boolean;
   deletingGroup: boolean;
+  leavingGroup: boolean;
 }
 
 export const initialState: GroupsState = {
@@ -43,6 +44,7 @@ export const initialState: GroupsState = {
   pendingMembers: null,
   pendingProcessing: false,
   deletingGroup: false,
+  leavingGroup: false,
 };
 
 export const GROUPS_REDUCER = createReducer(
@@ -121,6 +123,10 @@ export const GROUPS_REDUCER = createReducer(
   on(groupsActions.deleteGroup, (state) => ({ ...state, deletingGroup: true })),
   on(groupsActions.deleteGroupSuccess, (state) => ({ ...state, deletingGroup: false })),
   on(groupsActions.deleteGroupFail, (state) => ({ ...state, deletingGroup: false })),
+
+  on(groupsActions.leaveGroup, (state) => ({ ...state, leavingGroup: true })),
+  on(groupsActions.leaveGroupSuccess, (state) => ({ ...state, leavingGroup: false })),
+  on(groupsActions.leaveGroupFail, (state) => ({ ...state, leavingGroup: false })),
 );
 
 export function groupsReducer(state: GroupsState | undefined, action: Action) {

@@ -18,6 +18,7 @@ import {
   selectGroupLoading,
   selectGroupPosts,
   selectGroupPostsLoading,
+  selectLeavingGroup,
   selectMakingModerator,
   selectMembers,
   selectMembersLoading,
@@ -47,6 +48,7 @@ export class GroupComponent implements OnDestroy {
   formVisibility$: Observable<boolean>;
   membersLoading$: Observable<boolean>;
   deletingGroup$: Observable<boolean>;
+  leavingGroup$: Observable<boolean>;
   members: IUser[];
   posts: IPost[];
   postsNext: string;
@@ -120,6 +122,7 @@ export class GroupComponent implements OnDestroy {
     this.membersLoading$ = this.store.select(selectMembersLoading);
     this.pendingMembersLoading$ = this.store.select(selectPendingMembersLoading);
     this.deletingGroup$ = this.store.select(selectDeletingGroup);
+    this.leavingGroup$ = this.store.select(selectLeavingGroup);
   }
 
   get ownerOrAdmin() {
@@ -245,7 +248,16 @@ export class GroupComponent implements OnDestroy {
     });
   }
 
-  leaveGroup() {}
+  leaveGroup() {
+    this.dialogService.showDialog({
+      header: 'Opuszczanie grupy',
+      caption: 'Jesteś pewien?',
+      onAcceptCallback: () => {
+        this.store.dispatch(groupsActions.leaveGroup({ groupId: this.group.id }));
+      },
+      loadingSelect: this.leavingGroup$,
+    });
+  }
 
   ngOnDestroy(): void {
     this.sub$.unsubscribe();

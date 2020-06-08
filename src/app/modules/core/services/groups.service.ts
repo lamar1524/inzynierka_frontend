@@ -57,4 +57,8 @@ export class GroupsService {
   deleteGroup(groupId: number): Observable<{ message: string }> {
     return this.http.delete<{ message: string }>(URLS.deleteGroup + groupId + '/');
   }
+
+  leaveGroup(groupId: number): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(URLS.leaveGroup + groupId + '/', {});
+  }
 }

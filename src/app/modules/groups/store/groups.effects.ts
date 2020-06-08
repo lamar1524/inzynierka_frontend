@@ -214,4 +214,23 @@ export class GroupsEffects {
       ),
     ),
   );
+
+  leaveGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.leaveGroup),
+      switchMap((action) =>
+        this.groupsService.leaveGroup(action.groupId).pipe(
+          map((res) => {
+            this.popupService.success(res.message);
+            this.router.navigate([ROUTES.privateGroups.path]);
+            return groupsActions.leaveGroupSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd opuszczania grupy');
+            return of(groupsActions.leaveGroupFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }
