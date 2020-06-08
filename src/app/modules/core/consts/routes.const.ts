@@ -34,11 +34,15 @@ export const ROUTES: IRoutes = {
     path: '/home/groups/',
   },
   singleGroup: {
-    name: '',
-    path: '/home/groups/',
+    name: 'group',
+    path: '/home/groups/group/',
   },
   error403: {
     name: '403',
     path: '/403',
+  },
+  search: {
+    name: 'search',
+    path: '/home/groups/search/',
   },
 };

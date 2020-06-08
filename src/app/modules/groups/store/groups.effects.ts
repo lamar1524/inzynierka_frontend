@@ -252,4 +252,41 @@ export class GroupsEffects {
       ),
     ),
   );
+
+  searchForGroups = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.searchForGroup),
+      switchMap((action) =>
+        this.groupsService.searchForGroups(action.url ? action.url : URLS.searchForGroups + '?phrase=' + action.phrase).pipe(
+          map((res) => groupsActions.searchForGroupSuccess({ results: res })),
+          catchError(() => {
+            this.popupService.error('Błąd szukania grup');
+            return of(groupsActions.searchForGroupFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  joinGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.joinGroup),
+      switchMap((action) =>
+        this.groupsService.joinGroup(action.groupId).pipe(
+          map((res) => {
+            this.popupService.success(res.message);
+            return groupsActions.joinGroupSuccess();
+          }),
+          catchError((error) => {
+            if (error.status === 406) {
+              this.popupService.error(error.error.message);
+            } else {
+              this.popupService.error('Błąd dołączania do grupy');
+            }
+            return of(groupsActions.joinGroupFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }

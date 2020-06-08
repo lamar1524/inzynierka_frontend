@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,8 +15,7 @@ import { PostFormModule } from '@reusable-modules/post-form';
 import { PostsListModule } from '@reusable-modules/posts-list';
 import { GroupComponent, PrivateGroupsComponent, SearchComponent } from './components';
 import { GroupsRoutingModule } from './groups-routing.module';
-import { groupsReducer } from './store';
-import { GroupsEffects } from './store/groups.effects';
+import { groupsReducer, GroupsEffects } from './store';
 
 @NgModule({
   declarations: [PrivateGroupsComponent, GroupComponent, SearchComponent],
@@ -32,6 +32,7 @@ import { GroupsEffects } from './store/groups.effects';
     PostFormModule,
     MatFormFieldModule,
     MatInputModule,
+    ReactiveFormsModule,
   ],
 })
 export class GroupsModule {}

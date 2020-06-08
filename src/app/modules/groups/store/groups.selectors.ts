@@ -34,3 +34,8 @@ export const selectDeletingGroup = createSelector(selectGroups, (state: GroupsSt
 export const selectLeavingGroup = createSelector(selectGroups, (state: GroupsState) => state.leavingGroup);
 
 export const selectEditingGroup = createSelector(selectGroups, (state: GroupsState) => state.editingGroup);
+
+export const selectSearchingForGroup = createSelector(selectGroups, (state: GroupsState) => state.resultsLoading);
+export const selectSearchingResults = createSelector(selectGroups, (state: GroupsState) => state.results);
+
+export const selectJoiningGroup = createSelector(selectGroups, (state: GroupsState) => state.joiningGroup);

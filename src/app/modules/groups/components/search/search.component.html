@@ -1,1 +1,29 @@
-<p>search works!</p>
+<div class="container">
+  <div class="form__wrapper">
+    <form [formGroup]="searchForm" (ngSubmit)="search()" class="form-group">
+      <mat-form-field>
+        <input matInput type="text" formControlName="phrase" placeholder="Szukaj..." />
+      </mat-form-field>
+      <button [disabled]="searchForm.invalid || searchForm.disabled" mat-raised-button color="primary" type="submit">Szukaj</button>
+    </form>
+  </div>
+  <div class="results" *ngIf="!loading; else spinner">
+    <div class="result" *ngFor="let group of results">
+      <div class="image__wrapper">
+        <img class="image" [src]="group.image" alt="Group image" />
+      </div>
+      <div class="info__wrapper">
+        <div class="name u-text--link">{{ group.name }}</div>
+        <div class="owner">{{ group.owner.first_name }} {{ group.owner.last_name }}</div>
+        <div class="members-count">Członkowie: {{ group.members_count }}</div>
+        <div class="name u-text--link" (click)="joinGroup(group)">Dołącz!</div>
+      </div>
+    </div>
+    <div class="lack">Brak wyników</div>
+  </div>
+  <ng-template #spinner>
+    <div class="spinner__wrapper">
+      <mat-spinner [diameter]="75"></mat-spinner>
+    </div>
+  </ng-template>
+</div>

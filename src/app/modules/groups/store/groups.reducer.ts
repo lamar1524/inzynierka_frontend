@@ -26,6 +26,9 @@ export interface GroupsState {
   deletingGroup: boolean;
   leavingGroup: boolean;
   editingGroup: boolean;
+  resultsLoading: boolean;
+  results: IResponseGroups;
+  joiningGroup: boolean;
 }
 
 export const initialState: GroupsState = {
@@ -47,6 +50,9 @@ export const initialState: GroupsState = {
   deletingGroup: false,
   leavingGroup: false,
   editingGroup: false,
+  results: null,
+  resultsLoading: false,
+  joiningGroup: false,
 };
 
 export const GROUPS_REDUCER = createReducer(
@@ -133,6 +139,22 @@ export const GROUPS_REDUCER = createReducer(
   on(groupsActions.editGroup, (state) => ({ ...state, editingGroup: true })),
   on(groupsActions.editGroupSuccess, (state) => ({ ...state, editingGroup: false })),
   on(groupsActions.editGroupFail, (state) => ({ ...state, editingGroup: false })),
+
+  on(groupsActions.clearResults, (state) => ({ ...state, results: null })),
+
+  on(groupsActions.searchForGroup, (state) => ({ ...state, resultsLoading: true })),
+  on(groupsActions.searchForGroupSuccess, (state, { results }) => ({
+    ...state,
+    resultsLoading: false,
+    results: results.previous
+      ? { next: results.next, previous: results.previous, groups: [...state.results.groups, ...results.groups] }
+      : results,
+  })),
+  on(groupsActions.searchForGroupFail, (state) => ({ ...state, resultsLoading: false })),
+
+  on(groupsActions.joinGroup, (state) => ({ ...state, joiningGroup: true })),
+  on(groupsActions.joinGroupSuccess, (state) => ({ ...state, joiningGroup: false })),
+  on(groupsActions.joinGroupFail, (state) => ({ ...state, joiningGroup: false })),
 );
 
 export function groupsReducer(state: GroupsState | undefined, action: Action) {
