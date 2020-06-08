@@ -12,13 +12,13 @@ import { STORE_FEATURES } from '@core/consts';
 import { GroupWrapperModule } from '@reusable-modules/group-wrapper';
 import { PostFormModule } from '@reusable-modules/post-form';
 import { PostsListModule } from '@reusable-modules/posts-list';
-import { GroupComponent, PrivateGroupsComponent } from './components';
+import { GroupComponent, PrivateGroupsComponent, SearchComponent } from './components';
 import { GroupsRoutingModule } from './groups-routing.module';
 import { groupsReducer } from './store';
 import { GroupsEffects } from './store/groups.effects';
 
 @NgModule({
-  declarations: [PrivateGroupsComponent, GroupComponent],
+  declarations: [PrivateGroupsComponent, GroupComponent, SearchComponent],
   imports: [
     CommonModule,
     GroupsRoutingModule,
@@ -31,7 +31,7 @@ import { GroupsEffects } from './store/groups.effects';
     PostsListModule,
     PostFormModule,
     MatFormFieldModule,
-    MatInputModule
-  ]
+    MatInputModule,
+  ],
 })
 export class GroupsModule {}

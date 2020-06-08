@@ -244,8 +244,8 @@ export class GroupsEffects {
             this.store.dispatch(groupsActions.loadGroup({ id: action.groupId }));
             return groupsActions.editGroupSuccess();
           }),
-          catchError(() => {
-            this.popupService.error('Błąd edycji');
+          catchError((error) => {
+            error.status === 406 ? this.popupService.error('Istnieje już grupa o tej nazwie!') : this.popupService.error('Błąd edycji');
             return of(groupsActions.editGroupFail());
           }),
         ),
