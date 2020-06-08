@@ -1,0 +1,65 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
+$image-wrapper: 80px;
+
+.container {
+  padding: 15px 25px;
+
+  .form-group {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+  }
+}
+
+.result {
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  height: 150px;
+  margin: 15px auto;
+  width: 100%;
+
+  .image__wrapper {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: $image-wrapper;
+  }
+
+  .image {
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+  }
+
+  .info__wrapper {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-around;
+    padding: 15px 0;
+    width: calc(100% - #{$image-wrapper});
+  }
+
+  .name {
+    font-size: 2.2rem;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  .owner,
+  .members-count {
+    font-size: 1.8rem;
+  }
+
+  @include break(map-get($breakpoints, lg)) {
+    width: 80%;
+  }
+}

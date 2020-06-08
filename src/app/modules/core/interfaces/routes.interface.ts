@@ -9,6 +9,7 @@ export interface IRoutes {
   privateGroups: IRoute;
   singleGroup: IRoute;
   error403: IRoute;
+  search: IRoute;
 }
 
 export interface IRoute {
