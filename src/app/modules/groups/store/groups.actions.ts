@@ -62,3 +62,7 @@ export const searchForGroupSuccess = createAction('[Groups] Search for group suc
 export const searchForGroupFail = createAction('[Groups] Search for group fail');
 
 export const clearResults = createAction('[Groups] Clear results');
+
+export const joinGroup = createAction('[Groups] Join group', props<{ groupId: number }>());
+export const joinGroupSuccess = createAction('[Groups] Join group success');
+export const joinGroupFail = createAction('[Groups] Join group fail');

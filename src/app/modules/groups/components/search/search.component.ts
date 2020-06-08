@@ -7,7 +7,8 @@ import { filter } from 'rxjs/operators';
 
 import { ROUTES } from '@core/consts';
 import { IGroup } from '@core/interfaces/group.interface';
-import { selectSearchingForGroup, selectSearchingResults, GroupsModuleState } from '../../store';
+import { DialogService } from '@core/services';
+import { selectJoiningGroup, selectSearchingForGroup, selectSearchingResults, GroupsModuleState } from '../../store';
 import * as groupsActions from '../../store/groups.actions';
 
 @Component({
@@ -23,7 +24,12 @@ export class SearchComponent implements OnDestroy {
   next: string;
   loading: boolean;
 
-  constructor(private route: ActivatedRoute, private router: Router, private store: Store<GroupsModuleState>) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private store: Store<GroupsModuleState>,
+    private dialogService: DialogService,
+  ) {
     this.sub$ = new Subscription();
     this.searchForm = new FormGroup({
       phrase: new FormControl(null, Validators.required),
@@ -62,6 +68,17 @@ export class SearchComponent implements OnDestroy {
     if (this.phrase.value) {
       this.router.navigate([ROUTES.search.path + this.phrase.value]);
     }
+  }
+
+  joinGroup(group: IGroup) {
+    this.dialogService.showDialog({
+      header: 'Dołączanie do grupy',
+      caption: 'Jesteś pewien?',
+      onAcceptCallback: () => {
+        this.store.dispatch(groupsActions.joinGroup({ groupId: group.id }));
+      },
+      loadingSelect: this.store.select(selectJoiningGroup),
+    });
   }
 
   ngOnDestroy(): void {

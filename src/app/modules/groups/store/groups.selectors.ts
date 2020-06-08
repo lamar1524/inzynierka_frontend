@@ -37,3 +37,5 @@ export const selectEditingGroup = createSelector(selectGroups, (state: GroupsSta
 
 export const selectSearchingForGroup = createSelector(selectGroups, (state: GroupsState) => state.resultsLoading);
 export const selectSearchingResults = createSelector(selectGroups, (state: GroupsState) => state.results);
+
+export const selectJoiningGroup = createSelector(selectGroups, (state: GroupsState) => state.joiningGroup);

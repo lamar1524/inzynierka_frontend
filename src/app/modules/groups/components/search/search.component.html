@@ -16,7 +16,7 @@
         <div class="name u-text--link">{{ group.name }}</div>
         <div class="owner">{{ group.owner.first_name }} {{ group.owner.last_name }}</div>
         <div class="members-count">Członkowie: {{ group.members_count }}</div>
-        <div class="name u-text--link">Dołącz!</div>
+        <div class="name u-text--link" (click)="joinGroup(group)">Dołącz!</div>
       </div>
     </div>
     <div class="lack">Brak wyników</div>

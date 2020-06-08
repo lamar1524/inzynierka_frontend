@@ -28,6 +28,7 @@ export interface GroupsState {
   editingGroup: boolean;
   resultsLoading: boolean;
   results: IResponseGroups;
+  joiningGroup: boolean;
 }
 
 export const initialState: GroupsState = {
@@ -51,6 +52,7 @@ export const initialState: GroupsState = {
   editingGroup: false,
   results: null,
   resultsLoading: false,
+  joiningGroup: false,
 };
 
 export const GROUPS_REDUCER = createReducer(
@@ -149,6 +151,10 @@ export const GROUPS_REDUCER = createReducer(
       : results,
   })),
   on(groupsActions.searchForGroupFail, (state) => ({ ...state, resultsLoading: false })),
+
+  on(groupsActions.joinGroup, (state) => ({ ...state, joiningGroup: true })),
+  on(groupsActions.joinGroupSuccess, (state) => ({ ...state, joiningGroup: false })),
+  on(groupsActions.joinGroupFail, (state) => ({ ...state, joiningGroup: false })),
 );
 
 export function groupsReducer(state: GroupsState | undefined, action: Action) {

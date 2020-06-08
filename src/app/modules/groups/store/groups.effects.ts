@@ -267,4 +267,26 @@ export class GroupsEffects {
       ),
     ),
   );
+
+  joinGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.joinGroup),
+      switchMap((action) =>
+        this.groupsService.joinGroup(action.groupId).pipe(
+          map((res) => {
+            this.popupService.success(res.message);
+            return groupsActions.joinGroupSuccess();
+          }),
+          catchError((error) => {
+            if (error.status === 406) {
+              this.popupService.error(error.error.message);
+            } else {
+              this.popupService.error('Błąd dołączania do grupy');
+            }
+            return of(groupsActions.joinGroupFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }

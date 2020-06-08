@@ -69,4 +69,8 @@ export class GroupsService {
   searchForGroups(url: string): Observable<IResponseGroups> {
     return this.http.get(url).pipe(map((res: any) => ({ previous: res.previous, next: res.next, groups: res.results })));
   }
+
+  joinGroup(groupId: number): Observable<{ message: string }> {
+    return this.http.post(URLS.joinGroup + groupId + '/', {}).pipe(map((res: any) => ({ message: res.message })));
+  }
 }
