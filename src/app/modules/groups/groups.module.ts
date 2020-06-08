@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { EffectsModule } from '@ngrx/effects';
@@ -27,7 +29,9 @@ import { GroupsEffects } from './store/groups.effects';
     MatButtonModule,
     MatTabsModule,
     PostsListModule,
-    PostFormModule
+    PostFormModule,
+    MatFormFieldModule,
+    MatInputModule
   ]
 })
 export class GroupsModule {}

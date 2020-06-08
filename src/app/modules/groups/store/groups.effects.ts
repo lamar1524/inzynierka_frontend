@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { URLS } from '@core/consts';
+import { ROUTES, URLS } from '@core/consts';
 import { GroupsService, PopupService } from '@core/services';
 import * as groupsActions from './groups.actions';
 import { GroupsModuleState } from './groups.reducer';
@@ -15,6 +16,7 @@ export class GroupsEffects {
     private actions$: Actions,
     private groupsService: GroupsService,
     private popupService: PopupService,
+    private router: Router,
     private store: Store<GroupsModuleState>,
   ) {}
 
@@ -188,6 +190,63 @@ export class GroupsEffects {
           catchError(() => {
             this.popupService.error('Błąd akceptowania użytkownika');
             return of(groupsActions.rejectPendingMemberFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  deleteGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.deleteGroup),
+      switchMap((action) =>
+        this.groupsService.deleteGroup(action.groupId).pipe(
+          map((res) => {
+            this.popupService.success(res.message);
+            this.router.navigate([ROUTES.privateGroups.path]);
+            return groupsActions.deleteGroupSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd usuwania grupy');
+            return of(groupsActions.deleteGroupFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  leaveGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.leaveGroup),
+      switchMap((action) =>
+        this.groupsService.leaveGroup(action.groupId).pipe(
+          map((res) => {
+            this.popupService.success(res.message);
+            this.router.navigate([ROUTES.privateGroups.path]);
+            return groupsActions.leaveGroupSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd opuszczania grupy');
+            return of(groupsActions.leaveGroupFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  editGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.editGroup),
+      switchMap((action) =>
+        this.groupsService.editGroup(action.group, action.groupId).pipe(
+          map((res) => {
+            this.popupService.success('Dane zostały zachowane');
+            this.store.dispatch(groupsActions.loadGroup({ id: action.groupId }));
+            return groupsActions.editGroupSuccess();
+          }),
+          catchError(() => {
+            this.popupService.error('Błąd edycji');
+            return of(groupsActions.editGroupFail());
           }),
         ),
       ),

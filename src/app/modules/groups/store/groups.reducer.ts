@@ -23,6 +23,9 @@ export interface GroupsState {
   loadingPendingMembers: boolean;
   pendingMembers: IResponseUsers;
   pendingProcessing: boolean;
+  deletingGroup: boolean;
+  leavingGroup: boolean;
+  editingGroup: boolean;
 }
 
 export const initialState: GroupsState = {
@@ -41,6 +44,9 @@ export const initialState: GroupsState = {
   loadingPendingMembers: false,
   pendingMembers: null,
   pendingProcessing: false,
+  deletingGroup: false,
+  leavingGroup: false,
+  editingGroup: false,
 };
 
 export const GROUPS_REDUCER = createReducer(
@@ -115,6 +121,18 @@ export const GROUPS_REDUCER = createReducer(
   on(groupsActions.rejectPendingMember, (state) => ({ ...state, pendingProcessing: true })),
   on(groupsActions.rejectPendingMemberSuccess, (state) => ({ ...state, pendingProcessing: false })),
   on(groupsActions.rejectPendingMemberFail, (state) => ({ ...state, pendingProcessing: false })),
+
+  on(groupsActions.deleteGroup, (state) => ({ ...state, deletingGroup: true })),
+  on(groupsActions.deleteGroupSuccess, (state) => ({ ...state, deletingGroup: false })),
+  on(groupsActions.deleteGroupFail, (state) => ({ ...state, deletingGroup: false })),
+
+  on(groupsActions.leaveGroup, (state) => ({ ...state, leavingGroup: true })),
+  on(groupsActions.leaveGroupSuccess, (state) => ({ ...state, leavingGroup: false })),
+  on(groupsActions.leaveGroupFail, (state) => ({ ...state, leavingGroup: false })),
+
+  on(groupsActions.editGroup, (state) => ({ ...state, editingGroup: true })),
+  on(groupsActions.editGroupSuccess, (state) => ({ ...state, editingGroup: false })),
+  on(groupsActions.editGroupFail, (state) => ({ ...state, editingGroup: false })),
 );
 
 export function groupsReducer(state: GroupsState | undefined, action: Action) {

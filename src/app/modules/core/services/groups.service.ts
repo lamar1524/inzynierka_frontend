@@ -53,4 +53,16 @@ export class GroupsService {
   rejectPending(groupId: number, userId: number): Observable<{ message: string }> {
     return this.http.request<{ message: string }>('delete', URLS.managePending + groupId + '/', { body: { userId } });
   }
+
+  deleteGroup(groupId: number): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(URLS.deleteGroup + groupId + '/');
+  }
+
+  leaveGroup(groupId: number): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(URLS.leaveGroup + groupId + '/', {});
+  }
+
+  editGroup(group: FormData, groupId: number): Observable<IGroup> {
+    return this.http.put<IGroup>(URLS.groupUpdate + groupId + '/', group);
+  }
 }

@@ -25,4 +25,6 @@ export const URLS: IUrls = {
   dropMember: host + 'groups/drop/',
   loadPendingMembers: host + 'groups/pending_list/',
   managePending: host + 'groups/manage-pending/',
+  deleteGroup: host + 'groups/delete/',
+  leaveGroup: host + 'groups/leave/',
 };

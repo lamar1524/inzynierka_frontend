@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -12,11 +13,14 @@ import { DialogService } from '@core/services';
 import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModuleState } from '@core/store';
 import {
   selectAddingPostVisibility,
+  selectDeletingGroup,
   selectDroppingUser,
+  selectEditingGroup,
   selectGroup,
   selectGroupLoading,
   selectGroupPosts,
   selectGroupPostsLoading,
+  selectLeavingGroup,
   selectMakingModerator,
   selectMembers,
   selectMembersLoading,
@@ -39,12 +43,15 @@ export class GroupComponent implements OnDestroy {
   group: IGroup;
   currentUser: IUser;
   groupLoading$: Observable<boolean>;
+  groupEditing$: Observable<boolean>;
   postsLoading$: Observable<boolean>;
   postEditing$: Observable<boolean>;
   postDeleting$: Observable<boolean>;
   postAdding$: Observable<boolean>;
   formVisibility$: Observable<boolean>;
   membersLoading$: Observable<boolean>;
+  deletingGroup$: Observable<boolean>;
+  leavingGroup$: Observable<boolean>;
   members: IUser[];
   posts: IPost[];
   postsNext: string;
@@ -52,6 +59,7 @@ export class GroupComponent implements OnDestroy {
   pendingMembers: IUser[];
   pendingMembersLoading$: Observable<boolean>;
   pendingMembersNext: string;
+  nameEdit: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,8 +67,10 @@ export class GroupComponent implements OnDestroy {
     private cdRef: ChangeDetectorRef,
     private router: Router,
     private dialogService: DialogService,
+    @Inject(DOCUMENT) private document: Document,
   ) {
     this.sub$ = new Subscription();
+    this.nameEdit = false;
     const route$ = this.route.params.subscribe((params) => {
       this.store.dispatch(groupsActions.loadGroup({ id: params.id }));
       this.store.dispatch(groupsActions.loadGroupsPosts({ url: null, id: params.id }));
@@ -117,6 +127,9 @@ export class GroupComponent implements OnDestroy {
     this.formVisibility$ = this.store.select(selectAddingPostVisibility);
     this.membersLoading$ = this.store.select(selectMembersLoading);
     this.pendingMembersLoading$ = this.store.select(selectPendingMembersLoading);
+    this.deletingGroup$ = this.store.select(selectDeletingGroup);
+    this.leavingGroup$ = this.store.select(selectLeavingGroup);
+    this.groupEditing$ = this.store.select(selectEditingGroup);
   }
 
   get ownerOrAdmin() {
@@ -229,6 +242,62 @@ export class GroupComponent implements OnDestroy {
       },
       loadingSelect: this.store.select(selectPendingProcessing),
     });
+  }
+
+  deleteGroup() {
+    this.dialogService.showDialog({
+      header: 'Usuwanie grupy',
+      caption: 'Tego nie da się cofnąć!',
+      onAcceptCallback: () => {
+        this.store.dispatch(groupsActions.deleteGroup({ groupId: this.group.id }));
+      },
+      loadingSelect: this.deletingGroup$,
+    });
+  }
+
+  leaveGroup() {
+    this.dialogService.showDialog({
+      header: 'Opuszczanie grupy',
+      caption: 'Jesteś pewien?',
+      onAcceptCallback: () => {
+        this.store.dispatch(groupsActions.leaveGroup({ groupId: this.group.id }));
+      },
+      loadingSelect: this.leavingGroup$,
+    });
+  }
+
+  pickImage() {
+    if (this.ownerOrAdmin) {
+      const input = this.document.querySelector('.image-input');
+      input.dispatchEvent(new MouseEvent('click'));
+    }
+  }
+
+  chooseImage($event) {
+    if (this.ownerOrAdmin) {
+      const imageToChange = $event.target.files[0];
+      const fd = new FormData();
+      fd.append('image', imageToChange);
+      this.store.dispatch(groupsActions.editGroup({ group: fd, groupId: this.group.id }));
+    }
+  }
+
+  showNameEdit() {
+    if (this.ownerOrAdmin) {
+      this.nameEdit = true;
+    }
+  }
+
+  sendName($event) {
+    if ($event.key === 'Enter' && this.ownerOrAdmin) {
+      const text = $event.target.value;
+      if (text !== '' && text !== null && text !== this.group.name) {
+        const fd = new FormData();
+        fd.append('name', text);
+        this.store.dispatch(groupsActions.editGroup({ group: fd, groupId: this.group.id }));
+        this.nameEdit = false;
+      }
+    }
   }
 
   ngOnDestroy(): void {

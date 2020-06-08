@@ -28,3 +28,9 @@ export const selectPendingMembersLoading = createSelector(selectGroups, (state: 
 export const selectPendingMembers = createSelector(selectGroups, (state: GroupsState) => state.pendingMembers);
 
 export const selectPendingProcessing = createSelector(selectGroups, (state: GroupsState) => state.pendingProcessing);
+
+export const selectDeletingGroup = createSelector(selectGroups, (state: GroupsState) => state.deletingGroup);
+
+export const selectLeavingGroup = createSelector(selectGroups, (state: GroupsState) => state.leavingGroup);
+
+export const selectEditingGroup = createSelector(selectGroups, (state: GroupsState) => state.editingGroup);
