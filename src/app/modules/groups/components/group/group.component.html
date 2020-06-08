@@ -85,6 +85,7 @@
               <span class="u-text--link option" (click)="showRejectDialog(pendingMember)">Usuń</span>
             </div>
           </div>
+          <div class="error" *ngIf="pendingMembers.length == 0">Brak oczekujących</div>
         </div>
       </mat-tab>
     </mat-tab-group>
