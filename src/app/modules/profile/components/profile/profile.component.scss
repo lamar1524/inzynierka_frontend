@@ -1,4 +1,52 @@
+@import '../../../../../styles/variables';
+
 .container {
   min-height: 100vh;
   width: 100%;
+
+  .photo__wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 25vh;
+    justify-content: flex-end;
+    width: 100%;
+
+    .photo {
+      border-radius: 50%;
+      height: 140px;
+      width: 140px;
+    }
+  }
+
+  .full-name__wrapper {
+    font-size: 4.5rem;
+    padding-top: 30px;
+    text-align: center;
+  }
+
+  .message__wrapper {
+    padding-top: 20px;
+    text-align: center;
+
+    .message-icon {
+      height: 48px;
+      width: 48px;
+    }
+  }
+
+  .data__wrapper {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    font-size: 2rem;
+    justify-content: space-around;
+    margin: 0 auto;
+    min-height: 200px;
+    width: 90%;
+
+    .prop__label {
+      color: $primary;
+    }
+  }
 }

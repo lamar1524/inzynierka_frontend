@@ -3,15 +3,19 @@
     <div class="image__wrapper"><img class="image" alt="profile image" [src]="post.owner.image" /></div>
     <div class="text__wrapper">
       <div class="credentials">
-        <div class="name">{{ post.owner.first_name }} {{ post.owner.last_name }}</div>
+        <div class="name">
+          <span class="u-text--link profile-link" [routerLink]="[routes.profile.path + post.owner.id + '/']">
+            {{ post.owner.first_name }} {{ post.owner.last_name }}
+          </span>
+        </div>
         <img src="../../../../../assets/img/next.svg" alt="" class="arrow" *ngIf="withGroup" />
         <div class="group u-text--link" *ngIf="withGroup" [routerLink]="[routes.singleGroup.path + post.group.id + '/']">
           {{ post.group.name }}
         </div>
       </div>
       <div class="date" *ngIf="withRoute">
-        <div [className]="withRoute ? 'date-route' : ''" (click)="routeToPost?.emit({ id: post.id })">
-          {{ post.date_posted | date: 'medium':'+1':'pl-PL' }}
+        <div [className]="withRoute ? 'date-route' : ''">
+          <span (click)="routeToPost?.emit({ id: post.id })">{{ post.date_posted | date: 'medium':'+1':'pl-PL' }}</span>
         </div>
       </div>
       <div class="date" *ngIf="!withRoute">
@@ -35,7 +39,13 @@
     <div class="post__image" *ngIf="post.image"><img class="image" alt="post image" [src]="post.image" /></div>
   </div>
   <ng-template #form>
-    <app-post-form [postProcessing$]="postEditing$" [postId]="post.id" (hideForm)="hideForm()" (submitPost)="updatePost($event)" [startContent]="post.content"></app-post-form>
+    <app-post-form
+      [postProcessing$]="postEditing$"
+      [postId]="post.id"
+      (hideForm)="hideForm()"
+      (submitPost)="updatePost($event)"
+      [startContent]="post.content"
+    ></app-post-form>
   </ng-template>
   <div class="dropdown" *ngIf="dropdownVisible">
     <div *ngIf="isOwner" class="option" (mouseenter)="hoverOption($event)" (mouseleave)="unHoverOption($event)" (click)="editButton()">

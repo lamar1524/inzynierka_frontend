@@ -61,14 +61,14 @@
               <img [src]="member.image" alt="Profile img" class="member-image" />
             </div>
             <div class="name__wrapper">
-              <p>{{ member.first_name }} {{ member.last_name }}</p>
+              <p class="u-text--link profile-link" [routerLink]="[routes.profile.path + member.id + '/']">{{ member.first_name }} {{ member.last_name }}</p>
               <p *ngIf="group.moderator?.id === member.id">Moderator</p>
               <p *ngIf="group.owner?.id === member.id">Właściciel</p>
             </div>
             <div class="buttons__wrapper" *ngIf="ownerOrAdmin || group?.moderator.id === currentUser?.id">
               <span
                 class="u-text--link option"
-                *ngIf="group.owner.id !== member.id && group.moderator.id !== member.id && group.owner.id === currentUser?.id"
+                *ngIf="group?.owner?.id !== member.id && group?.moderator?.id !== member.id && group?.owner?.id === currentUser?.id"
                 (click)="showModDialog(member)"
                 >Mod</span
               >
@@ -84,9 +84,9 @@
               <img [src]="pendingMember.image" alt="Profile img" class="member-image" />
             </div>
             <div class="name__wrapper">
-              <p>{{ pendingMember.first_name }} {{ pendingMember.last_name }}</p>
+              <p class="u-text--link profile-link" [routerLink]="[routes.profile.path + pendingMember.id + '/']">{{ pendingMember.first_name }} {{ pendingMember.last_name }}</p>
             </div>
-            <div class="buttons__wrapper" *ngIf="group?.moderator.id === currentUser?.id || group?.owner.id === currentUser?.id">
+            <div class="buttons__wrapper" *ngIf="group?.moderator?.id === currentUser?.id || group?.owner?.id === currentUser?.id">
               <span class="u-text--link option" (click)="showAcceptDialog(pendingMember)">Akceptuj</span>
               <span class="u-text--link option" (click)="showRejectDialog(pendingMember)">Usuń</span>
             </div>

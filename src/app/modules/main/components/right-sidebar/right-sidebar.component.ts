@@ -1,10 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ROUTES } from '@core/consts';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { IResponseUsers, IUser } from '@core/interfaces';
+import { IResponseUsers, IRoutes, IUser } from '@core/interfaces';
 import { loadFriendsList, selectFriends, selectFriendsLoading, MainModuleState } from '../../store';
 
 @Component({
@@ -18,6 +19,7 @@ export class RightSidebarComponent {
   users$: Observable<IUser[]>;
   usersLoading$: Observable<boolean>;
   loading: boolean;
+  readonly routes: IRoutes;
 
   constructor(private store: Store<MainModuleState>, @Inject(DOCUMENT) private document: Document) {
     this.loading = false;
@@ -35,6 +37,7 @@ export class RightSidebarComponent {
         }
       }),
     );
+    this.routes = ROUTES;
   }
 
   hover(event) {

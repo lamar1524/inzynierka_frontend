@@ -25,4 +25,5 @@ export interface IUrls {
   leaveGroup: string;
   searchForGroups: string;
   joinGroup: string;
+  loadProfile: string;
 }

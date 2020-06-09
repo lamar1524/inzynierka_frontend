@@ -1,7 +1,22 @@
-<div class="container">
+<div class="container" *ngIf="profile$ | async as profile">
   <div class="photo__wrapper">
+    <img class="photo" [src]="profile.image" />
   </div>
-  <div class="full-name__wrapper"></div>
-  <div class="message__wrapper"></div>
-  <div class="data__wrapper"></div>
+  <div class="full-name__wrapper">
+    <span class="full-name">{{ profile.first_name }} {{ profile.last_name }}</span>
+  </div>
+  <div class="message__wrapper">
+    <img src="../../../../../assets/img/msg.png" class="message-icon" />
+  </div>
+  <div class="data__wrapper">
+    <div class="prop">
+      <span class="prop__label">Imię: </span> <span class="prop__value">{{ profile.first_name }}</span>
+    </div>
+    <div class="prop">
+      <span class="prop__label">Nazwisko: </span> <span class="prop__value">{{ profile.last_name }}</span>
+    </div>
+    <div class="prop">
+      <span class="prop__label">Email: </span> <span class="prop__value">{{ profile.email }}</span>
+    </div>
+  </div>
 </div>

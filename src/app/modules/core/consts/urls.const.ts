@@ -29,4 +29,5 @@ export const URLS: IUrls = {
   leaveGroup: host + 'groups/leave/',
   searchForGroups: host + 'groups/search',
   joinGroup: host + 'groups/join/',
+  loadProfile: host + 'users/get/',
 };

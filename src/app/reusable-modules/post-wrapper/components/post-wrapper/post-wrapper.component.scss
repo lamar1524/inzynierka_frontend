@@ -13,6 +13,12 @@ $options-wrapper: 35px;
   position: relative;
   width: 100%;
 
+  .profile-link {
+    &:hover {
+      color: $primary;
+    }
+  }
+
   .post__header {
     border-bottom: 1px solid $primary;
     display: grid;

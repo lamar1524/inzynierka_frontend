@@ -8,7 +8,7 @@ import { filter } from 'rxjs/operators';
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { ROUTES } from '@core/consts';
 import { USER_ROLE } from '@core/enums';
-import { IGroup, IPost, IUser } from '@core/interfaces';
+import { IGroup, IPost, IRoutes, IUser } from '@core/interfaces';
 import { DialogService } from '@core/services';
 import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModuleState } from '@core/store';
 import {
@@ -60,6 +60,7 @@ export class GroupComponent implements OnDestroy {
   pendingMembersLoading$: Observable<boolean>;
   pendingMembersNext: string;
   nameEdit: boolean;
+  readonly routes: IRoutes;
 
   constructor(
     private route: ActivatedRoute,
@@ -69,6 +70,7 @@ export class GroupComponent implements OnDestroy {
     private dialogService: DialogService,
     @Inject(DOCUMENT) private document: Document,
   ) {
+    this.routes = ROUTES;
     this.sub$ = new Subscription();
     this.nameEdit = false;
     const route$ = this.route.params.subscribe((params) => {

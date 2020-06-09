@@ -1,7 +1,13 @@
 <div class="container" (scroll)="loadMoreFriends($event)">
   <div class="friends__wrapper">
     <div class="friends__header"><span>Kontakty</span></div>
-    <div class="friend__wrapper" (mouseenter)="hover($event)" (mouseleave)="unHover($event)" *ngFor="let friend of users$ | async">
+    <div
+      class="friend__wrapper u-text--link"
+      (mouseenter)="hover($event)"
+      (mouseleave)="unHover($event)"
+      [routerLink]="[routes.profile.path + friend.id + '/']"
+      *ngFor="let friend of users$ | async"
+    >
       <div class="friend__image"><img class="image" alt="profile" [src]="friend.image" /></div>
       <div class="friend__credentials">
         <span>{{ friend.first_name }} {{ friend.last_name }}</span>

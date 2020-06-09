@@ -20,6 +20,12 @@ $info-wrapper: 80px;
     }
   }
 
+  .profile-link {
+    &:hover {
+      color: $primary;
+    }
+  }
+
   .group__header {
     background-color: #fff;
   }
