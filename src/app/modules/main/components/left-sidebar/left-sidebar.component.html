@@ -24,12 +24,14 @@
         <span>{{ group.name.length >= 20 ? (group.name | slice: 0:17) + '...' : group.name }}</span>
       </div>
     </div>
-    <div class="groups__caption u-text--link u-text--primary" [routerLink]="[routes.privateGroups.path]" *ngIf="(groups$ | async) && (groups$ | async).length === 5; else error">
+    <div
+      class="groups__caption u-text--link u-text--primary"
+      [routerLink]="[routes.privateGroups.path]"
+      *ngIf="(groups$ | async) && (groups$ | async).length === 5"
+    >
       Zobacz więcej...
     </div>
-    <ng-template #error>
-      <div class="groups__caption u-text--link">Brak grup.</div>
-    </ng-template>
+    <div class="groups__caption u-text--link" *ngIf="(groups$ | async)?.length === 0">Brak grup.</div>
   </div>
   <ng-template #spinner>
     <div class="spinner__wrapper">

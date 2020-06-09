@@ -45,4 +45,8 @@ export const ROUTES: IRoutes = {
     name: 'search',
     path: '/home/groups/search/',
   },
+  profile: {
+    name: 'profile',
+    path: '/home/profile/',
+  },
 };

@@ -6,4 +6,5 @@ export const STORE_FEATURES: IStoreFeatures = {
   posts: 'posts',
   groups: 'groups',
   core: 'core',
+  profile: 'profile',
 };

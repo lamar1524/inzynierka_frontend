@@ -39,7 +39,7 @@
       <button class="option" (click)="closeNav()" [routerLink]="[routes.search.path]" mat-button>Szukaj</button>
     </div>
     <div class="option__wrapper">
-      <button class="option" (click)="closeNav()" mat-button>Profil</button>
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.profile.path + (currentUser$ | async)?.id]" mat-button>Profil</button>
     </div>
     <div class="option__wrapper">
       <button class="option" (click)="logout()" mat-button>Wyloguj</button>
@@ -61,7 +61,7 @@
       <button class="option" (click)="closeNav()" [routerLink]="[routes.search.path]" mat-button>Szukaj</button>
     </div>
     <div class="option__wrapper">
-      <button class="option" (click)="closeNav()" mat-button>Profil</button>
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.profile.path + (currentUser$ | async)?.id]" mat-button>Profil</button>
     </div>
     <div class="option__wrapper">
       <button class="option" (click)="logout()" mat-button>Wyloguj</button>

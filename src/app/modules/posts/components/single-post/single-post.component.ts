@@ -95,11 +95,11 @@ export class SinglePostComponent implements OnDestroy {
   }
 
   isOwner(obj: IPost | IComment, user: IUser): boolean {
-    return obj.owner.id === user.id;
+    return obj.owner?.id === user?.id;
   }
 
   isAdminOrIsOwner(obj: IPost | IComment, user: IUser): boolean {
-    return obj.owner.id === user.id || user.role === USER_ROLE.ADMIN;
+    return obj.owner?.id === user.id || user.role === USER_ROLE.ADMIN;
   }
 
   updatePost = ($event: { id: number; data: FormData }) =>

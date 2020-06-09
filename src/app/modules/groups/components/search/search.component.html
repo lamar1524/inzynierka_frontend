@@ -19,7 +19,7 @@
         <div class="name u-text--link" (click)="joinGroup(group)">Dołącz!</div>
       </div>
     </div>
-    <div class="lack">Brak wyników</div>
+    <div class="lack" *ngIf="results?.length === 0">Brak wyników</div>
   </div>
   <ng-template #spinner>
     <div class="spinner__wrapper">

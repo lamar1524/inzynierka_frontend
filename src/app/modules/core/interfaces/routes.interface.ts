@@ -10,6 +10,7 @@ export interface IRoutes {
   singleGroup: IRoute;
   error403: IRoute;
   search: IRoute;
+  profile: IRoute;
 }
 
 export interface IRoute {
