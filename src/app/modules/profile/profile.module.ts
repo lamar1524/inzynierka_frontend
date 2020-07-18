@@ -1,5 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
@@ -15,6 +19,10 @@ import { profileReducer, ProfileEffects } from './store';
     ProfileRoutingModule,
     StoreModule.forFeature(STORE_FEATURES.profile, profileReducer),
     EffectsModule.forFeature([ProfileEffects]),
+    MatButtonModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    ReactiveFormsModule,
   ],
 })
 export class ProfileModule {}

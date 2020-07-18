@@ -1,7 +1,7 @@
 @import '../../../../../styles/variables';
 
 .container {
-  min-height: 100vh;
+  min-height: calc(100vh - #{$nav-height});
   width: 100%;
 
   .photo__wrapper {
@@ -20,9 +20,22 @@
   }
 
   .full-name__wrapper {
+    align-items: center;
+    display: flex;
     font-size: 4.5rem;
+    justify-content: center;
     padding-top: 30px;
     text-align: center;
+    width: 100%;
+
+    .edit-icon__wrapper {
+      margin-left: 10px;
+    }
+
+    .edit-icon {
+      height: 24px;
+      width: 24px;
+    }
   }
 
   .message__wrapper {
@@ -49,4 +62,12 @@
       color: $primary;
     }
   }
+}
+
+.spinner__wrapper {
+  align-content: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
 }
