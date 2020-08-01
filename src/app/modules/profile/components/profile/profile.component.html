@@ -24,8 +24,9 @@
       <span class="prop__label">Email: </span> <span class="prop__value">{{ profile.email }}</span>
     </div>
   </div>
-  <div class="data__wrapper" *ngIf="editing && isCurrentUser">
+  <div class="data__wrapper form__wrapper" *ngIf="editing && isCurrentUser">
     <form [formGroup]="editForm" (ngSubmit)="submitUpdate()">
+      <div class="form__header u-text--bold">Edit credentials</div>
       <div class="prop">
         <mat-form-field>
           <input formControlName="firstName" matInput type="text" placeholder="Imię" />
@@ -44,6 +45,20 @@
       <div class="prop">
         <button mat-raised-button type="submit" color="primary">Zapisz</button>
       </div>
+    </form>
+    <form [formGroup]="editPasswordForm">
+      <div class="form__header u-text--bold">Change password</div>
+      <div class="prop">
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" />
+        </mat-form-field>
+      </div>
+      <div class="prop">
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" />
+        </mat-form-field>
+      </div>
+      <button type="submit" mat-raised-button color="primary">Zapisz</button>
     </form>
   </div>
 </div>

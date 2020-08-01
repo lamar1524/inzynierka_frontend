@@ -1,4 +1,5 @@
 @import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
 
 .container {
   min-height: calc(100vh - #{$nav-height});
@@ -60,6 +61,23 @@
 
     .prop__label {
       color: $primary;
+    }
+  }
+
+  .form__wrapper {
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 0;
+
+    .form__header {
+      padding: 10px 0;
+    }
+  }
+
+  @include break(map-get($breakpoints, md)) {
+    .form__wrapper {
+      flex-direction: row;
     }
   }
 }
