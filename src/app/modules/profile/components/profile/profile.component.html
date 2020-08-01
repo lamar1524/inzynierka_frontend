@@ -1,4 +1,4 @@
-<div class="container" *ngIf="(profileLoading$ | async) === false; else spinner">
+<div class="container" *ngIf="(profileLoading$ | async) === false && (profileEditing$ | async) === false; else spinner">
   <div class="photo__wrapper">
     <img class="photo" [src]="profile.image" />
   </div>

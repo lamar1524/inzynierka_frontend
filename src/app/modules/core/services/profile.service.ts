@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { URLS } from '@core/consts';
-import { IUser } from '@core/interfaces';
+import { IUpdateUser, IUser } from '@core/interfaces';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,5 +12,9 @@ export class ProfileService {
 
   getProfile(userId: number): Observable<IUser> {
     return this.http.get<IUser>(URLS.loadProfile + userId + '/');
+  }
+
+  editProfile(user: IUpdateUser): Observable<IUser> {
+    return this.http.put<IUser>(URLS.editProfile, user);
   }
 }

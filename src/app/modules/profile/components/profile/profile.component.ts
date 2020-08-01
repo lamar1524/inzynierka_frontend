@@ -6,8 +6,8 @@ import { IUser } from '@core/interfaces';
 import { equalityValidator } from '@core/validators/equality.validator';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
-import { selectProfileData, selectProfileLoading, ProfileModuleState } from '../../store';
+import { filter, tap } from 'rxjs/operators';
+import { selectProfileData, selectProfileEditing, selectProfileLoading, ProfileModuleState } from '../../store';
 import * as profileActions from '../../store/profile.actions';
 
 @Component({
@@ -19,6 +19,7 @@ import * as profileActions from '../../store/profile.actions';
 export class ProfileComponent implements OnDestroy {
   profile: IUser;
   profileLoading$: Observable<boolean>;
+  profileEditing$: Observable<boolean>;
   currentUser: IUser;
   sub$: Subscription;
   editing: boolean;
@@ -71,6 +72,13 @@ export class ProfileComponent implements OnDestroy {
     this.sub$.add(route$);
 
     this.profileLoading$ = this.store.select(selectProfileLoading);
+    this.profileEditing$ = this.store.select(selectProfileEditing).pipe(
+      tap((res) => {
+        if (this.editing && !res) {
+          this.editing = false;
+        }
+      }),
+    );
   }
 
   private _initForm(): void {
@@ -93,7 +101,7 @@ export class ProfileComponent implements OnDestroy {
   }
 
   submitUpdate(): void {
-    console.log(this.editForm.value);
+    this.store.dispatch(profileActions.editProfileData({ user: { ...this.editForm.value, id: this.profile.id } }));
   }
 
   ngOnDestroy(): void {

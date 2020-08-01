@@ -10,11 +10,13 @@ export interface ProfileModuleState {
 export interface ProfileState {
   profileLoading: boolean;
   profileData: IUser;
+  profileEditing: boolean;
 }
 
 export const initialState: ProfileState = {
   profileData: null,
   profileLoading: false,
+  profileEditing: false,
 };
 
 export const PROFILE_REDUCER = createReducer(
@@ -22,6 +24,10 @@ export const PROFILE_REDUCER = createReducer(
   on(profileActions.loadProfileData, (state) => ({ ...state, profileLoading: true })),
   on(profileActions.loadProfileDataSuccess, (state, { user }) => ({ ...state, profileLoading: false, profileData: user })),
   on(profileActions.loadProfileDataFail, (state) => ({ ...state, profileLoading: false })),
+
+  on(profileActions.editProfileData, (state) => ({ ...state, profileEditing: true })),
+  on(profileActions.editProfileDataSuccess, (state, { user }) => ({ ...state, profileEditing: false, profileData: user })),
+  on(profileActions.editProfileDataFail, (state) => ({ ...state, profileEditing: false })),
 );
 
 export function profileReducer(state: ProfileState | undefined, action: Action) {

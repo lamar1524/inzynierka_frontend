@@ -24,4 +24,21 @@ export class ProfileEffects {
       ),
     ),
   );
+
+  editProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(profileActions.editProfileData),
+      switchMap((action) =>
+        this.profileService.editProfile(action.user).pipe(
+          map((res) => {
+            return profileActions.editProfileDataSuccess({ user: res });
+          }),
+          catchError((error) => {
+            this.popupService.error('Edytowanie profilu nieudane, spróbuj ponownie');
+            return of(profileActions.editProfileDataFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }
