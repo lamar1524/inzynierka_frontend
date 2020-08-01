@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
@@ -33,6 +34,7 @@ import { groupsReducer, GroupsEffects } from './store';
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-  ],
+    MatTooltipModule
+  ]
 })
 export class GroupsModule {}

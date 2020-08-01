@@ -19,7 +19,6 @@ export class PrivateGroupsComponent implements OnDestroy {
   next: string;
   groupsLoading$: Observable<boolean>;
   sub$: Subscription;
-  readonly routes: IRoutes;
 
   constructor(private store: Store<GroupsModuleState>, private cdRef: ChangeDetectorRef) {
     this.groups = [];
@@ -35,8 +34,12 @@ export class PrivateGroupsComponent implements OnDestroy {
       });
     this.groupsLoading$ = this.store.select(selectPrivateGroupsLoading);
     this.sub$.add(groups$);
-    this.routes = ROUTES;
   }
+
+  get routes(): IRoutes {
+    return ROUTES;
+  }
+
   @HostListener('window:scroll') scroll() {
     if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
       if (this.next !== null) {

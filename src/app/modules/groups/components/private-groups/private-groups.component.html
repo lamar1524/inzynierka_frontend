@@ -3,4 +3,12 @@
   <div class="spinner__wrapper" *ngIf="(groupsLoading$ | async) === true">
     <mat-spinner [diameter]="70"></mat-spinner>
   </div>
+  <ng-container *ngIf="groups.length === 0">
+    <span>
+      Brak grup! Spróbuj ich
+      <span class="u-text--bold u-text--link" [routerLink]="[routes.search.path]" matTooltip="Przenieś na stronę wyszukiwania">
+        wyszukać
+      </span>
+    </span>
+  </ng-container>
 </div>
