@@ -15,11 +15,12 @@ import { GroupWrapperModule } from '@reusable-modules/group-wrapper';
 import { PostFormModule } from '@reusable-modules/post-form';
 import { PostsListModule } from '@reusable-modules/posts-list';
 import { GroupComponent, PrivateGroupsComponent, SearchComponent } from './components';
+import { CreateGroupComponent } from './components/create-group/create-group.component';
 import { GroupsRoutingModule } from './groups-routing.module';
 import { groupsReducer, GroupsEffects } from './store';
 
 @NgModule({
-  declarations: [PrivateGroupsComponent, GroupComponent, SearchComponent],
+  declarations: [PrivateGroupsComponent, GroupComponent, SearchComponent, CreateGroupComponent],
   imports: [
     CommonModule,
     GroupsRoutingModule,
@@ -34,7 +35,7 @@ import { groupsReducer, GroupsEffects } from './store';
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatTooltipModule
-  ]
+    MatTooltipModule,
+  ],
 })
 export class GroupsModule {}
