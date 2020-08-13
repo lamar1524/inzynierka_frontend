@@ -10,7 +10,7 @@
     >
       <div class="friend__image"><img class="image" alt="profile" [src]="friend.image" /></div>
       <div class="friend__credentials">
-        <span>{{ friend.first_name }} {{ friend.last_name }}</span>
+        <span>{{ friend.firstName }} {{ friend.lastName }}</span>
       </div>
     </div>
     <div class="error__wrapper" *ngIf="(users$ | async)?.length === 0 || (users$ | async) === null">Brak kontaktów.</div>

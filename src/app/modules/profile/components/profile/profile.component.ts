@@ -83,8 +83,8 @@ export class ProfileComponent implements OnDestroy {
 
   private _initForm(): void {
     this.editForm = new FormGroup({
-      firstName: new FormControl(this.profile.first_name, [Validators.required]),
-      lastName: new FormControl(this.profile.last_name, [Validators.required]),
+      firstName: new FormControl(this.profile.firstName, [Validators.required]),
+      lastName: new FormControl(this.profile.lastName, [Validators.required]),
       email: new FormControl(this.profile.email, [Validators.required, Validators.email]),
     });
   }

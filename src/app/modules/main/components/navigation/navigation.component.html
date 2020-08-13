@@ -7,7 +7,7 @@
       <div class="img__wrapper">
         <img class="img" alt="Photo" [src]="currentUser.image" />
       </div>
-      <span class="name__wrapper">{{ currentUser.first_name }} {{ currentUser.last_name }} </span>
+      <span class="name__wrapper">{{ currentUser.firstName }} {{ currentUser.lastName }} </span>
     </div>
     <ng-template #spinner>
       <div class="user__wrapper wrapper">
@@ -39,7 +39,9 @@
       <button class="option" (click)="closeNav()" [routerLink]="[routes.search.path]" mat-button>Szukaj</button>
     </div>
     <div class="option__wrapper">
-      <button class="option" (click)="closeNav()" [routerLink]="[routes.profile.path + (currentUser$ | async)?.id]" mat-button>Profil</button>
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.profile.path + (currentUser$ | async)?.id]" mat-button>
+        Profil
+      </button>
     </div>
     <div class="option__wrapper">
       <button class="option" (click)="logout()" mat-button>Wyloguj</button>
@@ -61,7 +63,9 @@
       <button class="option" (click)="closeNav()" [routerLink]="[routes.search.path]" mat-button>Szukaj</button>
     </div>
     <div class="option__wrapper">
-      <button class="option" (click)="closeNav()" [routerLink]="[routes.profile.path + (currentUser$ | async)?.id]" mat-button>Profil</button>
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.profile.path + (currentUser$ | async)?.id]" mat-button>
+        Profil
+      </button>
     </div>
     <div class="option__wrapper">
       <button class="option" (click)="logout()" mat-button>Wyloguj</button>

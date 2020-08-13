@@ -6,7 +6,7 @@ export interface IPost {
   content: string;
   owner?: IUser;
   group?: IBaseGroup;
-  date_posted?: Date;
+  datePosted?: Date;
   image?: string | File;
   file?: string | File;
   comments?: IComment[];
@@ -22,7 +22,7 @@ export interface IComment {
   id?: number;
   owner?: IUser;
   content: string;
-  date_commented?: Date;
+  dateCommented?: Date;
   post?: number;
 }
 

@@ -5,7 +5,7 @@
       <div class="credentials">
         <div class="name">
           <span class="u-text--link profile-link" [routerLink]="[routes.profile.path + post.owner.id + '/']">
-            {{ post.owner.first_name }} {{ post.owner.last_name }}
+            {{ post.owner.firstName }} {{ post.owner.lastName }}
           </span>
         </div>
         <img src="../../../../../assets/img/next.svg" alt="" class="arrow" *ngIf="withGroup" />
@@ -15,12 +15,12 @@
       </div>
       <div class="date" *ngIf="withRoute">
         <div [className]="withRoute ? 'date-route' : ''">
-          <span (click)="routeToPost?.emit({ id: post.id })">{{ post.date_posted | date: 'medium':'+1':'pl-PL' }}</span>
+          <span (click)="routeToPost?.emit({ id: post.id })">{{ post.datePosted | date: 'medium':'+1':'pl-PL' }}</span>
         </div>
       </div>
       <div class="date" *ngIf="!withRoute">
         <div>
-          {{ post.date_posted | date: 'medium':'+1':'pl-PL' }}
+          {{ post.datePosted | date: 'medium':'+1':'pl-PL' }}
         </div>
       </div>
     </div>

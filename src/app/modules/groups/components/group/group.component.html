@@ -12,7 +12,7 @@
             <input matInput type="text" [value]="group?.name" (keyup)="sendName($event)" />
           </mat-form-field>
         </div>
-        <div class="owner">{{ group?.owner.first_name }} {{ group?.owner.last_name }}</div>
+        <div class="owner">{{ group?.owner.firstName }} {{ group?.owner.lastName }}</div>
       </div>
       <div class="manage-button__wrapper">
         <button class="manage-button" mat-raised-button color="warn" (click)="deleteGroup()" *ngIf="ownerOrAdmin">Usuń</button>
@@ -54,14 +54,16 @@
           Brak Postów
         </div>
       </mat-tab>
-      <mat-tab [label]="'Członkowie(' + group?.members_count + ')'">
+      <mat-tab [label]="'Członkowie(' + group?.membersCount + ')'">
         <div class="members__wrapper">
           <div class="member" *ngFor="let member of members">
             <div class="member-image__wrapper">
               <img [src]="member.image" alt="Profile img" class="member-image" />
             </div>
             <div class="name__wrapper">
-              <p class="u-text--link profile-link" [routerLink]="[routes.profile.path + member.id + '/']">{{ member.first_name }} {{ member.last_name }}</p>
+              <p class="u-text--link profile-link" [routerLink]="[routes.profile.path + member.id + '/']">
+                {{ member.firstName }} {{ member.lastName }}
+              </p>
               <p *ngIf="group.moderator?.id === member.id">Moderator</p>
               <p *ngIf="group.owner?.id === member.id">Właściciel</p>
             </div>
@@ -77,14 +79,16 @@
           </div>
         </div>
       </mat-tab>
-      <mat-tab [label]="'Oczekujący(' + group.pending_count + ')'">
+      <mat-tab [label]="'Oczekujący(' + group.pendingCount + ')'">
         <div class="members__wrapper">
           <div class="member" *ngFor="let pendingMember of pendingMembers">
             <div class="member-image__wrapper">
               <img [src]="pendingMember.image" alt="Profile img" class="member-image" />
             </div>
             <div class="name__wrapper">
-              <p class="u-text--link profile-link" [routerLink]="[routes.profile.path + pendingMember.id + '/']">{{ pendingMember.first_name }} {{ pendingMember.last_name }}</p>
+              <p class="u-text--link profile-link" [routerLink]="[routes.profile.path + pendingMember.id + '/']">
+                {{ pendingMember.firstName }} {{ pendingMember.lastName }}
+              </p>
             </div>
             <div class="buttons__wrapper" *ngIf="group?.moderator?.id === currentUser?.id || group?.owner?.id === currentUser?.id">
               <span class="u-text--link option" (click)="showAcceptDialog(pendingMember)">Akceptuj</span>

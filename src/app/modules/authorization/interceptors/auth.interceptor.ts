@@ -21,7 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
           this.handle401Error(request, next, error);
         } else if (error.status === 403) {
           this.router.navigate([ROUTES.error403.path]);
-          return of({});
+          return throwError(error);
         }
         return throwError(error);
       }),

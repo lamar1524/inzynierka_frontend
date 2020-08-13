@@ -23,8 +23,8 @@ export class RegisterComponent {
 
   constructor(private store: Store<AuthModuleState>, private cdRef: ChangeDetectorRef) {
     this.registerForm = new FormGroup({
-      first_name: new FormControl(null, Validators.required),
-      last_name: new FormControl(null, Validators.required),
+      firstName: new FormControl(null, Validators.required),
+      lastName: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, Validators.email]),
       password: new FormControl(null, [Validators.required, Validators.minLength(8)]),
       repeatPassword: new FormControl(null, [Validators.required, equalityValidator('password')]),
@@ -39,11 +39,11 @@ export class RegisterComponent {
   }
 
   get firstName() {
-    return this.registerForm.get('first_name');
+    return this.registerForm.get('firstName');
   }
 
   get lastName() {
-    return this.registerForm.get('last_name');
+    return this.registerForm.get('lastName');
   }
 
   get email() {
@@ -58,7 +58,7 @@ export class RegisterComponent {
   }
 
   submitRegister(): void {
-    const { first_name, last_name, email, password } = this.registerForm.value;
-    this.store.dispatch(authActions.register({ data: { first_name, last_name, email, password } }));
+    const { firstName, lastName, email, password } = this.registerForm.value;
+    this.store.dispatch(authActions.register({ data: { firstName, lastName, email, password } }));
   }
 }

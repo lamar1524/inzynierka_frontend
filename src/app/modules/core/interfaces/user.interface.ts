@@ -7,16 +7,16 @@ export interface ILoginUser {
 
 export interface IRegisterUser {
   email: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   password: string;
 }
 
 export interface IUser {
   id: number;
   email: string;
-  first_name: string;
-  last_name: string;
+  firstName: string;
+  lastName: string;
   role: USER_ROLE;
   image: string;
   token?: string;

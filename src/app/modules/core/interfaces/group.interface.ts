@@ -7,8 +7,8 @@ export interface IGroup {
   moderator?: IUser;
   image: string;
   members: IUser[];
-  members_count?: number;
-  pending_count?: number;
+  membersCount?: number;
+  pendingCount?: number;
 }
 
 export interface IBaseGroup {

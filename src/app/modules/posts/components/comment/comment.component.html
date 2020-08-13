@@ -3,13 +3,13 @@
     <div class="photo__wrapper">
       <img class="image" [src]="comment.owner.image" alt="User image" />
     </div>
-    <div class="name__wrapper">{{ comment.owner.first_name }} {{ comment.owner.last_name }}</div>
+    <div class="name__wrapper">{{ comment.owner.firstName }} {{ comment.owner.lastName }}</div>
     <div class="options__wrapper" *ngIf="isOwnerOrAdmin">
       <button class="options__button" mat-icon-button (click)="dropdownToggle($event)">
         <img class="options__img" alt="options" src="../../../../../assets/img/options.svg" />
       </button>
     </div>
-    <div class="date">{{ comment.date_commented | date: 'medium':'+1':'pl-PL' }}</div>
+    <div class="date">{{ comment.dateCommented | date: 'medium':'+1':'pl-PL' }}</div>
   </div>
   <div class="content" *ngIf="!formVisibility; else form">
     {{ comment.content }}

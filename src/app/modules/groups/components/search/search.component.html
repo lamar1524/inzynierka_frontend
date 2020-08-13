@@ -14,8 +14,8 @@
       </div>
       <div class="info__wrapper">
         <div class="name u-text--link">{{ group.name }}</div>
-        <div class="owner">{{ group.owner.first_name }} {{ group.owner.last_name }}</div>
-        <div class="members-count">Członkowie: {{ group.members_count }}</div>
+        <div class="owner">{{ group.owner.firstName }} {{ group.owner.lastName }}</div>
+        <div class="members-count">Członkowie: {{ group.membersCount }}</div>
         <div class="name u-text--link" (click)="joinGroup(group)">Dołącz!</div>
       </div>
     </div>

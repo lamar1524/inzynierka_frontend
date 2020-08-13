@@ -3,7 +3,7 @@
     <img class="photo" [src]="profile.image" />
   </div>
   <div class="full-name__wrapper">
-    <span class="full-name">{{ profile.first_name }} {{ profile.last_name }}</span>
+    <span class="full-name">{{ profile.firstName }} {{ profile.lastName }}</span>
     <button (click)="editToggle()" *ngIf="isCurrentUser" mat-icon-button class="edit-icon__wrapper">
       <img class="edit-icon" src="../../../../../assets/img/edit.svg" />
     </button>
@@ -14,11 +14,11 @@
   <div class="data__wrapper" *ngIf="!editing">
     <div class="prop">
       <span class="prop__label">Imię: </span>
-      <span class="prop__value">{{ profile.first_name }}</span>
+      <span class="prop__value">{{ profile.firstName }}</span>
     </div>
     <div class="prop">
       <span class="prop__label">Nazwisko: </span>
-      <span class="prop__value">{{ profile.last_name }}</span>
+      <span class="prop__value">{{ profile.lastName }}</span>
     </div>
     <div class="prop">
       <span class="prop__label">Email: </span> <span class="prop__value">{{ profile.email }}</span>
@@ -34,7 +34,7 @@
       </div>
       <div class="prop">
         <mat-form-field>
-          <input formControlName="lastName" matInput type="text" placeholder="Nazwisko" [value]="profile.last_name" />
+          <input formControlName="lastName" matInput type="text" placeholder="Nazwisko" [value]="profile.lastName" />
         </mat-form-field>
       </div>
       <div class="prop">
