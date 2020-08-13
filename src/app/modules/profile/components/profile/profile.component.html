@@ -26,7 +26,7 @@
   </div>
   <div class="data__wrapper form__wrapper" *ngIf="editing && isCurrentUser">
     <form [formGroup]="editForm" (ngSubmit)="submitUpdate()">
-      <div class="form__header u-text--bold">Edit credentials</div>
+      <div class="form__header u-text--bold">Edytuj dane</div>
       <div class="prop">
         <mat-form-field>
           <input formControlName="firstName" matInput type="text" placeholder="Imię" />
@@ -43,22 +43,22 @@
         </mat-form-field>
       </div>
       <div class="prop">
-        <button mat-raised-button type="submit" color="primary">Zapisz</button>
+        <button mat-raised-button type="submit" color="primary" [disabled]="editForm.invalid">Zapisz</button>
       </div>
     </form>
-    <form [formGroup]="editPasswordForm">
-      <div class="form__header u-text--bold">Change password</div>
+    <form [formGroup]="editPasswordForm" (ngSubmit)="sendPasswordChange()">
+      <div class="form__header u-text--bold">Zmień hasło</div>
       <div class="prop">
         <mat-form-field>
-          <input matInput type="password" placeholder="Password" />
+          <input formControlName="password" matInput type="password" placeholder="Nowe hasło" />
         </mat-form-field>
       </div>
       <div class="prop">
         <mat-form-field>
-          <input matInput type="password" placeholder="Password" />
+          <input formControlName="repeatPassword" matInput type="password" placeholder="Powtórz hasło" />
         </mat-form-field>
       </div>
-      <button type="submit" mat-raised-button color="primary">Zapisz</button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="editPasswordForm.invalid">Zapisz</button>
     </form>
   </div>
 </div>

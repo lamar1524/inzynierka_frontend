@@ -36,6 +36,26 @@ export class ProfileComponent implements OnDestroy {
     return !!this.currentUser && !!this.profile && this.currentUser.id === this.profile.id;
   }
 
+  get firstName() {
+    return this.editForm.get('firstName');
+  }
+
+  get lastName() {
+    return this.editForm.get('lastName');
+  }
+
+  get email() {
+    return this.editForm.get('email');
+  }
+
+  get password() {
+    return this.editPasswordForm.get('password');
+  }
+
+  get repeatPassword() {
+    return this.editPasswordForm.get('repeatPassword');
+  }
+
   private _initValues(): void {
     this.sub$ = new Subscription();
     this.editing = false;
@@ -102,6 +122,10 @@ export class ProfileComponent implements OnDestroy {
 
   submitUpdate(): void {
     this.store.dispatch(profileActions.editProfileData({ user: { ...this.editForm.value, id: this.profile.id } }));
+  }
+
+  sendPasswordChange() {
+    this.store.dispatch(profileActions.editProfileData({ user: { password: this.password.value, id: this.profile.id } }));
   }
 
   ngOnDestroy(): void {
