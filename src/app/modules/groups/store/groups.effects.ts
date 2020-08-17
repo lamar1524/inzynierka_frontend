@@ -289,4 +289,24 @@ export class GroupsEffects {
       ),
     ),
   );
+
+  createGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(groupsActions.createGroup),
+      switchMap(({ groupName, onSuccessCallback }) =>
+        this.groupsService.createGroup(groupName).pipe(
+          map((result) => {
+            console.log(result);
+            this.popupService.success('Pomyślnie dodano grupę');
+            onSuccessCallback();
+            return groupsActions.createGroupSuccess();
+          }),
+          catchError((error) => {
+            this.popupService.error('Błąd tworzenia grupy, spróbuj ponownie później');
+            return of(groupsActions.createGroupFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }

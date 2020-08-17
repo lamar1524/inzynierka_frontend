@@ -30,6 +30,7 @@ export const initialState: GroupsState = {
   resultsLoading: false,
   joiningGroup: false,
   groupCreationFormVisible: false,
+  groupCreationLoading: false,
 };
 
 export interface GroupsState {
@@ -55,6 +56,7 @@ export interface GroupsState {
   results: IResponseGroups;
   joiningGroup: boolean;
   groupCreationFormVisible: boolean;
+  groupCreationLoading: boolean;
 }
 
 export const GROUPS_REDUCER = createReducer(
@@ -160,6 +162,10 @@ export const GROUPS_REDUCER = createReducer(
 
   on(groupsActions.showGroupCreationForm, (state) => ({ ...state, groupCreationFormVisible: true })),
   on(groupsActions.hideGroupCreationForm, (state) => ({ ...state, groupCreationFormVisible: false })),
+
+  on(groupsActions.createGroup, (state) => ({ ...state, groupCreationLoading: true })),
+  on(groupsActions.createGroupSuccess, (state) => ({ ...state, groupCreationLoading: false })),
+  on(groupsActions.createGroupFail, (state) => ({ ...state, groupCreationLoading: false })),
 );
 
 export function groupsReducer(state: GroupsState | undefined, action: Action) {

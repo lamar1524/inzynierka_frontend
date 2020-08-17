@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-import { GroupsModuleState } from '../../store';
+import { selectGroupCreationLoading, GroupsModuleState } from '../../store';
 import * as groupsActions from '../../store/groups.actions';
 
 @Component({
@@ -13,11 +14,13 @@ import * as groupsActions from '../../store/groups.actions';
 })
 export class CreateGroupComponent {
   groupCreationForm: FormGroup;
+  groupCreationLoading$: Observable<boolean>;
 
   constructor(private store: Store<GroupsModuleState>) {
     this.groupCreationForm = new FormGroup({
       groupName: new FormControl(null, Validators.required),
     });
+    this.groupCreationLoading$ = this.store.select(selectGroupCreationLoading);
   }
 
   get groupName() {
@@ -34,6 +37,14 @@ export class CreateGroupComponent {
 
   // TODO - implement group creation
   handleFormSubmit() {
-    console.log('placeholder');
+    this.store.dispatch(
+      groupsActions.createGroup({
+        groupName: this.groupName.value,
+        onSuccessCallback: () => {
+          this.store.dispatch(groupsActions.loadPrivateGroups({ url: null }));
+          this.store.dispatch(groupsActions.hideGroupCreationForm());
+        },
+      }),
+    );
   }
 }
