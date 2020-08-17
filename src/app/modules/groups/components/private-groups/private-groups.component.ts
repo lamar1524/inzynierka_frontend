@@ -1,3 +1,4 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -5,7 +6,7 @@ import { filter } from 'rxjs/operators';
 
 import { ROUTES } from '@core/consts';
 import { IGroup, IRoutes } from '@core/interfaces';
-import { selectPrivateGroups, selectPrivateGroupsLoading, GroupsModuleState } from '../../store';
+import { selectGroupCreationFormVisibility, selectPrivateGroups, selectPrivateGroupsLoading, GroupsModuleState } from '../../store';
 import * as groupsActions from '../../store/groups.actions';
 
 @Component({
@@ -13,12 +14,19 @@ import * as groupsActions from '../../store/groups.actions';
   templateUrl: './private-groups.component.html',
   styleUrls: ['./private-groups.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('appear', [
+      transition('void => *', [style({ opacity: 0 }), animate(300, style({ opacity: 1 }))]),
+      transition('* => void', [animate(300, style({ opacity: 0 }))]),
+    ]),
+  ],
 })
 export class PrivateGroupsComponent implements OnDestroy {
   groups: IGroup[];
   next: string;
   groupsLoading$: Observable<boolean>;
   sub$: Subscription;
+  groupCreationFormVisible: Observable<boolean>;
 
   constructor(private store: Store<GroupsModuleState>, private cdRef: ChangeDetectorRef) {
     this.groups = [];
@@ -33,6 +41,7 @@ export class PrivateGroupsComponent implements OnDestroy {
         this.cdRef.markForCheck();
       });
     this.groupsLoading$ = this.store.select(selectPrivateGroupsLoading);
+    this.groupCreationFormVisible = this.store.select(selectGroupCreationFormVisibility);
     this.sub$.add(groups$);
   }
 
@@ -50,5 +59,9 @@ export class PrivateGroupsComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
+  }
+
+  revealGroupCreationForm() {
+    this.store.dispatch(groupsActions.showGroupCreationForm());
   }
 }

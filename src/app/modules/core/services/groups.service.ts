@@ -73,4 +73,8 @@ export class GroupsService {
   joinGroup(groupId: number): Observable<{ message: string }> {
     return this.http.post(URLS.joinGroup + groupId + '/', {}).pipe(map((res: any) => ({ message: res.message })));
   }
+
+  createGroup(name: string): Observable<any> {
+    return this.http.post(URLS.groupCreate, { name });
+  }
 }

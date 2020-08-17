@@ -7,30 +7,6 @@ export interface GroupsModuleState {
   groups: GroupsState;
 }
 
-export interface GroupsState {
-  privateGroupsLoading: boolean;
-  privateGroups: IResponseGroups;
-  groupLoading: boolean;
-  group: IGroup;
-  groupsPostsLoading: boolean;
-  groupsPosts: IResponsePosts;
-  postAdding: boolean;
-  addingPostFormVisibility: boolean;
-  membersLoading: boolean;
-  members: IResponseUsers;
-  makingModerator: boolean;
-  droppingUser: boolean;
-  loadingPendingMembers: boolean;
-  pendingMembers: IResponseUsers;
-  pendingProcessing: boolean;
-  deletingGroup: boolean;
-  leavingGroup: boolean;
-  editingGroup: boolean;
-  resultsLoading: boolean;
-  results: IResponseGroups;
-  joiningGroup: boolean;
-}
-
 export const initialState: GroupsState = {
   privateGroupsLoading: false,
   privateGroups: null,
@@ -53,7 +29,35 @@ export const initialState: GroupsState = {
   results: null,
   resultsLoading: false,
   joiningGroup: false,
+  groupCreationFormVisible: false,
+  groupCreationLoading: false,
 };
+
+export interface GroupsState {
+  privateGroupsLoading: boolean;
+  privateGroups: IResponseGroups;
+  groupLoading: boolean;
+  group: IGroup;
+  groupsPostsLoading: boolean;
+  groupsPosts: IResponsePosts;
+  postAdding: boolean;
+  addingPostFormVisibility: boolean;
+  membersLoading: boolean;
+  members: IResponseUsers;
+  makingModerator: boolean;
+  droppingUser: boolean;
+  loadingPendingMembers: boolean;
+  pendingMembers: IResponseUsers;
+  pendingProcessing: boolean;
+  deletingGroup: boolean;
+  leavingGroup: boolean;
+  editingGroup: boolean;
+  resultsLoading: boolean;
+  results: IResponseGroups;
+  joiningGroup: boolean;
+  groupCreationFormVisible: boolean;
+  groupCreationLoading: boolean;
+}
 
 export const GROUPS_REDUCER = createReducer(
   initialState,
@@ -155,6 +159,13 @@ export const GROUPS_REDUCER = createReducer(
   on(groupsActions.joinGroup, (state) => ({ ...state, joiningGroup: true })),
   on(groupsActions.joinGroupSuccess, (state) => ({ ...state, joiningGroup: false })),
   on(groupsActions.joinGroupFail, (state) => ({ ...state, joiningGroup: false })),
+
+  on(groupsActions.showGroupCreationForm, (state) => ({ ...state, groupCreationFormVisible: true })),
+  on(groupsActions.hideGroupCreationForm, (state) => ({ ...state, groupCreationFormVisible: false })),
+
+  on(groupsActions.createGroup, (state) => ({ ...state, groupCreationLoading: true })),
+  on(groupsActions.createGroupSuccess, (state) => ({ ...state, groupCreationLoading: false })),
+  on(groupsActions.createGroupFail, (state) => ({ ...state, groupCreationLoading: false })),
 );
 
 export function groupsReducer(state: GroupsState | undefined, action: Action) {

@@ -66,3 +66,10 @@ export const clearResults = createAction('[Groups] Clear results');
 export const joinGroup = createAction('[Groups] Join group', props<{ groupId: number }>());
 export const joinGroupSuccess = createAction('[Groups] Join group success');
 export const joinGroupFail = createAction('[Groups] Join group fail');
+
+export const showGroupCreationForm = createAction('[Groups] Show group creation form');
+export const hideGroupCreationForm = createAction('[Groups] Hide group creation form');
+
+export const createGroup = createAction('[Groups] Create group', props<{ groupName: string; onSuccessCallback: () => void }>());
+export const createGroupSuccess = createAction('[Groups] Create group success');
+export const createGroupFail = createAction('[Groups] Create group fail');

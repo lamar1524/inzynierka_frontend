@@ -27,4 +27,5 @@ export interface IUrls {
   joinGroup: string;
   loadProfile: string;
   editProfile: string;
+  groupCreate: string;
 }
