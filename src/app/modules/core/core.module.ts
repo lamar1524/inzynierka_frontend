@@ -10,7 +10,6 @@ import { StoreModule } from '@ngrx/store';
 
 import { STORE_FEATURES } from '@core/consts';
 import { DialogComponent, PopupComponent } from './components';
-import { DialogService, GroupsService, MessagesService, PopupService, PostsService, ProfileService } from './services';
 import { coreReducer, CoreEffects } from './store';
 
 @NgModule({
