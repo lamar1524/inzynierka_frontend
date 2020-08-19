@@ -15,6 +15,7 @@ export class DialogService {
       width: '350px',
       height: '200px',
       data,
+      panelClass: 'app-dialog-container',
     });
   }
 }

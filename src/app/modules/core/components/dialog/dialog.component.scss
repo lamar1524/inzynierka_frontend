@@ -1,9 +1,13 @@
 @import '../../../../../styles/variables';
 
 .container {
+  align-items: center;
   background-color: #fff;
   color: #000;
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  justify-content: center;
   margin: 0;
   text-align: center;
   width: 100%;
@@ -15,4 +19,5 @@
   flex-direction: row;
   justify-content: space-around;
   padding-top: 30px;
+  width: 100%;
 }
