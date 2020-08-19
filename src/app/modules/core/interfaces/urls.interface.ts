@@ -28,4 +28,5 @@ export interface IUrls {
   loadProfile: string;
   editProfile: string;
   groupCreate: string;
+  getThreadsList: string;
 }

@@ -25,7 +25,6 @@ import { coreReducer, CoreEffects } from './store';
     StoreModule.forFeature(STORE_FEATURES.core, coreReducer),
     EffectsModule.forFeature([CoreEffects]),
   ],
-  providers: [PopupService, GroupsService, MessagesService, PostsService, DialogService, ProfileService],
   exports: [],
 })
 export class CoreModule {}

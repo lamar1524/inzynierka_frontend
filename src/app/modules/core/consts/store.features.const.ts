@@ -7,4 +7,5 @@ export const STORE_FEATURES: IStoreFeatures = {
   groups: 'groups',
   core: 'core',
   profile: 'profile',
+  chat: 'chat',
 };
