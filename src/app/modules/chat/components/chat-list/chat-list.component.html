@@ -1,5 +1,7 @@
 <div class="container">
   <div class="threads__wrapper">
-    <div class="thread" *ngFor="let thread of messages">{{ thread }}</div>
+    <div class="thread" *ngFor="let thread of messages">
+      <span [routerLink]="[routes.singleChat.path + 1]">{{ thread }}</span>
+    </div>
   </div>
 </div>

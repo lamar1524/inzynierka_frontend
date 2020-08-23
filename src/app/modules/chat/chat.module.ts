@@ -1,5 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { STORE_FEATURES } from '../../consts';
@@ -16,6 +19,9 @@ import { chatReducer, ChatEffects } from './store';
     ChatRoutingModule,
     StoreModule.forFeature(STORE_FEATURES.chat, chatReducer),
     EffectsModule.forFeature([ChatEffects]),
+    ReactiveFormsModule,
+    MatInputModule,
+    MatButtonModule,
   ],
 })
 export class ChatModule {}

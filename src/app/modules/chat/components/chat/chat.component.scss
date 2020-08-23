@@ -1,0 +1,59 @@
+@import '../../../../../styles/variables';
+
+$form-height: 150px;
+
+.container {
+  height: calc(100vh - #{$nav-height});
+  overflow-y: auto;
+  padding: 30px;
+  width: 100%;
+
+  .message__list {
+    align-items: flex-start;
+    border: 2px solid #023355;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - #{$form-height});
+    justify-content: revert;
+    padding: 10px;
+    width: 100%;
+
+    .message {
+      align-items: center;
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    .image__wrapper {
+      align-items: center;
+      display: flex;
+      height: 70px;
+      justify-content: center;
+      width: 70px;
+    }
+
+    .user-image {
+      border: 1px solid #000;
+      border-radius: 50%;
+      height: 52px;
+      width: 52px;
+    }
+
+    .content__wrapper {
+      background-color: #fff;
+      border-radius: 15px;
+      display: flex;
+      height: auto;
+      max-width: 50%;
+      padding: 10px;
+      width: auto;
+    }
+  }
+
+  .message-form {
+    height: $form-height;
+    width: 100%;
+  }
+}

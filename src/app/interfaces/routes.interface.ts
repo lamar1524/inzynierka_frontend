@@ -12,6 +12,7 @@ export interface IRoutes {
   search: IRoute;
   profile: IRoute;
   chatModule: IRoute;
+  singleChat: IRoute;
 }
 
 export interface IRoute {

@@ -53,4 +53,8 @@ export const ROUTES: IRoutes = {
     name: 'chat',
     path: '/home/chat/',
   },
+  singleChat: {
+    name: '',
+    path: '/home/chat/',
+  },
 };

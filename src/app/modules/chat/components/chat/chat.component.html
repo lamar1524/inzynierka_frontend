@@ -1,1 +1,18 @@
-<p>chat works!</p>
+<div class="container">
+  <div class="message__list">
+    <div class="message" *ngFor="let message of messages">
+      <div class="image__wrapper">
+        <img src="#" alt="photo" class="user-image" />
+      </div>
+      <div class="content__wrapper">{{ message.content }}</div>
+    </div>
+  </div>
+  <div class="message__form">
+    <form [formGroup]="messageSubmitForm">
+      <mat-form-field>
+        <input matInput type="text" formControlName="content" />
+      </mat-form-field>
+      <button mat-raised-button color="primary">Wyślij</button>
+    </form>
+  </div>
+</div>

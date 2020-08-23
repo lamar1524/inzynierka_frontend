@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ROUTES } from '../../../../consts';
 
 @Component({
   selector: 'app-chat-list',
@@ -11,5 +12,9 @@ export class ChatListComponent {
 
   constructor() {
     this.messages = ['Paweł Młynarski', 'Andrzej działowy'];
+  }
+
+  get routes() {
+    return ROUTES;
   }
 }
