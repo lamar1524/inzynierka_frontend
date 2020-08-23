@@ -8,9 +8,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { STORE_FEATURES } from '@core/consts';
 import { PostWrapperModule } from '@reusable-modules/post-wrapper';
 import { PostsListModule } from '@reusable-modules/posts-list';
+import { STORE_FEATURES } from '../../consts';
 import { AllPostsComponent, CommentComponent, SinglePostComponent } from './components';
 import { PostsRoutingModule } from './posts-routing.module';
 import { postsReducer, PostsEffects } from './store';

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ROUTES } from '@core/consts';
+import { ROUTES } from '../../consts';
 import { GroupComponent, PrivateGroupsComponent, SearchComponent } from './components';
 
 const routes: Routes = [

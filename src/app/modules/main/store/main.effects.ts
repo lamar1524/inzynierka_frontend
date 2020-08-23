@@ -3,8 +3,8 @@ import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { URLS } from '@core/consts';
 import { GroupsService, MessagesService, PopupService } from '@core/services';
+import { URLS } from '../../../consts';
 import * as mainActions from '../store/main.actions';
 
 @Injectable()

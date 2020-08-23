@@ -8,7 +8,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { STORE_FEATURES } from '@core/consts';
+import { STORE_FEATURES } from '../../consts';
 import { DialogComponent, PopupComponent } from './components';
 import { coreReducer, CoreEffects } from './store';
 

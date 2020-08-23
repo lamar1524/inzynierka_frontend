@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { ILoginUser, IRegisterUser, IUser } from '@core/interfaces';
+import { ILoginUser, IRegisterUser, IUser } from '../../../interfaces';
 
 export const login = createAction('[Authorization] Login user', props<{ data: ILoginUser }>());
 export const loginSuccess = createAction('[Authorization] Login user success', props<{ user: IUser }>());

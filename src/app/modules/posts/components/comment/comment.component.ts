@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { IComment, IUser } from '@core/interfaces';
 import { DialogService } from '@core/services';
+import { IComment, IUser } from '../../../../interfaces';
 import { selectCommentDeleting, selectCommentEditing, PostsModuleState } from '../../store';
 import * as postsActions from '../../store/posts.actions';
 

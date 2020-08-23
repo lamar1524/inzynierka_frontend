@@ -4,8 +4,8 @@ import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { ROUTES } from '@core/consts';
 import { PopupService } from '@core/services';
+import { ROUTES } from '../../../consts';
 import { AuthService } from '../services';
 import * as authActions from './authorization.actions';
 

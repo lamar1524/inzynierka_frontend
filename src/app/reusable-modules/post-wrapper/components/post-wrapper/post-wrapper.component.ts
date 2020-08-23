@@ -2,9 +2,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, In
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { ROUTES } from '@core/consts';
-import { IPost, IRoutes } from '@core/interfaces';
 import { DialogService } from '@core/services';
+import { ROUTES } from '../../../../consts';
+import { IPost, IRoutes } from '../../../../interfaces';
 
 @Component({
   selector: 'app-post-wrapper',

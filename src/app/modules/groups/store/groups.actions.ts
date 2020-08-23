@@ -1,6 +1,6 @@
 import { createAction, props, Action } from '@ngrx/store';
 
-import { IGroup, IResponseGroups, IResponsePosts, IResponseUsers } from '@core/interfaces';
+import { IGroup, IResponseGroups, IResponsePosts, IResponseUsers } from '../../../interfaces';
 
 export const loadPrivateGroups = createAction('[Groups] Load private groups', props<{ url: string | null }>());
 export const loadPrivateGroupsSuccess = createAction('[Groups] Load private groups success', props<{ groups: IResponseGroups }>());

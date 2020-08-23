@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { ROUTES, URLS } from '@core/consts';
 import { GroupsService, PopupService } from '@core/services';
+import { ROUTES, URLS } from '../../../consts';
 import * as groupsActions from './groups.actions';
 import { GroupsModuleState } from './groups.reducer';
 

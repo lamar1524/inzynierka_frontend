@@ -5,9 +5,9 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { ROUTES } from '@core/consts';
-import { IGroup } from '@core/interfaces/group.interface';
 import { DialogService } from '@core/services';
+import { ROUTES } from '../../../../consts';
+import { IGroup } from '../../../../interfaces';
 import { selectJoiningGroup, selectSearchingForGroup, selectSearchingResults, GroupsModuleState } from '../../store';
 import * as groupsActions from '../../store/groups.actions';
 

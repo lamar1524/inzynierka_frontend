@@ -1,6 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
 
-import { IUser } from '@core/interfaces';
+import { IUser } from '../../../interfaces';
 import * as profileActions from './profile.actions';
 
 export interface ProfileModuleState {

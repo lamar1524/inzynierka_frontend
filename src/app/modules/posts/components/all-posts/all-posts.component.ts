@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
-import { ROUTES } from '@core/consts';
-import { IPost, IUser } from '@core/interfaces';
 import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModuleState } from '@core/store';
+import { ROUTES } from '../../../../consts';
+import { IPost, IUser } from '../../../../interfaces';
 import { PostsModuleState } from '../../store';
 import * as postsActions from '../../store/posts.actions';
 import * as postSelectors from '../../store/posts.selectors';

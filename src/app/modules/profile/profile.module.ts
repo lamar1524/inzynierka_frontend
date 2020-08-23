@@ -7,7 +7,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { STORE_FEATURES } from '@core/consts';
+import { STORE_FEATURES } from '../../consts';
 import { ProfileComponent } from './components';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { profileReducer, ProfileEffects } from './store';

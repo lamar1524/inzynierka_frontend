@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { ROUTES, URLS } from '@core/consts';
-import { ILoginUser, IRegisterUser, IUser } from '@core/interfaces/user.interface';
+import { ROUTES, URLS } from '../../../consts';
+import { ILoginUser, IRegisterUser, IUser } from '../../../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',

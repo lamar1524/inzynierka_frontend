@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { URLS } from '@core/consts';
-import { IUpdateUser, IUser } from '@core/interfaces';
 import { Observable } from 'rxjs';
+import { URLS } from '../../../consts';
+import { IUpdateUser, IUser } from '../../../interfaces';
 
 @Injectable({
   providedIn: 'root',

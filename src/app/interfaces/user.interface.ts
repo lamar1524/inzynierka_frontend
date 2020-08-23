@@ -1,4 +1,4 @@
-import { USER_ROLE } from '../enums';
+import { USER_ROLE } from '../modules/enums';
 
 export interface ILoginUser {
   username: string;

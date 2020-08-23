@@ -6,8 +6,6 @@ import { Observable, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
-import { USER_ROLE } from '@core/enums';
-import { IComment, IPost, IUser } from '@core/interfaces';
 import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModuleState } from '@core/store';
 import {
   selectComments,
@@ -17,6 +15,8 @@ import {
   selectSinglePostLoading,
   PostsModuleState,
 } from '@posts/store';
+import { IComment, IPost, IUser } from '../../../../interfaces';
+import { USER_ROLE } from '../../../enums';
 import * as postsActions from '../../store/posts.actions';
 
 @Component({

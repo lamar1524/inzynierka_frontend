@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { ROUTES } from '@core/consts';
-import { IRoutes } from '@core/interfaces';
-import { IGroup } from '@core/interfaces/group.interface';
+import { ROUTES } from '../../../../consts';
+import { IRoutes } from '../../../../interfaces';
+import { IGroup } from '../../../../interfaces/group.interface';
 import { loadBaseGroups, selectBaseGroups, selectBaseGroupsLoading, MainModuleState } from '../../store';
 
 @Component({

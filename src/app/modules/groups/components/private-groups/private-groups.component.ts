@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
-import { ROUTES } from '@core/consts';
-import { IGroup, IRoutes } from '@core/interfaces';
+import { ROUTES } from '../../../../consts';
+import { IGroup, IRoutes } from '../../../../interfaces';
 import { selectGroupCreationFormVisibility, selectPrivateGroups, selectPrivateGroupsLoading, GroupsModuleState } from '../../store';
 import * as groupsActions from '../../store/groups.actions';
 

@@ -1,7 +1,7 @@
 import { IUrls } from '../interfaces';
 
-// const host = 'http://lamar1524.pythonanywhere.com/';
-const host = 'http://localhost:8000/';
+const host = 'http://lamar1524.pythonanywhere.com/';
+// const host = 'http://localhost:8000/';
 
 export const URLS: IUrls = {
   host,

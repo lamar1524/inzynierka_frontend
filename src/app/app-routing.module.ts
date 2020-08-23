@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ROUTES } from '@core/consts';
+import { ROUTES } from './consts';
 
-const routes: Routes = [
-  { path: '', redirectTo: ROUTES.login.path, pathMatch: 'full' },
-];
+const routes: Routes = [{ path: '', redirectTo: ROUTES.login.path, pathMatch: 'full' }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { URLS } from '@core/consts';
 import { PopupService, PostsService } from '@core/services';
+import { URLS } from '../../../consts';
 import * as postsActions from './posts.actions';
 import { PostsModuleState } from './posts.reducer';
 

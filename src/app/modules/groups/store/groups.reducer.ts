@@ -1,6 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
 
-import { IGroup, IResponseGroups, IResponsePosts, IResponseUsers } from '@core/interfaces';
+import { IGroup, IResponseGroups, IResponsePosts, IResponseUsers } from '../../../interfaces';
 import * as groupsActions from './groups.actions';
 
 export interface GroupsModuleState {

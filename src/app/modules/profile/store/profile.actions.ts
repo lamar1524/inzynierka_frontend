@@ -1,6 +1,7 @@
-import { IUser } from '@core/interfaces';
-import { IUpdateUser } from '@core/interfaces/user.interface';
 import { createAction, props } from '@ngrx/store';
+
+import { IUser } from '../../../interfaces';
+import { IUpdateUser } from '../../../interfaces';
 
 export const loadProfileData = createAction('[Profile] Load profile data', props<{ userId: number }>());
 export const loadProfileDataSuccess = createAction('[Profile] Load profile data success', props<{ user: IUser }>());

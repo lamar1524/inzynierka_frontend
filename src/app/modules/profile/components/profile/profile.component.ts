@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { selectCurrentUser, AuthModuleState } from '@authorization/store';
-import { IUser } from '@core/interfaces';
-import { equalityValidator } from '@core/validators/equality.validator';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
+
+import { selectCurrentUser, AuthModuleState } from '@authorization/store';
+import { IUser } from '../../../../interfaces';
+import { equalityValidator } from '../../../../validators/equality.validator';
 import { selectProfileData, selectProfileEditing, selectProfileLoading, ProfileModuleState } from '../../store';
 import * as profileActions from '../../store/profile.actions';
 
