@@ -295,8 +295,7 @@ export class GroupsEffects {
       ofType(groupsActions.createGroup),
       switchMap(({ groupName, onSuccessCallback }) =>
         this.groupsService.createGroup(groupName).pipe(
-          map((result) => {
-            console.log(result);
+          map(() => {
             this.popupService.success('Pomyślnie dodano grupę');
             onSuccessCallback();
             return groupsActions.createGroupSuccess();

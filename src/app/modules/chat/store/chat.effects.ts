@@ -29,7 +29,7 @@ export class ChatEffects {
     this.actions$.pipe(
       ofType(chatActions.loadMessages),
       switchMap((action) =>
-        this.chatService.fetchMessagesList(action.url).pipe(
+        this.chatService.fetchMessagesList(action.url, action.threadId).pipe(
           map((result) => chatActions.loadMessagesSuccess({ messages: result.results })),
           catchError(() => {
             this.popupService.error('Błąd pobierania wiadomości');

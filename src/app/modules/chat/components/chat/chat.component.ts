@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { IMessage } from '../../../../interfaces/message.interface';
+import { chatActions, chatSelectors, ChatModuleState } from '../../store';
 
 @Component({
   selector: 'app-chat',
@@ -11,28 +13,23 @@ import { IMessage } from '../../../../interfaces/message.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatComponent implements OnDestroy {
-  private _talkerID;
+  private _threadId;
   private _sub$: Subscription;
 
-  messages: IMessage[];
+  messages$: Observable<IMessage[]>;
+  messagesLoading$: Observable<boolean>;
   messageSubmitForm: FormGroup;
 
-  constructor(private activatedRoute: ActivatedRoute) {
+  constructor(private activatedRoute: ActivatedRoute, private store: Store<ChatModuleState>) {
     this._sub$ = new Subscription();
     const route$ = this.activatedRoute.params.subscribe((params) => {
-      this._talkerID = params.id;
-      console.log(this._talkerID);
+      this._threadId = params.id;
+      this.store.dispatch(chatActions.loadMessages({ url: null, threadId: this._threadId }));
     });
     this._sub$.add(route$);
+    this.messages$ = this.store.select(chatSelectors.selectMessages);
+    this.messagesLoading$ = this.store.select(chatSelectors.selectMessagesLoading);
 
-    this.messages = [
-      {
-        thread: null,
-        content: 'No hej',
-        sender: 1,
-        dateSend: new Date(),
-      },
-    ];
     this.messageSubmitForm = new FormGroup({
       content: new FormControl(null, Validators.required),
     });

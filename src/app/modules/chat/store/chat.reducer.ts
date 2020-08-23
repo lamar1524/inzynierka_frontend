@@ -1,4 +1,5 @@
 import { createReducer, on, Action } from '@ngrx/store';
+import { IMessage, IThread } from '../../../interfaces/message.interface';
 
 import * as chatActions from './chat.actions';
 
@@ -9,13 +10,15 @@ export interface ChatModuleState {
 export interface ChatState {
   threadsLoading: boolean;
   messagesLoading: boolean;
-  threads: any[];
+  threads: IThread[];
+  messages: IMessage[];
 }
 
 export const initialState: ChatState = {
   threadsLoading: false,
   messagesLoading: false,
   threads: [],
+  messages: [],
 };
 
 export const CHAT_REDUCER = createReducer(

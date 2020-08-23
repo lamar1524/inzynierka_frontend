@@ -1,6 +1,6 @@
 <div class="container">
   <div class="message__list">
-    <div class="message" *ngFor="let message of messages">
+    <div class="message" *ngFor="let message of messages$ | async">
       <div class="image__wrapper">
         <img src="#" alt="photo" class="user-image" />
       </div>
