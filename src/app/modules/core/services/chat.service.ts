@@ -10,7 +10,11 @@ import { URLS } from '../../../consts';
 export class ChatService {
   constructor(private http: HttpClient) {}
 
-  fetchThreadList(): Observable<any> {
-    return this.http.get(URLS.getThreadsList);
+  fetchThreadList(url?: string): Observable<any> {
+    return this.http.get(url ? url : URLS.getThreadsList);
+  }
+
+  fetchMessagesList(url?: string): Observable<any> {
+    return this.http.get(url ? url : URLS.getMessagesList);
   }
 }
