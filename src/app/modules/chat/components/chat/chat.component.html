@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="message__form">
-    <form [formGroup]="messageSubmitForm">
+    <form [formGroup]="messageSubmitForm" (ngSubmit)="handleMessageSubmit()">
       <mat-form-field>
         <input matInput type="text" formControlName="content" />
       </mat-form-field>

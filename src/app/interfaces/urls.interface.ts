@@ -30,4 +30,5 @@ export interface IUrls {
   groupCreate: string;
   getThreadsList: string;
   getMessagesList: string;
+  chatSocket: string;
 }
