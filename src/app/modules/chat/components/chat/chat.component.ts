@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -7,6 +7,7 @@ import { Observable, Subscription } from 'rxjs';
 import { AuthModuleState } from '@authorization/store';
 import * as authSelectors from '@authorization/store/authorization.selectors';
 import { ChatService } from '@core/services';
+import { filter } from 'rxjs/operators';
 import { IUser } from '../../../../interfaces';
 import { IMessage } from '../../../../interfaces/message.interface';
 import { chatActions, chatSelectors, ChatModuleState } from '../../store';
@@ -20,9 +21,9 @@ import { chatActions, chatSelectors, ChatModuleState } from '../../store';
 export class ChatComponent implements OnDestroy {
   private _threadId;
   private _sub$: Subscription;
-  private _currentUser: IUser;
 
-  messages$: Observable<IMessage[]>;
+  currentUser: IUser;
+  messages: IMessage[];
   messagesLoading$: Observable<boolean>;
   messageSubmitForm: FormGroup;
 
@@ -30,14 +31,27 @@ export class ChatComponent implements OnDestroy {
     private activatedRoute: ActivatedRoute,
     private store: Store<ChatModuleState | AuthModuleState>,
     private chatService: ChatService,
+    private cdRef: ChangeDetectorRef,
   ) {
     this._sub$ = new Subscription();
+    const currentUser$ = this.store
+      .select(authSelectors.selectCurrentUser)
+      .pipe(filter((user) => !!user))
+      .subscribe((user) => {
+        this.currentUser = user;
+        this.cdRef.markForCheck();
+      });
+    this._sub$.add(currentUser$);
     const route$ = this.activatedRoute.params.subscribe((params) => {
       this._threadId = params.id;
       this.store.dispatch(chatActions.loadMessages({ url: null, threadId: this._threadId }));
     });
     this._sub$.add(route$);
-    this.messages$ = this.store.select(chatSelectors.selectMessages);
+    const messages$ = this.store.select(chatSelectors.selectMessages).subscribe((messages) => {
+      this.messages = [...messages];
+      this.cdRef.markForCheck();
+    });
+    this._sub$.add(messages$);
     this.messagesLoading$ = this.store.select(chatSelectors.selectMessagesLoading);
 
     this.messageSubmitForm = new FormGroup({
@@ -45,13 +59,9 @@ export class ChatComponent implements OnDestroy {
     });
     this.chatService.createChatSocket(1);
     const chat$ = this.chatService.chatSocket$.subscribe((message) => {
-      console.log(message);
+      this.store.dispatch(chatActions.pushMessage({ message }));
     });
     this._sub$.add(chat$);
-    const currentUser$ = this.store.select(authSelectors.selectCurrentUser).subscribe((user) => {
-      this._currentUser = user;
-    });
-    this._sub$.add(currentUser$);
   }
 
   get content() {
@@ -59,7 +69,7 @@ export class ChatComponent implements OnDestroy {
   }
 
   handleMessageSubmit() {
-    this.chatService.sendMessage({ message: 'Hamlo', senderId: this._currentUser.id });
+    this.chatService.sendMessage({ message: this.content.value, senderId: this.currentUser.id });
   }
 
   ngOnDestroy(): void {

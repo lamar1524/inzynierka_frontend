@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
 import { URLS } from '../../../consts';
-import { IResponseMessages, IResponseThreads } from '../../../interfaces/message.interface';
+import { IMessage, IResponseMessages, IResponseThreads } from '../../../interfaces/message.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -19,8 +18,8 @@ export class ChatService {
     this._chatSocket$ = webSocket(URLS.chatSocket + id + '/');
   }
 
-  get chatSocket$(): Observable<any> {
-    return this._chatSocket$.asObservable().pipe(tap((res) => console.log(res)));
+  get chatSocket$(): Observable<IMessage> {
+    return this._chatSocket$.asObservable();
   }
 
   sendMessage(obj: { message: string; senderId: number }): void {

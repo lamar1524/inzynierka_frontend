@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { STORE_FEATURES } from '../../consts';
@@ -22,6 +23,7 @@ import { chatReducer, ChatEffects } from './store';
     ReactiveFormsModule,
     MatInputModule,
     MatButtonModule,
+    MatTooltipModule,
   ],
 })
 export class ChatModule {}

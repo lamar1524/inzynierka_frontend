@@ -1,10 +1,10 @@
 <div class="container">
-  <div class="message__list">
-    <div class="message" *ngFor="let message of messages$ | async">
-      <div class="image__wrapper">
-        <img src="#" alt="photo" class="user-image" />
+  <div class="message__list" *ngIf="messages">
+    <div class="message" [ngClass]="{ 'message--owner': currentUser.id === message.sender.id }" *ngFor="let message of messages">
+      <div class="image__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">
+        <img [src]="message.sender.image" alt="photo" class="user-image" />
       </div>
-      <div class="content__wrapper">{{ message.content }}</div>
+      <div class="content__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">{{ message.content }} {{ message.id }}</div>
     </div>
   </div>
   <div class="message__form">
@@ -12,7 +12,7 @@
       <mat-form-field>
         <input matInput type="text" formControlName="content" />
       </mat-form-field>
-      <button mat-raised-button color="primary">Wyślij</button>
+      <button mat-raised-button color="primary" [disabled]="messageSubmitForm.invalid">Wyślij</button>
     </form>
   </div>
 </div>

@@ -4,7 +4,6 @@ $form-height: 150px;
 
 .container {
   height: calc(100vh - #{$nav-height});
-  overflow-y: auto;
   padding: 30px;
   width: 100%;
 
@@ -15,7 +14,7 @@ $form-height: 150px;
     display: flex;
     flex-direction: column;
     height: calc(100% - #{$form-height});
-    justify-content: revert;
+    overflow-y: auto;
     padding: 10px;
     width: 100%;
 
@@ -24,6 +23,10 @@ $form-height: 150px;
       display: flex;
       justify-content: flex-start;
       width: 100%;
+    }
+
+    .message--owner {
+      flex-direction: row-reverse;
     }
 
     .image__wrapper {
