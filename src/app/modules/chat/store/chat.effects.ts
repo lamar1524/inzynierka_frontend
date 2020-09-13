@@ -30,7 +30,7 @@ export class ChatEffects {
       ofType(chatActions.loadMessages),
       switchMap((action) =>
         this.chatService.fetchMessagesList(action.url, action.threadId).pipe(
-          map((result) => chatActions.loadMessagesSuccess({ messages: result.results })),
+          map((result) => chatActions.loadMessagesSuccess({ messages: result.results.sort((el1, el2) => el1.id - el2.id) })),
           catchError(() => {
             this.popupService.error('Błąd pobierania wiadomości');
             return of(chatActions.loadMessagesFail());

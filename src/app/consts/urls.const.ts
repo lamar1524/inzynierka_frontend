@@ -2,7 +2,7 @@ import { IUrls } from '../interfaces';
 
 // const host = 'http://lamar1524.pythonanywhere.com/';
 const host = 'http://localhost:8080/';
-const socketHost = 'ws://localhost:8000/';
+const socketHost = 'ws://localhost:8080/';
 
 export const URLS: IUrls = {
   host,

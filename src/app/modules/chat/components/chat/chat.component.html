@@ -1,10 +1,10 @@
 <div class="container">
-  <div class="message__list" *ngIf="messages">
+  <div class="message__list" *ngIf="messages" #messageList>
     <div class="message" [ngClass]="{ 'message--owner': currentUser.id === message.sender.id }" *ngFor="let message of messages">
       <div class="image__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">
         <img [src]="message.sender.image" alt="photo" class="user-image" />
       </div>
-      <div class="content__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">{{ message.content }} {{ message.id }}</div>
+      <div class="content__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">{{ message.content }}</div>
     </div>
   </div>
   <div class="message__form">

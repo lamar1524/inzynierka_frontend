@@ -2,8 +2,10 @@ import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 
+import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { ROUTES } from '../../../../consts';
-import { IRoutes } from '../../../../interfaces';
+import { IRoutes, IUser } from '../../../../interfaces';
+import { IThread } from '../../../../interfaces/message.interface';
 import { chatActions, chatSelectors, ChatModuleState } from '../../store';
 
 @Component({
@@ -13,22 +15,26 @@ import { chatActions, chatSelectors, ChatModuleState } from '../../store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChatListComponent implements OnDestroy {
-  public messages: [string, string];
-  public threadsLoading: Observable<boolean>;
+  public threads$: Observable<IThread[]>;
+  public threadsLoading$: Observable<boolean>;
+  public currentUser$: Observable<IUser>;
 
   private _sub$: Subscription;
 
-  constructor(private store: Store<ChatModuleState>) {
-    this.messages = ['Paweł Młynarski', 'Andrzej działowy'];
+  constructor(private store: Store<ChatModuleState | AuthModuleState>) {
     this._sub$ = new Subscription();
     this.store.dispatch(chatActions.loadThreads({ url: null }));
-    this.store.select(chatSelectors.selectThreadsLoading);
-    const threads$ = this.store.select(chatSelectors.selectThreads).subscribe((threads) => {});
-    this._sub$.add(threads$);
+    this.threads$ = this.store.select(chatSelectors.selectThreads);
+    this.threadsLoading$ = this.store.select(chatSelectors.selectThreadsLoading);
+    this.currentUser$ = this.store.select(selectCurrentUser);
   }
 
   get routes(): IRoutes {
     return ROUTES;
+  }
+
+  getFullName(firstName: string, lastName: string): string {
+    return firstName + ' ' + lastName;
   }
 
   ngOnDestroy(): void {

@@ -20,6 +20,7 @@ export interface IResponseMessages {
 }
 
 export interface IMessage {
+  id?: number;
   thread: number;
   content: string;
   sender: IUser;
