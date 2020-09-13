@@ -1,12 +1,20 @@
 <div class="container">
-  <div class="message__list" *ngIf="messages" #messageList>
-    <div class="message" [ngClass]="{ 'message--owner': currentUser.id === message.sender.id }" *ngFor="let message of messages">
-      <div class="image__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">
-        <img [src]="message.sender.image" alt="photo" class="user-image" />
+  <perfect-scrollbar class="message__list--scroll">
+    <div class="message__list">
+      <div
+        class="message"
+        [ngClass]="{
+          'message--owner': currentUser.id === message.sender.id
+        }"
+        *ngFor="let message of messages"
+      >
+        <div class="image__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">
+          <img [src]="message.sender.image" alt="photo" class="user-image" />
+        </div>
+        <div class="content__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">{{ message.content }}</div>
       </div>
-      <div class="content__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">{{ message.content }}</div>
     </div>
-  </div>
+  </perfect-scrollbar>
   <div class="message__form">
     <form [formGroup]="messageSubmitForm" (ngSubmit)="handleMessageSubmit()">
       <mat-form-field>

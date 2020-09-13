@@ -6,8 +6,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { STORE_FEATURES } from '../../consts';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
+import { STORE_FEATURES } from '../../consts';
 import { ChatRoutingModule } from './chat-routing.module';
 import { ChatListComponent } from './components';
 import { ChatComponent } from './components/chat/chat.component';
@@ -24,6 +25,7 @@ import { chatReducer, ChatEffects } from './store';
     MatInputModule,
     MatButtonModule,
     MatTooltipModule,
+    PerfectScrollbarModule,
   ],
 })
 export class ChatModule {}
