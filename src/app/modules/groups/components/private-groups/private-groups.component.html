@@ -7,7 +7,10 @@
       </span>
     </span>
   </ng-container>
-  <div class="button__wrapper">
+  <div
+    class="button__wrapper"
+    *ngIf="(currentUser$ | async)?.role === userRoles.ADMIN || (currentUser$ | async)?.role === userRoles.LECTURER"
+  >
     <button mat-raised-button color="primary" (click)="revealGroupCreationForm()">Stwórz grupę</button>
   </div>
   <app-group-wrapper *ngFor="let group of groups" [group]="group" [route]="routes.singleGroup.path + group.id + '/'"></app-group-wrapper>

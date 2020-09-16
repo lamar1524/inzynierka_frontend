@@ -4,8 +4,10 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
+import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { ROUTES } from '../../../../consts';
-import { IGroup, IRoutes } from '../../../../interfaces';
+import { IGroup, IRoutes, IUser } from '../../../../interfaces';
+import { USER_ROLE } from '../../../enums';
 import { selectGroupCreationFormVisibility, selectPrivateGroups, selectPrivateGroupsLoading, GroupsModuleState } from '../../store';
 import * as groupsActions from '../../store/groups.actions';
 
@@ -27,8 +29,9 @@ export class PrivateGroupsComponent implements OnDestroy {
   groupsLoading$: Observable<boolean>;
   sub$: Subscription;
   groupCreationFormVisible: Observable<boolean>;
+  currentUser$: Observable<IUser>;
 
-  constructor(private store: Store<GroupsModuleState>, private cdRef: ChangeDetectorRef) {
+  constructor(private store: Store<GroupsModuleState | AuthModuleState>, private cdRef: ChangeDetectorRef) {
     this.groups = [];
     this.sub$ = new Subscription();
     this.store.dispatch(groupsActions.loadPrivateGroups({ url: null }));
@@ -40,6 +43,7 @@ export class PrivateGroupsComponent implements OnDestroy {
         this.next = resGroups.next;
         this.cdRef.markForCheck();
       });
+    this.currentUser$ = this.store.select(selectCurrentUser);
     this.groupsLoading$ = this.store.select(selectPrivateGroupsLoading);
     this.groupCreationFormVisible = this.store.select(selectGroupCreationFormVisibility);
     this.sub$.add(groups$);
@@ -47,6 +51,10 @@ export class PrivateGroupsComponent implements OnDestroy {
 
   get routes(): IRoutes {
     return ROUTES;
+  }
+
+  get userRoles() {
+    return USER_ROLE;
   }
 
   @HostListener('window:scroll') scroll() {
