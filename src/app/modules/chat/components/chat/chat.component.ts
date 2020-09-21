@@ -94,5 +94,6 @@ export class ChatComponent implements AfterViewChecked, OnDestroy {
   ngOnDestroy(): void {
     this._sub$.unsubscribe();
     this.chatService.closeSocketConnection();
+    this.store.dispatch(chatActions.clearChat());
   }
 }

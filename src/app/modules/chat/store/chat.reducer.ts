@@ -36,6 +36,8 @@ export const CHAT_REDUCER = createReducer(
   on(chatActions.loadMessagesFail, (state: ChatState) => ({ ...state, messagesLoading: false })),
 
   on(chatActions.pushMessage, (state: ChatState, { message }) => ({ ...state, messages: [...state.messages, message] })),
+
+  on(chatActions.clearChat, (state: ChatState) => ({ ...state, messages: [] })),
 );
 
 export const chatReducer = (state: ChatState | undefined, action: Action) => CHAT_REDUCER(state, action);

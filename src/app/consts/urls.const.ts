@@ -35,6 +35,7 @@ export const URLS: IUrls = {
   joinGroup: host + 'groups/join/',
   groupCreate: host + 'groups/create/',
   getThreadsList: host + 'chat/threads_list/',
+  getThread: host + 'chat/',
   getMessagesList: host + 'chat/messages/',
   chatSocket: socketHost + 'ws/chat/',
 };

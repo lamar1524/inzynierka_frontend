@@ -10,3 +10,5 @@ export const loadMessagesSuccess = createAction('[Chat] Load messages success', 
 export const loadMessagesFail = createAction('[Chat] Load messages fail');
 
 export const pushMessage = createAction('[Chat] Push message', props<{ message: IMessage }>());
+
+export const clearChat = createAction('[Chat] Clear chat');

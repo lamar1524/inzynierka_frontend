@@ -6,9 +6,10 @@ import { Observable, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
+import { ROUTES } from '../../../../consts';
 import { IUser } from '../../../../interfaces';
 import { equalityValidator } from '../../../../validators/equality.validator';
-import { selectProfileData, selectProfileEditing, selectProfileLoading, ProfileModuleState } from '../../store';
+import { selectProfileData, selectProfileEditing, selectProfileLoading, selectThreadFetching, ProfileModuleState } from '../../store';
 import * as profileActions from '../../store/profile.actions';
 
 @Component({
@@ -21,6 +22,7 @@ export class ProfileComponent implements OnDestroy {
   profile: IUser;
   profileLoading$: Observable<boolean>;
   profileEditing$: Observable<boolean>;
+  threadLoading$: Observable<boolean>;
   currentUser: IUser;
   sub$: Subscription;
   editing: boolean;
@@ -55,6 +57,10 @@ export class ProfileComponent implements OnDestroy {
 
   get repeatPassword() {
     return this.editPasswordForm.get('repeatPassword');
+  }
+
+  get routes() {
+    return ROUTES;
   }
 
   private _initValues(): void {
@@ -100,6 +106,7 @@ export class ProfileComponent implements OnDestroy {
         }
       }),
     );
+    this.threadLoading$ = this.store.select(selectThreadFetching);
   }
 
   private _initForm(): void {
@@ -127,6 +134,10 @@ export class ProfileComponent implements OnDestroy {
 
   sendPasswordChange() {
     this.store.dispatch(profileActions.editProfileData({ user: { password: this.password.value, id: this.profile.id } }));
+  }
+
+  handleMessageClick() {
+    this.store.dispatch(profileActions.fetchOrCreateThread({ user2Id: this.profile.id }));
   }
 
   ngOnDestroy(): void {

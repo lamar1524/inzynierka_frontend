@@ -10,3 +10,7 @@ export const loadProfileDataFail = createAction('[Profile] Load profile data fai
 export const editProfileData = createAction('[Profile] Send profile to update', props<{ user: IUpdateUser }>());
 export const editProfileDataSuccess = createAction('[Profile] Send profile to update success', props<{ user: IUser }>());
 export const editProfileDataFail = createAction('[Profile] Send profile to update fail');
+
+export const fetchOrCreateThread = createAction('[Profile] Get or create thread', props<{ user2Id: number }>());
+export const fetchOrCreateThreadSuccess = createAction('[Profile] Get or create thread success');
+export const fetchOrCreateThreadFail = createAction('[Profile] Get or create thread fail');

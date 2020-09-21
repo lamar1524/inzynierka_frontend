@@ -1,14 +1,21 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { createEffect, ofType, Actions } from '@ngrx/effects';
-
-import { PopupService, ProfileService } from '@core/services';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+
+import { PopupService, ProfileService } from '@core/services';
+import { ROUTES } from '../../../consts';
 import * as profileActions from './profile.actions';
 
 @Injectable()
 export class ProfileEffects {
-  constructor(private actions$: Actions, private profileService: ProfileService, private popupService: PopupService) {}
+  constructor(
+    private actions$: Actions,
+    private profileService: ProfileService,
+    private popupService: PopupService,
+    private router: Router,
+  ) {}
 
   loadProfile$ = createEffect(() =>
     this.actions$.pipe(
@@ -37,6 +44,26 @@ export class ProfileEffects {
           catchError((error) => {
             this.popupService.error('Edytowanie profilu nieudane, spróbuj ponownie');
             return of(profileActions.editProfileDataFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  fetchOrCreateThread$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(profileActions.fetchOrCreateThread),
+      switchMap((action) =>
+        this.profileService.fetchOrCreateThread(action.user2Id).pipe(
+          map((res) => {
+            console.log(res);
+            this.router.navigate([ROUTES.singleChat.path + res.id]);
+            return profileActions.fetchOrCreateThreadSuccess();
+          }),
+          catchError((err) => {
+            console.log(err);
+            this.popupService.error('Błąd pobierania wiadomości');
+            return of(profileActions.fetchOrCreateThreadFail());
           }),
         ),
       ),

@@ -9,7 +9,9 @@
     </button>
   </div>
   <div class="message__wrapper" *ngIf="!isCurrentUser">
-    <img src="../../../../../assets/img/msg.png" class="message-icon" />
+    <button mat-icon-button class="message__button" (click)="handleMessageClick()">
+      <img alt="msg" src="../../../../../assets/img/msg.png" class="message-icon" />
+    </button>
   </div>
   <div class="data__wrapper" *ngIf="!editing">
     <div class="prop">
