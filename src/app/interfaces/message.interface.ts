@@ -1,3 +1,4 @@
+import { LAST_MESSAGE_TYPE } from '../enums/last-message-name.enum';
 import { IUser } from './user.interface';
 
 export interface IResponseThreads {
@@ -17,6 +18,7 @@ export interface IResponseMessages {
   previous?: string;
   next?: string;
   results: IMessage[];
+  type?: LAST_MESSAGE_TYPE;
 }
 
 export interface IMessage {

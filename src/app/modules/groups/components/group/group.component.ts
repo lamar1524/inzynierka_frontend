@@ -9,8 +9,8 @@ import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { DialogService } from '@core/services';
 import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModuleState } from '@core/store';
 import { ROUTES } from '../../../../consts';
+import { USER_ROLE } from '../../../../enums';
 import { IGroup, IPost, IRoutes, IUser } from '../../../../interfaces';
-import { USER_ROLE } from '../../../enums';
 import {
   selectAddingPostVisibility,
   selectDeletingGroup,

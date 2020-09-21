@@ -24,6 +24,14 @@ $form-height: 150px;
     position: relative;
     width: 100%;
 
+    .spinner__wrapper {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      padding: 45px 0 15px;
+      width: 100%;
+    }
+
     .message {
       align-items: center;
       display: flex;

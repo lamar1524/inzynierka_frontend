@@ -1,6 +1,9 @@
 <div class="container">
-  <perfect-scrollbar class="message__list--scroll">
+  <perfect-scrollbar class="message__list--scroll" (psYReachStart)="handleMessagesScroll()">
     <div class="message__list">
+      <div class="spinner__wrapper" *ngIf="messagesLoading">
+        <mat-spinner [diameter]="40"></mat-spinner>
+      </div>
       <div
         class="message"
         [ngClass]="{

@@ -6,8 +6,8 @@ import { filter } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { ROUTES } from '../../../../consts';
+import { USER_ROLE } from '../../../../enums';
 import { IGroup, IRoutes, IUser } from '../../../../interfaces';
-import { USER_ROLE } from '../../../enums';
 import { selectGroupCreationFormVisibility, selectPrivateGroups, selectPrivateGroupsLoading, GroupsModuleState } from '../../store';
 import * as groupsActions from '../../store/groups.actions';
 

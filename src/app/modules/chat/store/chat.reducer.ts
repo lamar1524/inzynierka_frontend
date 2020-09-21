@@ -1,6 +1,7 @@
 import { createReducer, on, Action } from '@ngrx/store';
-import { IMessage, IThread } from '../../../interfaces/message.interface';
+import { IResponseMessages, IThread } from '../../../interfaces/message.interface';
 
+import { LAST_MESSAGE_TYPE } from '../../../enums/last-message-name.enum';
 import * as chatActions from './chat.actions';
 
 export interface ChatModuleState {
@@ -11,14 +12,14 @@ export interface ChatState {
   threadsLoading: boolean;
   messagesLoading: boolean;
   threads: IThread[];
-  messages: IMessage[];
+  messages: IResponseMessages;
 }
 
 export const initialState: ChatState = {
   threadsLoading: false,
   messagesLoading: false,
   threads: [],
-  messages: [],
+  messages: null,
 };
 
 export const CHAT_REDUCER = createReducer(
@@ -31,13 +32,16 @@ export const CHAT_REDUCER = createReducer(
   on(chatActions.loadMessagesSuccess, (state: ChatState, { messages }) => ({
     ...state,
     messagesLoading: false,
-    messages: state.messages.length > 0 ? [...messages, ...state.messages] : [...messages],
+    messages: { ...messages, type: LAST_MESSAGE_TYPE.GROUP },
   })),
   on(chatActions.loadMessagesFail, (state: ChatState) => ({ ...state, messagesLoading: false })),
 
-  on(chatActions.pushMessage, (state: ChatState, { message }) => ({ ...state, messages: [...state.messages, message] })),
+  on(chatActions.pushMessage, (state: ChatState, { message }) => ({
+    ...state,
+    messages: { ...state.messages, results: [...state.messages.results, message], type: LAST_MESSAGE_TYPE.SINGLE },
+  })),
 
-  on(chatActions.clearChat, (state: ChatState) => ({ ...state, messages: [] })),
+  on(chatActions.clearChat, (state: ChatState) => ({ ...state, messages: null })),
 );
 
 export const chatReducer = (state: ChatState | undefined, action: Action) => CHAT_REDUCER(state, action);

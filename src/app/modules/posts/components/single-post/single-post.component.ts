@@ -15,8 +15,8 @@ import {
   selectSinglePostLoading,
   PostsModuleState,
 } from '@posts/store';
+import { USER_ROLE } from '../../../../enums';
 import { IComment, IPost, IUser } from '../../../../interfaces';
-import { USER_ROLE } from '../../../enums';
 import * as postsActions from '../../store/posts.actions';
 
 @Component({

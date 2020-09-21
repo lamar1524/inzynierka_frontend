@@ -3,12 +3,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { AuthModuleState } from '@authorization/store';
 import * as authSelectors from '@authorization/store/authorization.selectors';
 import { ChatService } from '@core/services';
+import { LAST_MESSAGE_TYPE } from '../../../../enums/last-message-name.enum';
 import { IUser } from '../../../../interfaces';
 import { IMessage } from '../../../../interfaces/message.interface';
 import { chatActions, chatSelectors, ChatModuleState } from '../../store';
@@ -24,12 +25,14 @@ export class ChatComponent implements AfterViewChecked, OnDestroy {
 
   private _threadId: number;
   private _sub$: Subscription;
-  private _hasBeenChecked: boolean;
+  private _nextUrl: string;
+  private _lastMessageType: LAST_MESSAGE_TYPE;
 
   currentUser: IUser;
   messages: IMessage[];
-  messagesLoading$: Observable<boolean>;
+  messagesLoading: boolean;
   messageSubmitForm: FormGroup;
+  firstLoading: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,8 +41,9 @@ export class ChatComponent implements AfterViewChecked, OnDestroy {
     private cdRef: ChangeDetectorRef,
   ) {
     this._sub$ = new Subscription();
-    this._hasBeenChecked = false;
     this.messages = [];
+    this.firstLoading = true;
+    this._lastMessageType = LAST_MESSAGE_TYPE.GROUP;
     const currentUser$ = this.store
       .select(authSelectors.selectCurrentUser)
       .pipe(filter((user) => !!user))
@@ -52,7 +56,10 @@ export class ChatComponent implements AfterViewChecked, OnDestroy {
       this.store.dispatch(chatActions.loadMessages({ url: null, threadId: this._threadId }));
       this.chatService.createChatSocket(this._threadId);
     });
-    this.messagesLoading$ = this.store.select(chatSelectors.selectMessagesLoading);
+    const messagesLoading$ = this.store.select(chatSelectors.selectMessagesLoading).subscribe((loading) => {
+      this.messagesLoading = loading;
+    });
+    this._sub$.add(messagesLoading$);
 
     this.messageSubmitForm = new FormGroup({
       content: new FormControl(null, Validators.required),
@@ -60,15 +67,15 @@ export class ChatComponent implements AfterViewChecked, OnDestroy {
     const chat$ = this.chatService.chatSocket$.subscribe((message) => {
       this.store.dispatch(chatActions.pushMessage({ message }));
     });
-    const messages$ = this.store.select(chatSelectors.selectMessages).subscribe((messages) => {
-      let shouldScroll = false;
-      if (messages.length - this.messages.length !== 1 && !this.scrollComponentRef) {
-        shouldScroll = true;
-      }
-      this.messages = [...messages];
-      this._hasBeenChecked = shouldScroll;
-      this.cdRef.markForCheck();
-    });
+    const messages$ = this.store
+      .select(chatSelectors.selectMessages)
+      .pipe(filter((messages) => !!messages))
+      .subscribe((messages) => {
+        this.messages = [...messages.results, ...this.messages];
+        this._lastMessageType = messages.type;
+        this._nextUrl = messages.next;
+        this.cdRef.markForCheck();
+      });
     this._sub$.add(messages$);
     this._sub$.add(route$);
     this._sub$.add(currentUser$);
@@ -80,15 +87,31 @@ export class ChatComponent implements AfterViewChecked, OnDestroy {
   }
 
   ngAfterViewChecked() {
-    if (this.messages.length > 0 && !this._hasBeenChecked) {
+    if (
+      (this.messages.length > 0 && this._lastMessageType === LAST_MESSAGE_TYPE.SINGLE) ||
+      (this.messages.length > 0 && this.firstLoading)
+    ) {
       this.scrollComponentRef.directiveRef.scrollToBottom();
-      this._hasBeenChecked = true;
+      this.firstLoading = false;
+    } else if (
+      this.messages.length > 0 &&
+      this._lastMessageType === LAST_MESSAGE_TYPE.GROUP &&
+      !this.firstLoading &&
+      this.scrollComponentRef.directiveRef.position().y !== 'end'
+    ) {
+      this.scrollComponentRef.directiveRef.scrollToY(25);
     }
   }
 
   handleMessageSubmit() {
     this.chatService.sendMessage({ message: this.content.value, senderId: this.currentUser.id });
     this.content.setValue('');
+  }
+
+  handleMessagesScroll() {
+    if (!this.messagesLoading && this._nextUrl) {
+      this.store.dispatch(chatActions.loadMessages({ url: this._nextUrl, threadId: this._threadId }));
+    }
   }
 
   ngOnDestroy(): void {
