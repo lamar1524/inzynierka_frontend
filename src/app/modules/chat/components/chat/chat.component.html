@@ -1,23 +1,35 @@
 <div class="container">
-  <perfect-scrollbar class="message__list--scroll" (psYReachStart)="handleMessagesScroll($event)" [config]="{ scrollYMarginOffset: 20 }">
-    <div class="message__list">
-      <div class="spinner__wrapper" *ngIf="messagesLoading">
-        <mat-spinner [diameter]="40"></mat-spinner>
-      </div>
+  <div class="message__list--scroll">
+    <ng-scrollbar class="message__list">
       <div
-        class="message"
-        [ngClass]="{
-          'message--owner': currentUser.id === message.sender.id
-        }"
-        *ngFor="let message of messages"
+        class="messages"
+        infiniteScroll
+        [scrollWindow]="false"
+        scrollViewport
+        (scrolledUp)="handleMessagesScroll()"
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="50"
       >
-        <div class="image__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">
-          <img [src]="message.sender.image" alt="photo" class="user-image" />
+        <div class="spinner__wrapper" *ngIf="messagesLoading">
+          <mat-spinner [diameter]="40"></mat-spinner>
         </div>
-        <div class="content__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">{{ message.content }}</div>
+        <div
+          class="message"
+          [ngClass]="{
+            'message--owner': currentUser.id === message.sender.id,
+            'first-message': i === messages?.length - 1,
+            'last-message': i === 0
+          }"
+          *ngFor="let message of messages; index as i"
+        >
+          <div class="image__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">
+            <img [src]="message.sender.image" alt="photo" class="user-image" />
+          </div>
+          <div class="content__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">{{ message.content }}</div>
+        </div>
       </div>
-    </div>
-  </perfect-scrollbar>
+    </ng-scrollbar>
+  </div>
   <div class="form__wrapper">
     <form class="message__form" [formGroup]="messageSubmitForm" (ngSubmit)="handleMessageSubmit()">
       <mat-form-field class="message-field__wrapper">

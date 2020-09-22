@@ -1,8 +1,8 @@
-import { AfterViewChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { PerfectScrollbarComponent } from 'ngx-perfect-scrollbar';
+import { NgScrollbar } from 'ngx-scrollbar';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -20,13 +20,12 @@ import { chatActions, chatSelectors, ChatModuleState } from '../../store';
   styleUrls: ['./chat.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChatComponent implements AfterViewChecked, OnDestroy {
-  @ViewChild(PerfectScrollbarComponent, { static: false }) scrollComponentRef?: PerfectScrollbarComponent;
+export class ChatComponent implements AfterViewInit, OnDestroy {
+  @ViewChild(NgScrollbar, { static: true }) scrollbarRef: NgScrollbar;
 
   private _threadId: number;
   private _sub$: Subscription;
   private _nextUrl: string;
-  private _lastMessageType: LAST_MESSAGE_TYPE;
 
   currentUser: IUser;
   messages: IMessage[];
@@ -43,7 +42,6 @@ export class ChatComponent implements AfterViewChecked, OnDestroy {
     this._sub$ = new Subscription();
     this.messages = [];
     this.firstLoading = true;
-    this._lastMessageType = LAST_MESSAGE_TYPE.GROUP;
     const currentUser$ = this.store
       .select(authSelectors.selectCurrentUser)
       .pipe(filter((user) => !!user))
@@ -67,20 +65,6 @@ export class ChatComponent implements AfterViewChecked, OnDestroy {
     const chat$ = this.chatService.chatSocket$.subscribe((message) => {
       this.store.dispatch(chatActions.pushMessage({ message }));
     });
-    const messages$ = this.store
-      .select(chatSelectors.selectMessages)
-      .pipe(filter((messages) => !!messages))
-      .subscribe((messages) => {
-        if (messages.type === LAST_MESSAGE_TYPE.SINGLE) {
-          this.messages = [...this.messages, ...messages.results];
-        } else {
-          this.messages = [...messages.results, ...this.messages];
-        }
-        this._lastMessageType = messages.type;
-        this._nextUrl = messages.next;
-        this.cdRef.markForCheck();
-      });
-    this._sub$.add(messages$);
     this._sub$.add(route$);
     this._sub$.add(currentUser$);
     this._sub$.add(chat$);
@@ -90,21 +74,25 @@ export class ChatComponent implements AfterViewChecked, OnDestroy {
     return this.messageSubmitForm.get('content');
   }
 
-  ngAfterViewChecked() {
-    if (
-      (this.messages.length > 0 && this._lastMessageType === LAST_MESSAGE_TYPE.SINGLE) ||
-      (this.messages.length > 0 && this.firstLoading)
-    ) {
-      this.scrollComponentRef.directiveRef.scrollToBottom();
-      this.firstLoading = false;
-    } else if (
-      this.messages.length > 0 &&
-      this._lastMessageType === LAST_MESSAGE_TYPE.GROUP &&
-      !this.firstLoading &&
-      this.scrollComponentRef.directiveRef.position().y !== 'end'
-    ) {
-      this.scrollComponentRef.directiveRef.scrollToY(25);
-    }
+  ngAfterViewInit() {
+    const messages$ = this.store
+      .select(chatSelectors.selectMessages)
+      .pipe(filter((messages) => !!messages))
+      .subscribe((messages) => {
+        if (messages.type === LAST_MESSAGE_TYPE.SINGLE) {
+          this.messages = [...this.messages, ...messages.results];
+        } else {
+          this.messages = [...messages.results, ...this.messages];
+        }
+        this._nextUrl = messages.next;
+        if (this.firstLoading || messages.type === LAST_MESSAGE_TYPE.SINGLE) {
+          this.cdRef.detectChanges();
+          this.firstLoading = false;
+          this.scrollbarRef.scrollTo({ bottom: 0 });
+        }
+        this.cdRef.markForCheck();
+      });
+    this._sub$.add(messages$);
   }
 
   handleMessageSubmit() {
