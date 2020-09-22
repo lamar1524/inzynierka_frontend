@@ -71,7 +71,11 @@ export class ChatComponent implements AfterViewChecked, OnDestroy {
       .select(chatSelectors.selectMessages)
       .pipe(filter((messages) => !!messages))
       .subscribe((messages) => {
-        this.messages = [...messages.results, ...this.messages];
+        if (messages.type === LAST_MESSAGE_TYPE.SINGLE) {
+          this.messages = [...this.messages, ...messages.results];
+        } else {
+          this.messages = [...messages.results, ...this.messages];
+        }
         this._lastMessageType = messages.type;
         this._nextUrl = messages.next;
         this.cdRef.markForCheck();

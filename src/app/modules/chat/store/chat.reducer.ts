@@ -38,7 +38,7 @@ export const CHAT_REDUCER = createReducer(
 
   on(chatActions.pushMessage, (state: ChatState, { message }) => ({
     ...state,
-    messages: { ...state.messages, results: [...state.messages.results, message], type: LAST_MESSAGE_TYPE.SINGLE },
+    messages: { ...state.messages, results: [message], type: LAST_MESSAGE_TYPE.SINGLE },
   })),
 
   on(chatActions.clearChat, (state: ChatState) => ({ ...state, messages: null })),
