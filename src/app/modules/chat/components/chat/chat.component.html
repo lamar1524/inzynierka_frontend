@@ -1,5 +1,5 @@
 <div class="container">
-  <perfect-scrollbar class="message__list--scroll" (psYReachStart)="handleMessagesScroll()">
+  <perfect-scrollbar class="message__list--scroll" (psYReachStart)="handleMessagesScroll($event)" [config]="{ scrollYMarginOffset: 20 }">
     <div class="message__list">
       <div class="spinner__wrapper" *ngIf="messagesLoading">
         <mat-spinner [diameter]="40"></mat-spinner>
@@ -18,12 +18,16 @@
       </div>
     </div>
   </perfect-scrollbar>
-  <div class="message__form">
-    <form [formGroup]="messageSubmitForm" (ngSubmit)="handleMessageSubmit()">
-      <mat-form-field>
-        <input matInput type="text" formControlName="content" />
+  <div class="form__wrapper">
+    <form class="message__form" [formGroup]="messageSubmitForm" (ngSubmit)="handleMessageSubmit()">
+      <mat-form-field class="message-field__wrapper">
+        <input class="message-field" matInput type="text" formControlName="content" />
+        <button class="message-button" mat-icon-button color="primary" [disabled]="messageSubmitForm.invalid">
+          <mat-icon>
+            send
+          </mat-icon>
+        </button>
       </mat-form-field>
-      <button mat-raised-button color="primary" [disabled]="messageSubmitForm.invalid">Wyślij</button>
     </form>
   </div>
 </div>

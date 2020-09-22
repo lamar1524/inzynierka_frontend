@@ -8,6 +8,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { STORE_FEATURES } from '../../consts';
 import { ChatRoutingModule } from './chat-routing.module';
@@ -28,6 +29,7 @@ import { chatReducer, ChatEffects } from './store';
     MatTooltipModule,
     PerfectScrollbarModule,
     MatProgressSpinnerModule,
+    MatIconModule,
   ],
 })
 export class ChatModule {}

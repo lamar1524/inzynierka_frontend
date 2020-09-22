@@ -35,7 +35,6 @@ export class ChatService {
   }
 
   fetchMessagesList(url?: string, threadId?: number): Observable<IResponseMessages> {
-    console.log(url);
     return this.http.get<IResponseMessages>(url ? url : URLS.getMessagesList + `?threadId=${threadId}`);
   }
 }

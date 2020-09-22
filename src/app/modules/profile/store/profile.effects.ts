@@ -56,12 +56,10 @@ export class ProfileEffects {
       switchMap((action) =>
         this.profileService.fetchOrCreateThread(action.user2Id).pipe(
           map((res) => {
-            console.log(res);
             this.router.navigate([ROUTES.singleChat.path + res.id]);
             return profileActions.fetchOrCreateThreadSuccess();
           }),
           catchError((err) => {
-            console.log(err);
             this.popupService.error('Błąd pobierania wiadomości');
             return of(profileActions.fetchOrCreateThreadFail());
           }),
