@@ -6,11 +6,11 @@ import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
-import { ROUTES } from '@core/consts';
-import { USER_ROLE } from '@core/enums';
-import { IGroup, IPost, IRoutes, IUser } from '@core/interfaces';
 import { DialogService } from '@core/services';
 import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModuleState } from '@core/store';
+import { ROUTES } from '../../../../consts';
+import { USER_ROLE } from '../../../../enums';
+import { IGroup, IPost, IRoutes, IUser } from '../../../../interfaces';
 import {
   selectAddingPostVisibility,
   selectDeletingGroup,

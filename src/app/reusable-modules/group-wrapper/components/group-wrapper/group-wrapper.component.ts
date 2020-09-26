@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
-import { IGroup } from '@core/interfaces';
+import { IGroup } from '../../../../interfaces';
 
 @Component({
   selector: 'app-group-wrapper',

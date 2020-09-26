@@ -1,6 +1,6 @@
 import { createAction, props, Action } from '@ngrx/store';
 
-import { IComment, IPost, IResponseComments, IResponsePosts } from '@core/interfaces';
+import { IComment, IPost, IResponseComments, IResponsePosts } from '../../../interfaces';
 
 export const loadAllPosts = createAction('[Posts] Load posts', props<{ url: string | null }>());
 export const loadAllPostsSuccess = createAction('[Posts] Load posts success', props<{ posts: IResponsePosts }>());

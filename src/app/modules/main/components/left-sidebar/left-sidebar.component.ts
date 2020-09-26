@@ -1,13 +1,12 @@
-import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { ROUTES } from '@core/consts';
-import { IRoutes } from '@core/interfaces';
-import { IGroup } from '@core/interfaces/group.interface';
+import { ROUTES } from '../../../../consts';
+import { IRoutes } from '../../../../interfaces';
+import { IGroup } from '../../../../interfaces/group.interface';
 import { loadBaseGroups, selectBaseGroups, selectBaseGroupsLoading, MainModuleState } from '../../store';
 
 @Component({
@@ -22,7 +21,7 @@ export class LeftSidebarComponent {
   searchForm: FormGroup;
   readonly routes: IRoutes;
 
-  constructor(private store: Store<MainModuleState>, @Inject(DOCUMENT) private document: Document, private router: Router) {
+  constructor(private store: Store<MainModuleState>, private router: Router) {
     this.store.dispatch(loadBaseGroups());
     this.groups$ = this.store.select(selectBaseGroups);
     this.groupsLoading$ = this.store.select(selectBaseGroupsLoading);

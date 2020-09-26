@@ -1,6 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
 
-import { IPost, IResponseComments, IResponsePosts } from '@core/interfaces';
+import { IPost, IResponseComments, IResponsePosts } from '../../../interfaces';
 import * as postsActions from '../store/posts.actions';
 
 export interface PostsModuleState {

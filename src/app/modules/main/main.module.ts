@@ -7,7 +7,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { STORE_FEATURES } from '@core/consts';
+import { STORE_FEATURES } from '../../consts';
 import { LeftSidebarComponent, MainComponent, NavigationComponent, RightSidebarComponent } from './components';
 import { MainRoutingModule } from './main-routing.module';
 import { mainReducer, MainEffects } from './store';

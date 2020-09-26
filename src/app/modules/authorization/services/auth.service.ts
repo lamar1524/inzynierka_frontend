@@ -2,11 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
-import { ROUTES, URLS } from '@core/consts';
-import { USER_ROLE } from '@core/enums';
-import { ILoginUser, IRegisterUser, IUser } from '@core/interfaces/user.interface';
+import { ROUTES, URLS } from '../../../consts';
+import { ILoginUser, IRegisterUser, IUser } from '../../../interfaces/user.interface';
 
 @Injectable({
   providedIn: 'root',

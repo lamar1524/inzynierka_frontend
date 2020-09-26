@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestro
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
-import { IDialogData } from '../../interfaces';
+import { IDialogData } from '../../../../interfaces';
 
 @Component({
   selector: 'app-dialog',

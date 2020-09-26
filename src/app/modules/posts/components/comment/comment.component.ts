@@ -1,12 +1,11 @@
-import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { IComment, IUser } from '@core/interfaces';
 import { DialogService } from '@core/services';
+import { IComment, IUser } from '../../../../interfaces';
 import { selectCommentDeleting, selectCommentEditing, PostsModuleState } from '../../store';
 import * as postsActions from '../../store/posts.actions';
 
@@ -28,12 +27,7 @@ export class CommentComponent implements OnInit {
   commentEditing$: Observable<boolean>;
   commentDeleting$: Observable<boolean>;
 
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private store: Store<PostsModuleState>,
-    private cdRef: ChangeDetectorRef,
-    private dialogService: DialogService,
-  ) {
+  constructor(private store: Store<PostsModuleState>, private cdRef: ChangeDetectorRef, private dialogService: DialogService) {
     this.dropdownVisible = false;
     this.commentEditing$ = this.store.select(selectCommentEditing).pipe(
       tap((res) => {

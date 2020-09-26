@@ -1,11 +1,10 @@
-import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { ROUTES } from '@core/consts';
-import { IPost, IRoutes } from '@core/interfaces';
 import { DialogService } from '@core/services';
+import { ROUTES } from '../../../../consts';
+import { IPost, IRoutes } from '../../../../interfaces';
 
 @Component({
   selector: 'app-post-wrapper',
@@ -32,7 +31,7 @@ export class PostWrapperComponent implements OnInit {
   postEditing: boolean;
   readonly routes: IRoutes;
 
-  constructor(@Inject(DOCUMENT) private document: Document, private dialogService: DialogService, private cdRef: ChangeDetectorRef) {
+  constructor(private dialogService: DialogService, private cdRef: ChangeDetectorRef) {
     this.sendUpdate = new EventEmitter<{ id: number; data: FormData }>();
     this.sendDelete = new EventEmitter<{ id: number }>();
     this.routeToPost = new EventEmitter<{ id: number }>();

@@ -5,8 +5,8 @@ import { first } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import * as authActions from '@authorization/store/authorization.actions';
-import { ROUTES } from '@core/consts';
-import { IRoutes, IUser } from '@core/interfaces';
+import { ROUTES } from '../../../../consts';
+import { IRoutes, IUser } from '../../../../interfaces';
 import { hideNav, selectNavVisibility, toggleNav, MainModuleState } from '../../store';
 
 @Component({

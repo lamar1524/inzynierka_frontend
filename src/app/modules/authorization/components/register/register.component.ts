@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { ROUTES } from '@core/consts';
-import { IRoutes } from '@core/interfaces';
-import { equalityValidator } from '@core/validators/equality.validator';
+import { ROUTES } from '../../../../consts';
+import { IRoutes } from '../../../../interfaces';
+import { equalityValidator } from '../../../../validators/equality.validator';
 import { selectRegisterLoading, AuthModuleState } from '../../store';
 import * as authActions from '../../store/authorization.actions';
 

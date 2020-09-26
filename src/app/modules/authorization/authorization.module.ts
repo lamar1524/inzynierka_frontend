@@ -9,7 +9,7 @@ import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { STORE_FEATURES } from '@core/consts';
+import { STORE_FEATURES } from '../../consts';
 import { AuthorizationRoutingModule } from './authorization-routing.module';
 import { Error403Component, LoginComponent, RegisterComponent } from './components';
 import { LoginGuard } from './guards';

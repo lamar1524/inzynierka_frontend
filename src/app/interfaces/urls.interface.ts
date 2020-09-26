@@ -28,4 +28,8 @@ export interface IUrls {
   loadProfile: string;
   editProfile: string;
   groupCreate: string;
+  getThreadsList: string;
+  getMessagesList: string;
+  getThread: string;
+  chatSocket: string;
 }

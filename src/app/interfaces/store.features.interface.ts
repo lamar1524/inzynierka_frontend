@@ -5,4 +5,5 @@ export interface IStoreFeatures {
   groups: string;
   core: string;
   profile: string;
+  chat: string;
 }

@@ -1,8 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { URLS } from '@core/consts';
-import { IUpdateUser, IUser } from '@core/interfaces';
 import { Observable } from 'rxjs';
+
+import { URLS } from '../../../consts';
+import { IUpdateUser, IUser } from '../../../interfaces';
+import { IThread } from '../../../interfaces/message.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -16,5 +18,9 @@ export class ProfileService {
 
   editProfile(user: IUpdateUser): Observable<IUser> {
     return this.http.put<IUser>(URLS.editProfile, user);
+  }
+
+  fetchOrCreateThread(user2Id: number): Observable<IThread> {
+    return this.http.get<IThread>(URLS.getThread + user2Id);
   }
 }

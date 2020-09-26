@@ -49,4 +49,12 @@ export const ROUTES: IRoutes = {
     name: 'profile',
     path: '/home/profile/',
   },
+  chatModule: {
+    name: 'chat',
+    path: '/home/chat/',
+  },
+  singleChat: {
+    name: '',
+    path: '/home/chat/',
+  },
 };

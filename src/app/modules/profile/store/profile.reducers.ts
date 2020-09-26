@@ -1,6 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
 
-import { IUser } from '@core/interfaces';
+import { IUser } from '../../../interfaces';
 import * as profileActions from './profile.actions';
 
 export interface ProfileModuleState {
@@ -11,12 +11,14 @@ export interface ProfileState {
   profileLoading: boolean;
   profileData: IUser;
   profileEditing: boolean;
+  threadFetching: boolean;
 }
 
 export const initialState: ProfileState = {
   profileData: null,
   profileLoading: false,
   profileEditing: false,
+  threadFetching: false,
 };
 
 export const PROFILE_REDUCER = createReducer(
@@ -28,6 +30,10 @@ export const PROFILE_REDUCER = createReducer(
   on(profileActions.editProfileData, (state) => ({ ...state, profileEditing: true })),
   on(profileActions.editProfileDataSuccess, (state, { user }) => ({ ...state, profileEditing: false, profileData: user })),
   on(profileActions.editProfileDataFail, (state) => ({ ...state, profileEditing: false })),
+
+  on(profileActions.fetchOrCreateThread, (state) => ({ ...state, threadFetching: true })),
+  on(profileActions.fetchOrCreateThreadSuccess, (state) => ({ ...state, threadFetching: false })),
+  on(profileActions.fetchOrCreateThreadFail, (state) => ({ ...state, threadFetching: false })),
 );
 
 export function profileReducer(state: ProfileState | undefined, action: Action) {

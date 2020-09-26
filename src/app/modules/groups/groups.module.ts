@@ -10,10 +10,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { STORE_FEATURES } from '@core/consts';
 import { GroupWrapperModule } from '@reusable-modules/group-wrapper';
 import { PostFormModule } from '@reusable-modules/post-form';
 import { PostsListModule } from '@reusable-modules/posts-list';
+import { STORE_FEATURES } from '../../consts';
 import { GroupComponent, PrivateGroupsComponent, SearchComponent } from './components';
 import { CreateGroupComponent } from './components/create-group/create-group.component';
 import { GroupsRoutingModule } from './groups-routing.module';

@@ -8,3 +8,5 @@ export const selectProfileLoading = createSelector(profileState, (state: Profile
 export const selectProfileData = createSelector(profileState, (state: ProfileState) => state.profileData);
 
 export const selectProfileEditing = createSelector(profileState, (state: ProfileState) => state.profileEditing);
+
+export const selectThreadFetching = createSelector(profileState, (state: ProfileState) => state.threadFetching);

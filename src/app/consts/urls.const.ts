@@ -1,6 +1,8 @@
 import { IUrls } from '../interfaces';
 
-const host = 'http://lamar1524.pythonanywhere.com/';
+// const host = 'http://lamar1524.pythonanywhere.com/';
+const host = 'http://localhost:8080/';
+const socketHost = 'ws://localhost:8080/';
 
 export const URLS: IUrls = {
   host,
@@ -32,4 +34,8 @@ export const URLS: IUrls = {
   searchForGroups: host + 'groups/search',
   joinGroup: host + 'groups/join/',
   groupCreate: host + 'groups/create/',
+  getThreadsList: host + 'chat/threads_list/',
+  getThread: host + 'chat/',
+  getMessagesList: host + 'chat/messages/',
+  chatSocket: socketHost + 'ws/chat/',
 };

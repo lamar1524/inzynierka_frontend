@@ -8,9 +8,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { STORE_FEATURES } from '@core/consts';
+import { STORE_FEATURES } from '../../consts';
 import { DialogComponent, PopupComponent } from './components';
-import { DialogService, GroupsService, MessagesService, PopupService, PostsService, ProfileService } from './services';
 import { coreReducer, CoreEffects } from './store';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { coreReducer, CoreEffects } from './store';
     StoreModule.forFeature(STORE_FEATURES.core, coreReducer),
     EffectsModule.forFeature([CoreEffects]),
   ],
-  providers: [PopupService, GroupsService, MessagesService, PostsService, DialogService, ProfileService],
   exports: [],
 })
 export class CoreModule {}

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ROUTES } from '@core/consts';
-import { IRoutes } from '@core/interfaces';
+import { ROUTES } from '../../../../consts';
+import { IRoutes } from '../../../../interfaces';
 
 @Component({
   selector: 'app-error403',

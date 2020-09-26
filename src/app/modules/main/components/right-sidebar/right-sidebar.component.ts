@@ -1,11 +1,11 @@
 import { DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { ROUTES } from '@core/consts';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { ROUTES } from '../../../../consts';
 
-import { IResponseUsers, IRoutes, IUser } from '@core/interfaces';
+import { IResponseUsers, IRoutes, IUser } from '../../../../interfaces';
 import { loadFriendsList, selectFriends, selectFriendsLoading, MainModuleState } from '../../store';
 
 @Component({

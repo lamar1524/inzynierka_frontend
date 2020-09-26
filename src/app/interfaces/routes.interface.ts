@@ -11,6 +11,8 @@ export interface IRoutes {
   error403: IRoute;
   search: IRoute;
   profile: IRoute;
+  chatModule: IRoute;
+  singleChat: IRoute;
 }
 
 export interface IRoute {
