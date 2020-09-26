@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
@@ -49,11 +49,9 @@ export class AllPostsComponent implements OnDestroy {
   deletePost = ($event: { id: number }) =>
     this.store.dispatch(deletePost({ id: $event.id, refreshAction: postsActions.loadAllPosts({ url: null }) }));
 
-  @HostListener('window:scroll') scrollEvent() {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      if (this.next !== null) {
-        this.store.dispatch(postsActions.loadAllPosts({ url: this.next }));
-      }
+  handleMessagesScroll() {
+    if (this.next !== null) {
+      this.store.dispatch(postsActions.loadAllPosts({ url: this.next }));
     }
   }
 
