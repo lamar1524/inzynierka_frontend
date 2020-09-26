@@ -9,6 +9,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 import { GroupWrapperModule } from '@reusable-modules/group-wrapper';
 import { PostFormModule } from '@reusable-modules/post-form';
@@ -36,6 +38,8 @@ import { groupsReducer, GroupsEffects } from './store';
     MatInputModule,
     ReactiveFormsModule,
     MatTooltipModule,
+    NgScrollbarModule,
+    InfiniteScrollModule,
   ],
 })
 export class GroupsModule {}
