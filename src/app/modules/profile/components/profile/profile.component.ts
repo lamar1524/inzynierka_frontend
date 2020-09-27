@@ -6,6 +6,7 @@ import { Observable, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
+import * as authActions from '@authorization/store/authorization.actions';
 import { ROUTES } from '../../../../consts';
 import { IUser } from '../../../../interfaces';
 import { equalityValidator } from '../../../../validators/equality.validator';
@@ -129,12 +130,23 @@ export class ProfileComponent implements OnDestroy {
   }
 
   submitUpdate(): void {
-    this.store.dispatch(profileActions.editProfileData({ user: { ...this.editForm.value, id: this.profile.id } }));
+    this.store.dispatch(
+      profileActions.editProfileData({ user: { ...this.editForm.value, id: this.profile.id }, refreshAction: this.refreshCurrentUser }),
+    );
   }
 
   sendPasswordChange() {
-    this.store.dispatch(profileActions.editProfileData({ user: { password: this.password.value, id: this.profile.id } }));
+    this.store.dispatch(
+      profileActions.editProfileData({
+        user: { password: this.password.value, id: this.profile.id },
+        refreshAction: this.refreshCurrentUser,
+      }),
+    );
   }
+
+  refreshCurrentUser = () => {
+    this.store.dispatch(authActions.loadUser());
+  };
 
   handleMessageClick() {
     this.store.dispatch(profileActions.fetchOrCreateThread({ user2Id: this.profile.id }));
