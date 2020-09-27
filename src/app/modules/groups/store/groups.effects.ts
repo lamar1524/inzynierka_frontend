@@ -242,6 +242,7 @@ export class GroupsEffects {
           map((res) => {
             this.popupService.success('Dane zostały zachowane');
             this.store.dispatch(groupsActions.loadGroup({ id: action.groupId }));
+            action.refreshAction();
             return groupsActions.editGroupSuccess();
           }),
           catchError((error) => {

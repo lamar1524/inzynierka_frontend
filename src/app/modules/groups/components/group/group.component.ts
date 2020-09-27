@@ -8,6 +8,7 @@ import { filter, tap } from 'rxjs/operators';
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { DialogService } from '@core/services';
 import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModuleState } from '@core/store';
+import { loadBaseGroups, MainModuleState } from '@main/store';
 import { ROUTES } from '../../../../consts';
 import { USER_ROLE } from '../../../../enums';
 import { IGroup, IPost, IRoutes, IUser } from '../../../../interfaces';
@@ -68,7 +69,7 @@ export class GroupComponent implements OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private store: Store<GroupsModuleState | AuthModuleState | CoreModuleState>,
+    private store: Store<GroupsModuleState | AuthModuleState | CoreModuleState | MainModuleState>,
     private cdRef: ChangeDetectorRef,
     private router: Router,
     private dialogService: DialogService,
@@ -294,7 +295,7 @@ export class GroupComponent implements OnDestroy {
       const imageToChange = $event.target.files[0];
       const fd = new FormData();
       fd.append('image', imageToChange);
-      this.store.dispatch(groupsActions.editGroup({ group: fd, groupId: this.group.id }));
+      this.store.dispatch(groupsActions.editGroup({ group: fd, groupId: this.group.id, refreshAction: this.refreshBaseGroups }));
     }
   }
 
@@ -310,11 +311,15 @@ export class GroupComponent implements OnDestroy {
       if (text !== '' && text !== null && text !== this.group.name) {
         const fd = new FormData();
         fd.append('name', text);
-        this.store.dispatch(groupsActions.editGroup({ group: fd, groupId: this.group.id }));
+        this.store.dispatch(groupsActions.editGroup({ group: fd, groupId: this.group.id, refreshAction: this.refreshBaseGroups }));
         this.nameEdit = false;
       }
     }
   }
+
+  refreshBaseGroups = () => {
+    this.store.dispatch(loadBaseGroups());
+  };
 
   ngOnDestroy(): void {
     this.sub$.unsubscribe();

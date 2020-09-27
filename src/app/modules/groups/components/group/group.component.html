@@ -8,113 +8,117 @@
     [infiniteScrollDistance]="2"
     [infiniteScrollThrottle]="50"
   >
-    <div class="container" *ngIf="(groupLoading$ | async) === false && (groupLoading$ | async) === false; else spinner">
-      <div class="group__header">
-        <div class="image__wrapper">
-          <img class="image" [ngClass]="{ 'image-choose': ownerOrAdmin }" alt="Group image" [src]="group?.image" (click)="pickImage()" />
-          <input type="file" accept="image/*" class="image-input" (change)="chooseImage($event)" />
-        </div>
-        <div class="info__wrapper">
-          <div class="info">
-            <div class="name" [ngClass]="{ 'image-choose': ownerOrAdmin }" *ngIf="!nameEdit" (click)="showNameEdit()">
-              {{ group?.name }}
-            </div>
-            <div class="name" *ngIf="nameEdit">
-              <mat-form-field class="name__input">
-                <input matInput type="text" [value]="group?.name" (keyup)="sendName($event)" />
-              </mat-form-field>
-            </div>
-            <div class="owner">{{ group?.owner.firstName }} {{ group?.owner.lastName }}</div>
+    <div class="group__wrapper">
+      <div class="container" *ngIf="(groupLoading$ | async) === false && (groupLoading$ | async) === false; else spinner">
+        <div class="group__header">
+          <div class="image__wrapper">
+            <img class="image" [ngClass]="{ 'image-choose': ownerOrAdmin }" alt="Group image" [src]="group?.image" (click)="pickImage()" />
+            <input type="file" accept="image/*" class="image-input" (change)="chooseImage($event)" />
           </div>
-          <div class="manage-button__wrapper">
-            <button class="manage-button" mat-raised-button color="warn" (click)="deleteGroup()" *ngIf="ownerOrAdmin">Usuń</button>
-            <button class="manage-button" mat-raised-button color="warn" (click)="leaveGroup()" *ngIf="!ownerOrAdmin">Opuść</button>
+          <div class="info__wrapper">
+            <div class="info">
+              <div class="name" [ngClass]="{ 'image-choose': ownerOrAdmin }" *ngIf="!nameEdit" (click)="showNameEdit()">
+                {{ group?.name }}
+              </div>
+              <div class="name" *ngIf="nameEdit">
+                <mat-form-field class="name__input">
+                  <input matInput type="text" [value]="group?.name" (keyup)="sendName($event)" />
+                </mat-form-field>
+              </div>
+              <div class="owner">{{ group?.owner.firstName }} {{ group?.owner.lastName }}</div>
+            </div>
+            <div class="manage-button__wrapper">
+              <button class="manage-button" mat-raised-button color="warn" (click)="deleteGroup()" *ngIf="ownerOrAdmin">Usuń</button>
+              <button class="manage-button" mat-raised-button color="warn" (click)="leaveGroup()" *ngIf="!ownerOrAdmin">Opuść</button>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="content__wrapper">
-        <mat-tab-group>
-          <mat-tab>
-            <ng-template mat-tab-label>
-              Dyskusja
-            </ng-template>
-            <div class="button__wrapper">
-              <button *ngIf="(formVisibility$ | async) === false" mat-raised-button color="primary" (click)="showForm()">Dodaj post</button>
-            </div>
-            <app-post-form
-              *ngIf="(formVisibility$ | async) === true"
-              [postId]="null"
-              [postProcessing$]="postAdding$"
-              [startContent]="null"
-              (submitPost)="addPost($event)"
-              (hideForm)="hideForm()"
-            ></app-post-form>
-            <div class="posts">
-              <app-posts-list
-                [withRoute]="true"
-                [withGroup]="false"
-                [currentUser]="currentUser"
-                [posts]="posts"
-                [postDeleting$]="postDeleting$"
-                [postEditing$]="postEditing$"
-                (routeToPost)="routeToPost($event)"
-                (sendPostUpdate)="updatePost($event)"
-                (sendPostDelete)="deletePost($event)"
-              ></app-posts-list>
-            </div>
-            <div class="error" *ngIf="posts?.length === 0 && (postsLoading$ | async) === false">
-              Brak Postów
-            </div>
-          </mat-tab>
-          <mat-tab [label]="'Członkowie(' + group?.membersCount + ')'">
-            <div class="members__wrapper">
-              <div class="member" *ngFor="let member of members">
-                <div class="member-image__wrapper">
-                  <img [src]="member.image" alt="Profile img" class="member-image" />
-                </div>
-                <div class="name__wrapper">
-                  <p class="u-text--link profile-link" [routerLink]="[routes.profile.path + member.id + '/']">
-                    {{ member.firstName }} {{ member.lastName }}
-                  </p>
-                  <p *ngIf="group.moderator?.id === member.id">Moderator</p>
-                  <p *ngIf="group.owner?.id === member.id">Właściciel</p>
-                </div>
-                <div class="buttons__wrapper" *ngIf="ownerOrAdmin || group?.moderator.id === currentUser?.id">
-                  <span
-                    class="u-text--link option"
-                    *ngIf="group?.owner?.id !== member.id && group?.moderator?.id !== member.id && group?.owner?.id === currentUser?.id"
-                    (click)="showModDialog(member)"
-                    >Mod</span
-                  >
-                  <span class="u-text--link option" *ngIf="group.owner.id !== member.id" (click)="showDeleteDialog(member)">Usuń</span>
+        <div class="content__wrapper">
+          <mat-tab-group>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                Dyskusja
+              </ng-template>
+              <div class="button__wrapper">
+                <button *ngIf="(formVisibility$ | async) === false" mat-raised-button color="primary" (click)="showForm()">
+                  Dodaj post
+                </button>
+              </div>
+              <app-post-form
+                *ngIf="(formVisibility$ | async) === true"
+                [postId]="null"
+                [postProcessing$]="postAdding$"
+                [startContent]="null"
+                (submitPost)="addPost($event)"
+                (hideForm)="hideForm()"
+              ></app-post-form>
+              <div class="posts">
+                <app-posts-list
+                  [withRoute]="true"
+                  [withGroup]="false"
+                  [currentUser]="currentUser"
+                  [posts]="posts"
+                  [postDeleting$]="postDeleting$"
+                  [postEditing$]="postEditing$"
+                  (routeToPost)="routeToPost($event)"
+                  (sendPostUpdate)="updatePost($event)"
+                  (sendPostDelete)="deletePost($event)"
+                ></app-posts-list>
+              </div>
+              <div class="error" *ngIf="posts?.length === 0 && (postsLoading$ | async) === false">
+                Brak Postów
+              </div>
+            </mat-tab>
+            <mat-tab [label]="'Członkowie(' + group?.membersCount + ')'">
+              <div class="members__wrapper">
+                <div class="member" *ngFor="let member of members">
+                  <div class="member-image__wrapper">
+                    <img [src]="member.image" alt="Profile img" class="member-image" />
+                  </div>
+                  <div class="name__wrapper">
+                    <p class="u-text--link profile-link" [routerLink]="[routes.profile.path + member.id + '/']">
+                      {{ member.firstName }} {{ member.lastName }}
+                    </p>
+                    <p *ngIf="group.moderator?.id === member.id">Moderator</p>
+                    <p *ngIf="group.owner?.id === member.id">Właściciel</p>
+                  </div>
+                  <div class="buttons__wrapper" *ngIf="ownerOrAdmin || group?.moderator.id === currentUser?.id">
+                    <span
+                      class="u-text--link option"
+                      *ngIf="group?.owner?.id !== member.id && group?.moderator?.id !== member.id && group?.owner?.id === currentUser?.id"
+                      (click)="showModDialog(member)"
+                      >Mod</span
+                    >
+                    <span class="u-text--link option" *ngIf="group.owner.id !== member.id" (click)="showDeleteDialog(member)">Usuń</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </mat-tab>
-          <mat-tab [label]="'Oczekujący(' + group.pendingCount + ')'">
-            <div class="members__wrapper">
-              <div class="member" *ngFor="let pendingMember of pendingMembers">
-                <div class="member-image__wrapper">
-                  <img [src]="pendingMember.image" alt="Profile img" class="member-image" />
+            </mat-tab>
+            <mat-tab [label]="'Oczekujący(' + group.pendingCount + ')'">
+              <div class="members__wrapper">
+                <div class="member" *ngFor="let pendingMember of pendingMembers">
+                  <div class="member-image__wrapper">
+                    <img [src]="pendingMember.image" alt="Profile img" class="member-image" />
+                  </div>
+                  <div class="name__wrapper">
+                    <p class="u-text--link profile-link" [routerLink]="[routes.profile.path + pendingMember.id + '/']">
+                      {{ pendingMember.firstName }} {{ pendingMember.lastName }}
+                    </p>
+                  </div>
+                  <div class="buttons__wrapper" *ngIf="group?.moderator?.id === currentUser?.id || group?.owner?.id === currentUser?.id">
+                    <span class="u-text--link option" (click)="showAcceptDialog(pendingMember)">Akceptuj</span>
+                    <span class="u-text--link option" (click)="showRejectDialog(pendingMember)">Usuń</span>
+                  </div>
                 </div>
-                <div class="name__wrapper">
-                  <p class="u-text--link profile-link" [routerLink]="[routes.profile.path + pendingMember.id + '/']">
-                    {{ pendingMember.firstName }} {{ pendingMember.lastName }}
-                  </p>
-                </div>
-                <div class="buttons__wrapper" *ngIf="group?.moderator?.id === currentUser?.id || group?.owner?.id === currentUser?.id">
-                  <span class="u-text--link option" (click)="showAcceptDialog(pendingMember)">Akceptuj</span>
-                  <span class="u-text--link option" (click)="showRejectDialog(pendingMember)">Usuń</span>
-                </div>
+                <div class="error" *ngIf="pendingMembers?.length == 0">Brak oczekujących</div>
               </div>
-              <div class="error" *ngIf="pendingMembers?.length == 0">Brak oczekujących</div>
-            </div>
-          </mat-tab>
-        </mat-tab-group>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
       </div>
+      <ng-template #spinner>
+        <div class="spinner__wrapper"><mat-spinner [diameter]="75"></mat-spinner></div>
+      </ng-template>
     </div>
-    <ng-template #spinner>
-      <div class="spinner__wrapper"><mat-spinner [diameter]="75"></mat-spinner></div>
-    </ng-template>
   </div>
 </ng-scrollbar>
