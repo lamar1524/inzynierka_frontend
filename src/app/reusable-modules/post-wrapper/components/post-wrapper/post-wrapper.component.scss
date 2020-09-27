@@ -81,6 +81,12 @@ $options-wrapper: 35px;
     }
   }
 
+  .options__button {
+    .mat-icon.more-icon {
+      color: #000;
+    }
+  }
+
   .options__wrapper {
     align-items: center;
     display: flex;

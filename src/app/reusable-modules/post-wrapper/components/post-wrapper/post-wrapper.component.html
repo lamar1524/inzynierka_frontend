@@ -25,9 +25,17 @@
       </div>
     </div>
     <div class="options__wrapper" *ngIf="isOwnerOrAdmin">
-      <button class="options__button" mat-icon-button (click)="dropdownToggle($event)">
-        <img class="options__img" alt="options" src="../../../../../assets/img/options.svg" />
+      <button class="options__button" mat-icon-button [mat-menu-trigger-for]="dropdown">
+        <mat-icon class="more-icon">more_horiz</mat-icon>
       </button>
+      <mat-menu #dropdown>
+        <button mat-menu-item *ngIf="isOwner" class="option" (click)="editButton()">
+          Edytuj
+        </button>
+        <button mat-menu-item class="option" (click)="deleteButton()">
+          Usuń
+        </button>
+      </mat-menu>
     </div>
   </div>
   <div class="post__content" *ngIf="!formVisibility; else form">
@@ -47,12 +55,4 @@
       [startContent]="post.content"
     ></app-post-form>
   </ng-template>
-  <div class="dropdown" *ngIf="dropdownVisible">
-    <div *ngIf="isOwner" class="option" (mouseenter)="hoverOption($event)" (mouseleave)="unHoverOption($event)" (click)="editButton()">
-      Edytuj
-    </div>
-    <div class="option" (mouseenter)="hoverOption($event)" (mouseleave)="unHoverOption($event)" (click)="deleteButton()">
-      Usuń
-    </div>
-  </div>
 </div>
