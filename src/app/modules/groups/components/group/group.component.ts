@@ -89,7 +89,7 @@ export class GroupComponent implements OnDestroy {
       .select(selectGroup)
       .pipe(filter((group) => group !== null))
       .subscribe((group) => {
-        this.group = group;
+        this.group = { ...group };
         this.cdRef.markForCheck();
       });
     const currentUser$ = this.store.select(selectCurrentUser).subscribe((user) => {
@@ -305,15 +305,18 @@ export class GroupComponent implements OnDestroy {
     }
   }
 
-  sendName($event) {
+  handleNameChangeKeyUp($event) {
     if ($event.key === 'Enter' && this.ownerOrAdmin) {
-      const text = $event.target.value;
-      if (text !== '' && text !== null && text !== this.group.name) {
-        const fd = new FormData();
-        fd.append('name', text);
-        this.store.dispatch(groupsActions.editGroup({ group: fd, groupId: this.group.id, refreshAction: this.refreshBaseGroups }));
-        this.nameEdit = false;
-      }
+      this.sendName();
+    }
+  }
+
+  sendName() {
+    if (this.group.name !== '' && this.group.name !== null) {
+      const fd = new FormData();
+      fd.append('name', this.group.name);
+      this.store.dispatch(groupsActions.editGroup({ group: fd, groupId: this.group.id, refreshAction: this.refreshBaseGroups }));
+      this.nameEdit = false;
     }
   }
 
