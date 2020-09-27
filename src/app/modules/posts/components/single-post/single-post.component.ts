@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -26,6 +26,8 @@ import * as postsActions from '../../store/posts.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SinglePostComponent implements OnDestroy {
+  private _tempLoading: boolean;
+
   postId: number;
   post$: Observable<IPost>;
   postLoading$: Observable<boolean>;
@@ -57,7 +59,11 @@ export class SinglePostComponent implements OnDestroy {
     this.post$ = this.store.select(selectSinglePost);
     this.postEditing$ = this.store.select(selectEditingPost);
     this.postLoading$ = this.store.select(selectSinglePostLoading);
-    this.commentsLoading$ = this.store.select(selectCommentsLoading);
+    this.commentsLoading$ = this.store.select(selectCommentsLoading).pipe(
+      tap((loading) => {
+        this._tempLoading = loading;
+      }),
+    );
     this.postDeleting$ = this.store.select(selectDeletingPost);
     const comments$ = this.store
       .select(selectComments)
@@ -108,11 +114,9 @@ export class SinglePostComponent implements OnDestroy {
   deletePost = ($event: { id: number }) =>
     this.store.dispatch(deletePost({ id: $event.id, refreshAction: postsActions.loadAllPosts({ url: null }) }));
 
-  @HostListener('window:scroll') scrollEvent() {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      if (this.next !== null) {
-        this.store.dispatch(postsActions.loadComments({ url: this.next, id: this.postId }));
-      }
+  handleCommentsScroll() {
+    if (this.next !== null && !this._tempLoading) {
+      this.store.dispatch(postsActions.loadComments({ url: this.next, id: this.postId }));
     }
   }
 

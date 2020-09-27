@@ -1,9 +1,9 @@
 import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, Inject, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { DialogService } from '@core/services';
@@ -39,6 +39,10 @@ import * as groupsActions from '../../store/groups.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupComponent implements OnDestroy {
+  private _tempPostsLoading: boolean;
+  private _tempMembersLoading: boolean;
+  private _tempPendingMembersLoading: boolean;
+
   sub$: Subscription;
   group: IGroup;
   currentUser: IUser;
@@ -122,13 +126,25 @@ export class GroupComponent implements OnDestroy {
     this.sub$.add(members$);
     this.sub$.add(pendingMembers$);
     this.groupLoading$ = this.store.select(selectGroupLoading);
-    this.postsLoading$ = this.store.select(selectGroupPostsLoading);
+    this.postsLoading$ = this.store.select(selectGroupPostsLoading).pipe(
+      tap((loading) => {
+        this._tempPostsLoading = loading;
+      }),
+    );
     this.postEditing$ = this.store.select(selectEditingPost);
     this.postDeleting$ = this.store.select(selectDeletingPost);
     this.postAdding$ = this.store.select(selectPostAdding);
     this.formVisibility$ = this.store.select(selectAddingPostVisibility);
-    this.membersLoading$ = this.store.select(selectMembersLoading);
-    this.pendingMembersLoading$ = this.store.select(selectPendingMembersLoading);
+    this.membersLoading$ = this.store.select(selectMembersLoading).pipe(
+      tap((loading) => {
+        this._tempMembersLoading = loading;
+      }),
+    );
+    this.pendingMembersLoading$ = this.store.select(selectPendingMembersLoading).pipe(
+      tap((loading) => {
+        this._tempPendingMembersLoading = loading;
+      }),
+    );
     this.deletingGroup$ = this.store.select(selectDeletingGroup);
     this.leavingGroup$ = this.store.select(selectLeavingGroup);
     this.groupEditing$ = this.store.select(selectEditingGroup);
@@ -142,17 +158,15 @@ export class GroupComponent implements OnDestroy {
     this.router.navigate([ROUTES.singlePost.path + event.id + '/']);
   }
 
-  @HostListener('window:scroll') scrollEvent() {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      if (this.postsNext !== null) {
-        this.store.dispatch(groupsActions.loadGroupsPosts({ url: this.postsNext, id: this.group.id }));
-      }
-      if (this.membersNext !== null) {
-        this.store.dispatch(groupsActions.loadGroupMembers({ groupId: this.group.id, url: this.membersNext }));
-      }
-      if (this.pendingMembersNext !== null) {
-        this.store.dispatch(groupsActions.loadPendingMembers({ groupId: this.group.id, url: this.pendingMembersNext }));
-      }
+  handleGroupsScroll() {
+    if (this.postsNext !== null && !this._tempPostsLoading) {
+      this.store.dispatch(groupsActions.loadGroupsPosts({ url: this.postsNext, id: this.group.id }));
+    }
+    if (this.membersNext !== null && !this._tempMembersLoading) {
+      this.store.dispatch(groupsActions.loadGroupMembers({ groupId: this.group.id, url: this.membersNext }));
+    }
+    if (this.pendingMembersNext !== null && !this._tempPendingMembersLoading) {
+      this.store.dispatch(groupsActions.loadPendingMembers({ groupId: this.group.id, url: this.pendingMembersNext }));
     }
   }
 

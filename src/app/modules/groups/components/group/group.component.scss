@@ -5,7 +5,7 @@ $image-wrapper: 140px;
 $info-wrapper: 80px;
 
 .container {
-  min-height: calc(100vh - #{$nav-height});
+  height: calc(100vh - #{$nav-height});
   width: 100%;
 
   .image-input {
