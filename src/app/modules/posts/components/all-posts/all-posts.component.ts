@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { deletePost, editPost, selectDeletingPost, selectEditingPost, CoreModuleState } from '@core/store';
@@ -25,6 +26,7 @@ export class AllPostsComponent implements OnDestroy {
   posts$: Subscription;
   next: string;
   currentUser$: Observable<IUser>;
+  tempLoading: boolean;
 
   constructor(
     public store: Store<AuthModuleState | PostsModuleState | CoreModuleState>,
@@ -32,7 +34,11 @@ export class AllPostsComponent implements OnDestroy {
     private cdRef: ChangeDetectorRef,
   ) {
     this.store.dispatch(postsActions.loadAllPosts({ url: null }));
-    this.postsLoading$ = this.store.select(postSelectors.selectAllPostsLoading);
+    this.postsLoading$ = this.store.select(postSelectors.selectAllPostsLoading).pipe(
+      tap((loading) => {
+        this.tempLoading = loading;
+      }),
+    );
     this.postDeleting$ = this.store.select(selectDeletingPost);
     this.currentUser$ = this.store.select(selectCurrentUser);
     this.posts$ = this.store.select(postSelectors.selectAllPosts).subscribe((resPosts) => {
@@ -49,11 +55,9 @@ export class AllPostsComponent implements OnDestroy {
   deletePost = ($event: { id: number }) =>
     this.store.dispatch(deletePost({ id: $event.id, refreshAction: postsActions.loadAllPosts({ url: null }) }));
 
-  @HostListener('window:scroll') scrollEvent() {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      if (this.next !== null) {
-        this.store.dispatch(postsActions.loadAllPosts({ url: this.next }));
-      }
+  handlePostsScroll() {
+    if (this.next !== null && !this.tempLoading) {
+      this.store.dispatch(postsActions.loadAllPosts({ url: this.next }));
     }
   }
 

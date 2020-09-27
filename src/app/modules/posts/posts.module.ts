@@ -7,6 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 import { PostWrapperModule } from '@reusable-modules/post-wrapper';
 import { PostsListModule } from '@reusable-modules/posts-list';
@@ -29,6 +31,8 @@ import { postsReducer, PostsEffects } from './store';
     PostsListModule,
     PostWrapperModule,
     MatProgressSpinnerModule,
+    NgScrollbarModule,
+    InfiniteScrollModule,
   ],
 })
 export class PostsModule {}

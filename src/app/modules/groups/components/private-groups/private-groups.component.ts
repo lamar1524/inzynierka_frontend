@@ -1,8 +1,8 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import { ROUTES } from '../../../../consts';
@@ -27,6 +27,7 @@ export class PrivateGroupsComponent implements OnDestroy {
   groups: IGroup[];
   next: string;
   groupsLoading$: Observable<boolean>;
+  tempLoading: boolean;
   sub$: Subscription;
   groupCreationFormVisible: Observable<boolean>;
   currentUser$: Observable<IUser>;
@@ -44,7 +45,11 @@ export class PrivateGroupsComponent implements OnDestroy {
         this.cdRef.markForCheck();
       });
     this.currentUser$ = this.store.select(selectCurrentUser);
-    this.groupsLoading$ = this.store.select(selectPrivateGroupsLoading);
+    this.groupsLoading$ = this.store.select(selectPrivateGroupsLoading).pipe(
+      tap((loading) => {
+        this.tempLoading = loading;
+      }),
+    );
     this.groupCreationFormVisible = this.store.select(selectGroupCreationFormVisibility);
     this.sub$.add(groups$);
   }
@@ -57,11 +62,9 @@ export class PrivateGroupsComponent implements OnDestroy {
     return USER_ROLE;
   }
 
-  @HostListener('window:scroll') scroll() {
-    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-      if (this.next !== null) {
-        this.store.dispatch(groupsActions.loadPrivateGroups({ url: this.next }));
-      }
+  handleGroupsScroll() {
+    if (this.next !== null && !this.tempLoading) {
+      this.store.dispatch(groupsActions.loadPrivateGroups({ url: this.next }));
     }
   }
 
