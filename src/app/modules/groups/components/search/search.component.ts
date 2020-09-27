@@ -81,6 +81,12 @@ export class SearchComponent implements OnDestroy {
     });
   }
 
+  handleResultsScroll() {
+    if (this.next !== null && !this.loading) {
+      this.store.dispatch(groupsActions.searchForGroup({ phrase: undefined, url: this.next }));
+    }
+  }
+
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
   }
