@@ -7,7 +7,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgScrollbarModule } from 'ngx-scrollbar';
 
 import { STORE_FEATURES } from '../../consts';
 import { LeftSidebarComponent, MainComponent, NavigationComponent, RightSidebarComponent } from './components';
@@ -27,6 +28,8 @@ import { mainReducer, MainEffects } from './store';
     StoreModule.forFeature(STORE_FEATURES.main, mainReducer),
     EffectsModule.forFeature([MainEffects]),
     MatIconModule,
+    NgScrollbarModule,
+    InfiniteScrollModule,
   ],
 })
 export class MainModule {}
