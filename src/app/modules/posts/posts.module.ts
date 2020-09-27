@@ -3,7 +3,9 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -16,6 +18,7 @@ import { STORE_FEATURES } from '../../consts';
 import { AllPostsComponent, CommentComponent, SinglePostComponent } from './components';
 import { PostsRoutingModule } from './posts-routing.module';
 import { postsReducer, PostsEffects } from './store';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [AllPostsComponent, SinglePostComponent, CommentComponent],
@@ -33,6 +36,9 @@ import { postsReducer, PostsEffects } from './store';
     MatProgressSpinnerModule,
     NgScrollbarModule,
     InfiniteScrollModule,
+    MatIconModule,
+    MatMenuModule,
+    MatTooltipModule,
   ],
 })
 export class PostsModule {}

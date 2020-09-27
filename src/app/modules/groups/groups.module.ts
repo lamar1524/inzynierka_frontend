@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -11,6 +11,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { MatIconModule } from '@angular/material/icon';
 
 import { GroupWrapperModule } from '@reusable-modules/group-wrapper';
 import { PostFormModule } from '@reusable-modules/post-form';
@@ -40,6 +41,8 @@ import { groupsReducer, GroupsEffects } from './store';
     MatTooltipModule,
     NgScrollbarModule,
     InfiniteScrollModule,
+    MatIconModule,
+    FormsModule,
   ],
 })
 export class GroupsModule {}

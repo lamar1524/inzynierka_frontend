@@ -39,9 +39,10 @@ export class ProfileEffects {
         this.profileService.editProfile(action.user).pipe(
           map((res) => {
             this.popupService.success('Profil pomyślnie edytowany');
+            action.refreshAction();
             return profileActions.editProfileDataSuccess({ user: res });
           }),
-          catchError((error) => {
+          catchError(() => {
             this.popupService.error('Edytowanie profilu nieudane, spróbuj ponownie');
             return of(profileActions.editProfileDataFail());
           }),

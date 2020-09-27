@@ -4,10 +4,18 @@
       <img class="image" [src]="comment.owner.image" alt="User image" />
     </div>
     <div class="name__wrapper">{{ comment.owner.firstName }} {{ comment.owner.lastName }}</div>
-    <div class="options__wrapper" *ngIf="isOwnerOrAdmin">
-      <button class="options__button" mat-icon-button (click)="dropdownToggle($event)">
-        <img class="options__img" alt="options" src="../../../../../assets/img/options.svg" />
+    <div class="options__wrapper" *ngIf="isOwnerOrAdmin" [matMenuTriggerFor]="dropdown">
+      <button class="options__button" mat-icon-button>
+        <mat-icon class="more-icon">more_horiz</mat-icon>
       </button>
+      <mat-menu #dropdown>
+        <button mat-menu-item *ngIf="isOwner" class="option" (click)="editButton($event)">
+          Edytuj
+        </button>
+        <button mat-menu-item class="option" (click)="deleteButton($event)">
+          Usuń
+        </button>
+      </mat-menu>
     </div>
     <div class="date">{{ comment.dateCommented | date: 'medium':'+1':'pl-PL' }}</div>
   </div>
@@ -28,18 +36,4 @@
       </div>
     </form>
   </ng-template>
-  <div class="dropdown" *ngIf="dropdownVisible">
-    <div
-      *ngIf="isOwner"
-      class="option"
-      (mouseenter)="hoverOption($event)"
-      (mouseleave)="unHoverOption($event)"
-      (click)="editButton($event)"
-    >
-      Edytuj
-    </div>
-    <div class="option" (mouseenter)="hoverOption($event)" (mouseleave)="unHoverOption($event)" (click)="deleteButton($event)">
-      Usuń
-    </div>
-  </div>
 </div>

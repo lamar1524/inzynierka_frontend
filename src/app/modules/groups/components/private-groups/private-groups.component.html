@@ -21,7 +21,9 @@
         class="button__wrapper"
         *ngIf="(currentUser$ | async)?.role === userRoles.ADMIN || (currentUser$ | async)?.role === userRoles.LECTURER"
       >
-        <button mat-raised-button color="primary" (click)="revealGroupCreationForm()">Stwórz grupę</button>
+        <button matTooltip="Stwórz grupę" mat-fab color="primary" (click)="revealGroupCreationForm()">
+          <mat-icon>add</mat-icon>
+        </button>
       </div>
       <app-group-wrapper
         *ngFor="let group of groups"

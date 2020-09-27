@@ -7,10 +7,9 @@
   padding: 30px;
   width: 100%;
 
-  .message__list--scroll {
+  .scroll__wrapper {
     border: 2px solid #0066cb;
     border-radius: 4px;
-    position: relative;
   }
 
   .message__list {
@@ -39,7 +38,6 @@
     }
 
     .user-image {
-      border: 1px solid #000;
       border-radius: 50%;
       height: 42px;
       width: 42px;

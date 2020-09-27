@@ -5,12 +5,12 @@
   <div class="full-name__wrapper">
     <span class="full-name">{{ profile.firstName }} {{ profile.lastName }}</span>
     <button (click)="editToggle()" *ngIf="isCurrentUser" mat-icon-button class="edit-icon__wrapper">
-      <img class="edit-icon" src="../../../../../assets/img/edit.svg" />
+      <mat-icon class="edit-icon">edit</mat-icon>
     </button>
   </div>
   <div class="message__wrapper" *ngIf="!isCurrentUser">
     <button mat-icon-button class="message__button" (click)="handleMessageClick()">
-      <img alt="msg" src="../../../../../assets/img/msg.png" class="message-icon" />
+      <mat-icon>email</mat-icon>
     </button>
   </div>
   <div class="data__wrapper" *ngIf="!editing">

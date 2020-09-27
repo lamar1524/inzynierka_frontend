@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -21,7 +20,7 @@ export class RightSidebarComponent {
   loading: boolean;
   readonly routes: IRoutes;
 
-  constructor(private store: Store<MainModuleState>, @Inject(DOCUMENT) private document: Document) {
+  constructor(private store: Store<MainModuleState>) {
     this.loading = false;
     this.store.dispatch(loadFriendsList({ url: null }));
     this.usersLoading$ = this.store.select(selectFriendsLoading).pipe(
@@ -48,12 +47,9 @@ export class RightSidebarComponent {
     event.target.classList.remove('u-item--hover');
   }
 
-  loadMoreFriends(event) {
-    const element = event.target;
-    if (element.offsetHeight + element.scrollTop >= this.document.body.offsetHeight) {
-      if (this.next !== null && !this.loading) {
-        this.store.dispatch(loadFriendsList({ url: this.next }));
-      }
+  loadMoreFriends() {
+    if (this.next !== null && !this.loading) {
+      this.store.dispatch(loadFriendsList({ url: this.next }));
     }
   }
 }

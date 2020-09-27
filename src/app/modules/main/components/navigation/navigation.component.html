@@ -14,11 +14,8 @@
         <mat-spinner [diameter]="50"></mat-spinner>
       </div>
     </ng-template>
-    <div class="message__wrapper wrapper">
-      <img class="message" src="../../../../../assets/img/msg.png" alt="msg" />
-    </div>
     <div class="hamburger__wrapper wrapper">
-      <button class="hamburger__box" (click)="toggleNav()">
+      <button mat-icon-button class="hamburger__box" (click)="toggleNav()">
         <span class="hamburger" [ngClass]="{ 'hamburger--active': navVisibility | async }">
           <span class="hamburger__inner"></span>
         </span>

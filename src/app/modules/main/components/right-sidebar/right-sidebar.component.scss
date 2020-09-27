@@ -5,24 +5,24 @@
   display: none;
 
   @include break(map-get($breakpoints, lg)) {
+    bottom: 0;
     display: block;
-    height: calc(100vh - #{$nav-height});
-    left: 75vw;
-    overflow-y: auto;
     position: fixed;
+    right: 0;
     top: $nav-height;
     width: 25vw;
 
     .friends__wrapper {
-      margin: 0 0 auto;
-      min-height: 100%;
-      width: 75%;
+      width: 100%;
     }
 
     .friends__header {
       border-bottom: 2px solid $primary;
       font-size: 2rem;
+      margin-left: 10px;
+      margin-right: auto;
       padding-top: 15px;
+      width: 90%;
     }
 
     .friend__wrapper {
@@ -33,27 +33,29 @@
       flex-direction: row;
       height: 45px;
       justify-content: flex-start;
+      margin-left: 10px;
+      margin-right: auto;
       padding: 5px;
       transition: background-color 0.5s ease;
-      width: 100%;
+      width: 90%;
     }
 
     .error__wrapper {
       font-size: 1.8rem;
       padding-top: 10px;
+      margin-left: 10px;
     }
 
     .friend__image {
-      height: 100%;
+      height: 40px;
       margin-right: 10px;
       width: 40px;
     }
 
     .image {
-      border: 1px solid $gray;
       border-radius: 50%;
-      height: 36px;
-      width: 36px;
+      height: 40px;
+      width: 40px;
     }
   }
 
@@ -61,11 +63,5 @@
     display: flex;
     justify-content: center;
     width: 100%;
-  }
-
-  @include break(map-get($breakpoints, xl)) {
-    .friends__wrapper {
-      width: 70%;
-    }
   }
 }

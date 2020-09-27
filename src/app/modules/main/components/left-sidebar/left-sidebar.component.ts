@@ -5,8 +5,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { ROUTES } from '../../../../consts';
-import { IRoutes } from '../../../../interfaces';
-import { IGroup } from '../../../../interfaces/group.interface';
+import { IGroup, IRoutes } from '../../../../interfaces';
 import { loadBaseGroups, selectBaseGroups, selectBaseGroupsLoading, MainModuleState } from '../../store';
 
 @Component({

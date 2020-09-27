@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -23,7 +23,6 @@ export class PostWrapperComponent implements OnInit {
   @Output() routeToPost: EventEmitter<{ id: number }> | null;
   @Output() sendDelete: EventEmitter<{ id: number }>;
   @Output() sendUpdate: EventEmitter<{ id: number; data: FormData }>;
-  dropdownVisible: boolean;
   editForm: FormGroup;
   formVisibility: boolean;
   image: File;
@@ -31,11 +30,10 @@ export class PostWrapperComponent implements OnInit {
   postEditing: boolean;
   readonly routes: IRoutes;
 
-  constructor(private dialogService: DialogService, private cdRef: ChangeDetectorRef) {
+  constructor(private dialogService: DialogService) {
     this.sendUpdate = new EventEmitter<{ id: number; data: FormData }>();
     this.sendDelete = new EventEmitter<{ id: number }>();
     this.routeToPost = new EventEmitter<{ id: number }>();
-    this.dropdownVisible = false;
     this.routes = ROUTES;
   }
 
@@ -44,29 +42,6 @@ export class PostWrapperComponent implements OnInit {
       content: new FormControl(this.post.content, Validators.required),
     });
     this.postEditing = false;
-  }
-
-  dropdownToggle(event) {
-    event.stopPropagation();
-    this.dropdownVisible = !this.dropdownVisible;
-    if (this.dropdownVisible) {
-      window.addEventListener('click', this.hideDropdown);
-    }
-    this.cdRef.markForCheck();
-  }
-
-  hideDropdown = (event) => {
-    this.dropdownVisible = false;
-    window.removeEventListener('click', this.hideDropdown);
-    this.cdRef.markForCheck();
-  };
-
-  hoverOption(event) {
-    event.target.classList.add('u-item--hover');
-  }
-
-  unHoverOption(event) {
-    event.target.classList.remove('u-item--hover');
   }
 
   editButton() {

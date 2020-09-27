@@ -21,14 +21,12 @@ export class CommentComponent implements OnInit {
   @Input() isOwner: boolean;
   @Input() isOwnerOrAdmin: boolean;
   @Input() postId: number;
-  dropdownVisible: boolean;
   formVisibility: boolean;
   editForm: FormGroup;
   commentEditing$: Observable<boolean>;
   commentDeleting$: Observable<boolean>;
 
   constructor(private store: Store<PostsModuleState>, private cdRef: ChangeDetectorRef, private dialogService: DialogService) {
-    this.dropdownVisible = false;
     this.commentEditing$ = this.store.select(selectCommentEditing).pipe(
       tap((res) => {
         res ? this.editForm.disable() : this.editForm.enable();
@@ -42,29 +40,6 @@ export class CommentComponent implements OnInit {
     this.editForm = new FormGroup({
       content: new FormControl(this.comment.content),
     });
-  }
-
-  dropdownToggle(event) {
-    event.stopPropagation();
-    this.dropdownVisible = !this.dropdownVisible;
-    if (this.dropdownVisible) {
-      window.addEventListener('click', this.hideDropdown);
-    }
-    this.cdRef.markForCheck();
-  }
-
-  hideDropdown = (event) => {
-    this.dropdownVisible = false;
-    window.removeEventListener('click', this.hideDropdown);
-    this.cdRef.markForCheck();
-  };
-
-  hoverOption(event) {
-    event.target.classList.add('u-item--hover');
-  }
-
-  unHoverOption(event) {
-    event.target.classList.remove('u-item--hover');
   }
 
   editButton(event) {

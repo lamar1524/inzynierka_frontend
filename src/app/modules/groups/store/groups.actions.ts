@@ -53,7 +53,7 @@ export const leaveGroup = createAction('[Groups] Leave group', props<{ groupId: 
 export const leaveGroupSuccess = createAction('[Groups] Leave group success');
 export const leaveGroupFail = createAction('[Groups] Leave group fail');
 
-export const editGroup = createAction('[Groups] Edit group', props<{ group: FormData; groupId: number }>());
+export const editGroup = createAction('[Groups] Edit group', props<{ group: FormData; groupId: number; refreshAction: () => void }>());
 export const editGroupSuccess = createAction('[Groups] Edit group success');
 export const editGroupFail = createAction('[Groups] Edit group fail');
 

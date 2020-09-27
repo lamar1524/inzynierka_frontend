@@ -35,13 +35,6 @@
     "no-var-requires": false,
     "object-literal-key-quotes": [true, "as-needed"],
     "object-literal-sort-keys": false,
-    "ordered-imports": [
-      true,
-      {
-        "import-sources-order": "lowercase-last",
-        "named-imports-order": "lowercase-first"
-      }
-    ],
     "quotemark": [true, "single"],
     "trailing-comma": false,
     "no-conflicting-lifecycle": true,
