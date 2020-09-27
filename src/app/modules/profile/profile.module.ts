@@ -11,6 +11,7 @@ import { STORE_FEATURES } from '../../consts';
 import { ProfileComponent } from './components';
 import { ProfileRoutingModule } from './profile-routing.module';
 import { profileReducer, ProfileEffects } from './store';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [ProfileComponent],
@@ -23,6 +24,7 @@ import { profileReducer, ProfileEffects } from './store';
     MatInputModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
+    MatIconModule,
   ],
 })
 export class ProfileModule {}

@@ -16,9 +16,9 @@
           }}
         </p>
         <p class="last-message">
-          {{ thread.lastMessage.content }}
+          {{ thread.lastMessage ? thread.lastMessage.content : 'Brak wiadomości' }}
         </p>
-        <div class="date__wrapper">
+        <div class="date__wrapper" *ngIf="thread.lastMessage">
           {{ thread.lastMessage.dateSend | date: 'yyyy-MM-dd HH:mm' }}
         </div>
       </div>

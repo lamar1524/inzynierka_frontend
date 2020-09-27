@@ -34,7 +34,7 @@
     >
       Zobacz więcej...
     </button>
-    <div class="groups__caption u-text--link" *ngIf="(groups$ | async)?.length === 0">Brak grup.</div>
+    <div class="groups__caption" *ngIf="(groups$ | async)?.length === 0">Brak grup</div>
   </div>
   <ng-template #spinner>
     <div class="spinner__wrapper">
