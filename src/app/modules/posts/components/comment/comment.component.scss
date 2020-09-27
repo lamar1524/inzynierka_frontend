@@ -38,6 +38,10 @@ $options-wrapper: 35px;
     padding: 0 10px;
   }
 
+  .mat-icon.more-icon {
+    color: #000;
+  }
+
   .options__wrapper {
     align-items: center;
     display: flex;
@@ -93,24 +97,5 @@ $options-wrapper: 35px;
     display: flex;
     justify-content: space-around;
     width: 100%;
-  }
-}
-
-.dropdown {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
-  left: calc(100% - #{$options-wrapper} - 75px);
-  padding: 5px;
-  position: absolute;
-  top: 50px;
-  width: 80px;
-  z-index: 2;
-
-  .option {
-    border-radius: 10px;
-    padding: 10px;
-    transition: background-color 0.5s ease;
-    z-index: 2;
   }
 }
