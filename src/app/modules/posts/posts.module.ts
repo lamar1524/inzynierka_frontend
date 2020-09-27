@@ -18,6 +18,7 @@ import { STORE_FEATURES } from '../../consts';
 import { AllPostsComponent, CommentComponent, SinglePostComponent } from './components';
 import { PostsRoutingModule } from './posts-routing.module';
 import { postsReducer, PostsEffects } from './store';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [AllPostsComponent, SinglePostComponent, CommentComponent],
@@ -37,6 +38,7 @@ import { postsReducer, PostsEffects } from './store';
     InfiniteScrollModule,
     MatIconModule,
     MatMenuModule,
+    MatTooltipModule,
   ],
 })
 export class PostsModule {}

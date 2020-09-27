@@ -54,6 +54,14 @@ $options-wrapper: 35px;
       width: 100%;
     }
 
+    .credentials {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-end;
+      height: 100%;
+    }
+
     .date {
       font-size: 1.2rem;
     }
@@ -68,9 +76,15 @@ $options-wrapper: 35px;
     }
 
     .name,
-    .arrow,
     .group {
       display: inline-block;
+    }
+
+    .arrow {
+      color: #000;
+      width: unset;
+      height: unset;
+      font-size: 2rem;
     }
 
     .group {
@@ -97,12 +111,6 @@ $options-wrapper: 35px;
   .options__img {
     height: 15px;
     width: 30px;
-  }
-
-  .arrow {
-    height: 10px;
-    margin: 0 5px;
-    width: 15px;
   }
 
   .post__content {
