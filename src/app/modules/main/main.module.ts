@@ -9,6 +9,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgScrollbarModule } from 'ngx-scrollbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { STORE_FEATURES } from '../../consts';
 import { LeftSidebarComponent, MainComponent, NavigationComponent, RightSidebarComponent } from './components';
@@ -30,6 +31,7 @@ import { mainReducer, MainEffects } from './store';
     MatIconModule,
     NgScrollbarModule,
     InfiniteScrollModule,
+    MatTooltipModule,
   ],
 })
 export class MainModule {}

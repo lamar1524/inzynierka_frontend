@@ -65,28 +65,27 @@ $image-size: 48px;
     }
 
     .groups__caption {
-      padding-top: 5px;
+      color: $primary;
     }
 
     .search__wrapper {
       margin: 15px 0 15px auto;
-      min-height: 25%;
       width: 90%;
 
       .form-group {
-        align-items: center;
-        display: flex;
-        justify-content: space-between;
-        margin: 15px auto 0 0;
-        width: 95%;
+        padding: 15px 0;
+        display: grid;
+        grid-template-columns: auto 60px;
+        width: 100%;
       }
 
+      .form-control,
       .form-button {
-        max-width: 30%;
+        margin: auto;
       }
 
-      .mat-form-field {
-        max-width: 60%;
+      .form-control {
+        width: 100%;
       }
     }
   }
