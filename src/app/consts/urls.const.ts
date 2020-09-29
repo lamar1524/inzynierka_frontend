@@ -11,6 +11,8 @@ export const URLS: IUrls = {
   loadProfile: host + 'users/get/',
   editProfile: host + 'users/update/',
   currentUser: host + 'users/current_user/',
+  usersList: host + 'users/users_list/',
+  manageUser: host + 'users/manage_user/',
   allPosts: host + 'posts/user_posts_list/',
   postEdit: host + 'posts/update/',
   postDelete: host + 'posts/delete/',

@@ -9,6 +9,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { AdminEffects, adminReducer } from './store';
 import { UsersListComponent } from './components';
 import { AdminGuard } from './guards/admin.guard';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [UsersListComponent],
@@ -19,6 +20,7 @@ import { AdminGuard } from './guards/admin.guard';
     EffectsModule.forFeature([AdminEffects]),
     FormsModule,
     ReactiveFormsModule,
+    MatTableModule,
   ],
   providers: [AdminGuard],
 })

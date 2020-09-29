@@ -19,6 +19,7 @@ export interface IUser {
   lastName: string;
   role: USER_ROLE;
   image: string;
+  active?: boolean;
   token?: string;
 }
 

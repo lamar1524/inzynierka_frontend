@@ -1,1 +1,34 @@
-HALKO
+<div class="users-list__container">
+  <div class="header__wrapper">
+    <h2>Lista użytkowników</h2>
+  </div>
+  <div class="table__wrapper">
+    <table mat-table class="users-table" [dataSource]="usersList">
+      <ng-container matColumnDef="photo">
+        <th mat-header-cell *matHeaderCellDef>Zdjęcie</th>
+        <td mat-cell *matCellDef="let element">
+          <img class="user-image" [src]="element.image" alt="photo" />
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>Imię</th>
+        <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+      </ng-container>
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Nazwisko</th>
+        <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+      </ng-container>
+      <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef>Aktywny</th>
+        <td mat-cell *matCellDef="let element">{{ element.active ? 'Tak' : 'Nie' }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+</div>
