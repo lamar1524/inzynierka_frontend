@@ -8,4 +8,5 @@ export const STORE_FEATURES: IStoreFeatures = {
   core: 'core',
   profile: 'profile',
   chat: 'chat',
+  admin: 'admin',
 };

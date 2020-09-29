@@ -57,4 +57,12 @@ export const ROUTES: IRoutes = {
     name: '',
     path: '/home/chat/',
   },
+  adminModule: {
+    name: 'admin',
+    path: '/home/admin',
+  },
+  usersList: {
+    name: 'users',
+    path: '/home/admin/users',
+  },
 };

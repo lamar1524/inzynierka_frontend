@@ -16,6 +16,7 @@ const routes: Routes = [
       { path: ROUTES.groupsModule.name, loadChildren: () => import('../groups/groups.module').then((mod) => mod.GroupsModule) },
       { path: ROUTES.profile.name, loadChildren: () => import('../profile/profile.module').then((mod) => mod.ProfileModule) },
       { path: ROUTES.chatModule.name, loadChildren: () => import('../chat/chat.module').then((mod) => mod.ChatModule) },
+      { path: ROUTES.adminModule.name, loadChildren: () => import('../admin/admin.module').then((mod) => mod.AdminModule) },
     ],
   },
 ];
