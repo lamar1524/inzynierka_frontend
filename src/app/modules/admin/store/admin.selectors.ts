@@ -1,5 +1,6 @@
-import { AdminModuleState, AdminState } from './admin.reducers';
 import { createSelector } from '@ngrx/store';
+
+import { AdminModuleState, AdminState } from './admin.reducers';
 
 export const adminSelector = (state: AdminModuleState) => state.admin;
 

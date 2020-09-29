@@ -1,5 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { adminActions } from './index';
+
+import * as adminActions from './admin.actions';
 
 export interface AdminModuleState {
   admin: AdminState;
