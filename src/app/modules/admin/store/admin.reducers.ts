@@ -23,7 +23,7 @@ export const ADMIN_REDUCER = createReducer(
   on(adminActions.loadUsersSuccess, (state, { users }) => ({
     ...state,
     usersLoading: false,
-    usersList: state.usersList ? { ...state.usersList, users: [...state.usersList.users, ...users.users] } : { ...users },
+    usersList: state.usersList ? { ...users, users: [...state.usersList.users, ...users.users] } : { ...users },
   })),
   on(adminActions.loadUsersFail, (state) => ({ ...state, usersLoading: false })),
   on(adminActions.clearUsersList, (state) => ({ ...state, usersList: null })),

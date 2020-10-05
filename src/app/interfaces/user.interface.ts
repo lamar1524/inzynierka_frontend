@@ -26,6 +26,7 @@ export interface IUser {
 export interface IResponseUsers {
   next: string;
   previous?: string;
+  count?: number;
   users: IUser[];
 }
 

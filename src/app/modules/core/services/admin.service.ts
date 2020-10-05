@@ -14,6 +14,6 @@ export class AdminService {
   fetchUsersList(url: string): Observable<IResponseUsers> {
     return this._httpClient
       .get<any>(url)
-      .pipe(map((results) => ({ users: results.results, next: results.next, previous: results.previous })));
+      .pipe(map((results) => ({ users: results.results, next: results.next, previous: results.previous, count: results.count })));
   }
 }

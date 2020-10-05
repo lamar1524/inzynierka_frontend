@@ -1,9 +1,10 @@
 import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { adminActions, AdminModuleState, adminSelectors } from '../../store';
-import { IUser } from '../../../../interfaces';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+
+import { adminActions, AdminModuleState, adminSelectors } from '../../store';
+import { IUser } from '../../../../interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -18,10 +19,12 @@ export class UsersListComponent implements OnDestroy {
 
   public usersList: MatTableDataSource<IUser>;
   public usersLoading: boolean;
+  public usersCount: number;
   public readonly displayedColumns: string[];
 
   constructor(private _store: Store<AdminModuleState>) {
     this.displayedColumns = ['photo', 'email', 'firstName', 'lastName', 'active'];
+    this.usersCount = 0;
     this._sub$ = new Subscription();
     this.usersList = new MatTableDataSource<IUser>();
     this.usersLoading = false;
@@ -30,7 +33,8 @@ export class UsersListComponent implements OnDestroy {
       .pipe(filter((users) => !!users))
       .subscribe((usersList) => {
         this._nextUrl = usersList.next;
-        this.usersList.data = [...this.usersList.data, ...usersList.users];
+        this.usersCount = usersList.count;
+        this.usersList.data = [...usersList.users];
       });
     this._sub$.add(usersListSubscription$);
     const usersLoadingSub$ = this._store.select(adminSelectors.selectUsersLoading).subscribe((loading) => {
@@ -48,5 +52,6 @@ export class UsersListComponent implements OnDestroy {
 
   ngOnDestroy() {
     this._store.dispatch(adminActions.clearUsersList());
+    this._sub$.unsubscribe();
   }
 }

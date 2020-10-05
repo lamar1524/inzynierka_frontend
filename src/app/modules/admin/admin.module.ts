@@ -3,13 +3,17 @@ import { CommonModule } from '@angular/common';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { STORE_FEATURES } from '../../consts';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminEffects, adminReducer } from './store';
 import { UsersListComponent } from './components';
 import { AdminGuard } from './guards/admin.guard';
-import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgScrollbarModule } from 'ngx-scrollbar';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [UsersListComponent],
@@ -21,6 +25,10 @@ import { MatTableModule } from '@angular/material/table';
     FormsModule,
     ReactiveFormsModule,
     MatTableModule,
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    NgScrollbarModule,
+    InfiniteScrollModule,
   ],
   providers: [AdminGuard],
 })
