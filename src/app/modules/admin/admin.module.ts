@@ -16,6 +16,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [UsersListComponent],
@@ -33,6 +34,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     InfiniteScrollModule,
     MatButtonModule,
     MatTooltipModule,
+    MatSelectModule,
   ],
   providers: [AdminGuard],
 })

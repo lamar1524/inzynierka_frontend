@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { IUser } from '../../../../interfaces';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogService } from '@core/services';
 import { AuthModuleState, selectCurrentUser } from '@authorization/store';
+import { USER_ROLE } from '../../../../enums';
 
 @Component({
   selector: 'app-users-list',
@@ -23,11 +24,13 @@ export class UsersListComponent implements OnDestroy {
   public usersLoading: boolean;
   public usersCount: number;
   public readonly displayedColumns: string[];
+  public readonly availableUserRoles: USER_ROLE[];
   public userToggling$: Observable<boolean>;
   public currentUser$: Observable<IUser>;
 
   constructor(private _store: Store<AdminModuleState | AuthModuleState>, private _dialogService: DialogService) {
-    this.displayedColumns = ['photo', 'email', 'firstName', 'lastName', 'active'];
+    this.displayedColumns = ['photo', 'email', 'firstName', 'lastName', 'active', 'role'];
+    this.availableUserRoles = [USER_ROLE.ADMIN, USER_ROLE.LECTURER, USER_ROLE.USER];
     this.usersCount = 0;
     this._sub$ = new Subscription();
     this.usersList = new MatTableDataSource<IUser>();
