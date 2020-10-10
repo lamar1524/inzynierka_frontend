@@ -13,6 +13,8 @@ export interface IRoutes {
   profile: IRoute;
   chatModule: IRoute;
   singleChat: IRoute;
+  adminModule: IRoute;
+  usersList: IRoute;
 }
 
 export interface IRoute {

@@ -1,0 +1,76 @@
+<div class="users-list__container">
+  <div class="spinner__wrapper" *ngIf="usersLoading || (settingUserRoleLoading$ | async) === true">
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+  <div class="header__wrapper">
+    <h2>Lista użytkowników</h2>
+  </div>
+  <ng-scrollbar style="position: relative;" [track]="'all'">
+    <div
+      class="infinite-scroll__wrapper"
+      infiniteScroll
+      [scrollWindow]="false"
+      scrollViewport
+      (scrolled)="handleScroll()"
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="50"
+    >
+      <div class="table__wrapper">
+        <table mat-table class="users-table" [dataSource]="usersList">
+          <ng-container matColumnDef="photo">
+            <th mat-header-cell *matHeaderCellDef>Zdjęcie</th>
+            <td mat-cell *matCellDef="let element">
+              <img class="user-image" [src]="element.image" alt="photo" />
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="email">
+            <th mat-header-cell *matHeaderCellDef>Email</th>
+            <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+          </ng-container>
+          <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef>Imię</th>
+            <td mat-cell *matCellDef="let element">{{ element.firstName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef>Nazwisko</th>
+            <td mat-cell *matCellDef="let element">{{ element.lastName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="active">
+            <th mat-header-cell *matHeaderCellDef>Aktywność</th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                mat-stroked-button
+                color="primary"
+                (click)="openTogglingActivityDialog(element)"
+                *ngIf="element.id !== (currentUser$ | async).id; else info"
+              >
+                {{ element.active ? 'Zablokuj' : 'Aktywuj' }}
+              </button>
+              <ng-template #info>
+                <span class="admin__info">{{ element.active ? 'Aktywny' : 'Zablokowany' }}</span>
+              </ng-template>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="role">
+            <th mat-header-cell *matHeaderCellDef>Rola</th>
+            <td mat-cell *matCellDef="let element">
+              <mat-form-field *ngIf="element.id !== (currentUser$ | async).id; else roleInfo">
+                <mat-select [value]="element.role" (selectionChange)="switchUserRole($event, element)">
+                  <mat-option *ngFor="let role of availableUserRoles" [value]="role">
+                    {{ role }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <ng-template #roleInfo>
+                <span>{{ element.role }}</span>
+              </ng-template>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    </div>
+  </ng-scrollbar>
+</div>

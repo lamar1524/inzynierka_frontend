@@ -6,4 +6,5 @@ export interface IStoreFeatures {
   core: string;
   profile: string;
   chat: string;
+  admin: string;
 }

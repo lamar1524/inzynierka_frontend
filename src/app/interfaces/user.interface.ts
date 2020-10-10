@@ -19,12 +19,14 @@ export interface IUser {
   lastName: string;
   role: USER_ROLE;
   image: string;
+  active?: boolean;
   token?: string;
 }
 
 export interface IResponseUsers {
   next: string;
   previous?: string;
+  count?: number;
   users: IUser[];
 }
 

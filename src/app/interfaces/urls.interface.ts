@@ -32,4 +32,7 @@ export interface IUrls {
   getMessagesList: string;
   getThread: string;
   chatSocket: string;
+  usersList: string;
+  manageUser: string;
+  setUserRole: string;
 }

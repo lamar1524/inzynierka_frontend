@@ -12,8 +12,8 @@ export class DialogService {
 
   showDialog(data: IDialogData) {
     this.matDialog.open(DialogComponent, {
-      width: '350px',
-      height: '200px',
+      width: '400px',
+      height: '275px',
       data,
       panelClass: 'app-dialog-container',
     });
