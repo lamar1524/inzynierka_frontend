@@ -14,6 +14,8 @@ import { AdminGuard } from './guards/admin.guard';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [UsersListComponent],
@@ -29,6 +31,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     MatPaginatorModule,
     NgScrollbarModule,
     InfiniteScrollModule,
+    MatButtonModule,
+    MatTooltipModule,
   ],
   providers: [AdminGuard],
 })

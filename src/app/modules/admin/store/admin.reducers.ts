@@ -10,11 +10,13 @@ export interface AdminModuleState {
 export interface AdminState {
   usersLoading: boolean;
   usersList: IResponseUsers;
+  activityToggleLoading: boolean;
 }
 
 export const initialState: AdminState = {
   usersLoading: false,
   usersList: null,
+  activityToggleLoading: false,
 };
 
 export const ADMIN_REDUCER = createReducer(
@@ -27,6 +29,10 @@ export const ADMIN_REDUCER = createReducer(
   })),
   on(adminActions.loadUsersFail, (state) => ({ ...state, usersLoading: false })),
   on(adminActions.clearUsersList, (state) => ({ ...state, usersList: null })),
+
+  on(adminActions.toggleUserActivity, (state) => ({ ...state, activityToggleLoading: true })),
+  on(adminActions.toggleUserActivitySuccess, (state) => ({ ...state, activityToggleLoading: false })),
+  on(adminActions.toggleUserActivityFail, (state) => ({ ...state, activityToggleLoading: false })),
 );
 
 export const adminReducer = (state: AdminState | undefined, action: Action) => ADMIN_REDUCER(state, action);

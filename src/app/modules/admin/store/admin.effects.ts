@@ -26,4 +26,23 @@ export class AdminEffects {
       ),
     ),
   );
+
+  toggleUserActivity = createEffect(() =>
+    this._actions$.pipe(
+      ofType(adminActions.toggleUserActivity),
+      switchMap((action) =>
+        this._adminService.toggleUserActivity(action.userId).pipe(
+          map((res) => {
+            action.refreshAction();
+            this._popupService.success('Pomyślnie zaktualizowałeś aktywność użytkownika');
+            return adminActions.toggleUserActivitySuccess();
+          }),
+          catchError((error) => {
+            this._popupService.error('Błąd aktualizacji aktywności użytkownika');
+            return of(adminActions.toggleUserActivityFail());
+          }),
+        ),
+      ),
+    ),
+  );
 }

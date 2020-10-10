@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { IResponseUsers } from '../../../interfaces';
 import { map } from 'rxjs/operators';
+import { URLS } from '../../../consts';
 
 @Injectable({
   providedIn: 'root',
@@ -15,5 +16,9 @@ export class AdminService {
     return this._httpClient
       .get<any>(url)
       .pipe(map((results) => ({ users: results.results, next: results.next, previous: results.previous, count: results.count })));
+  }
+
+  toggleUserActivity(userId: number): Observable<any> {
+    return this._httpClient.put(URLS.manageUser, { userId });
   }
 }
