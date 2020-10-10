@@ -16,6 +16,7 @@ import { LoginGuard } from './guards';
 import { AuthInterceptor } from './interceptors';
 import { AuthService } from './services';
 import { authReducer, AuthorizationEffects } from './store';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, Error403Component],
@@ -31,6 +32,7 @@ import { authReducer, AuthorizationEffects } from './store';
     MatProgressSpinnerModule,
     RouterModule,
     AuthorizationRoutingModule,
+    MatIconModule,
   ],
   providers: [
     AuthService,

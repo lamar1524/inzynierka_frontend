@@ -48,10 +48,15 @@ $hamburger-width: 30px;
     grid-area: logo;
     height: 75px;
     width: $logo-width;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    .logo {
+    .logo__icon {
       height: 100%;
       width: 100%;
+      font-size: 70px;
+      color: $primary;
     }
   }
 
