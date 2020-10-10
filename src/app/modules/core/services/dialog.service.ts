@@ -13,7 +13,7 @@ export class DialogService {
   showDialog(data: IDialogData) {
     this.matDialog.open(DialogComponent, {
       width: '400px',
-      height: '250px',
+      height: '275px',
       data,
       panelClass: 'app-dialog-container',
     });
