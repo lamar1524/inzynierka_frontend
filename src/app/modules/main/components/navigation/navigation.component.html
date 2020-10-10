@@ -1,24 +1,21 @@
 <div class="container">
   <div class="left__wrapper">
     <div class="logo__wrapper wrapper">
-      <img class="logo" alt="Logo" src="../../../../../assets/img/logo-ur.jpg" />
+      <mat-icon class="logo__icon">groups</mat-icon>
     </div>
     <div class="user__wrapper wrapper" *ngIf="currentUser$ | async as currentUser; else spinner">
       <div class="img__wrapper">
         <img class="img" alt="Photo" [src]="currentUser.image" />
       </div>
-      <span class="name__wrapper">{{ currentUser.first_name }} {{ currentUser.last_name }} </span>
+      <span class="name__wrapper">{{ currentUser.firstName }} {{ currentUser.lastName }} </span>
     </div>
     <ng-template #spinner>
       <div class="user__wrapper wrapper">
         <mat-spinner [diameter]="50"></mat-spinner>
       </div>
     </ng-template>
-    <div class="message__wrapper wrapper">
-      <img class="message" src="../../../../../assets/img/msg.png" alt="msg" />
-    </div>
     <div class="hamburger__wrapper wrapper">
-      <button class="hamburger__box" (click)="toggleNav()">
+      <button mat-icon-button class="hamburger__box" (click)="toggleNav()">
         <span class="hamburger" [ngClass]="{ 'hamburger--active': navVisibility | async }">
           <span class="hamburger__inner"></span>
         </span>
@@ -26,20 +23,25 @@
     </div>
   </div>
   <div class="right__wrapper">
+    <div class="option__wrapper" *ngIf="(currentUser$ | async)?.role === roles.ADMIN">
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.adminModule.path]" mat-button>Panel administracyjny</button>
+    </div>
     <div class="option__wrapper">
       <button class="option" (click)="closeNav()" [routerLink]="[routes.allPosts.path]" mat-button>Strona główna</button>
     </div>
     <div class="option__wrapper">
-      <button class="option" (click)="closeNav()" mat-button>Wiadomości</button>
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.chatModule.path]" mat-button>Wiadomości</button>
     </div>
     <div class="option__wrapper">
-      <button class="option" (click)="closeNav()" mat-button>Grupy</button>
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.privateGroups.path]" mat-button>Grupy</button>
     </div>
     <div class="option__wrapper">
-      <button class="option" (click)="closeNav()" mat-button>Szukaj</button>
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.search.path]" mat-button>Szukaj</button>
     </div>
     <div class="option__wrapper">
-      <button class="option" (click)="closeNav()" mat-button>Profil</button>
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.profile.path + (currentUser$ | async)?.id]" mat-button>
+        Profil
+      </button>
     </div>
     <div class="option__wrapper">
       <button class="option" (click)="logout()" mat-button>Wyloguj</button>
@@ -48,20 +50,25 @@
 </div>
 <div class="nav" [ngClass]="{ 'nav--active': navVisibility | async }">
   <div class="options">
+    <div class="option__wrapper" *ngIf="(currentUser$ | async)?.role === roles.ADMIN">
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.adminModule.path]" mat-button>Admin panel</button>
+    </div>
     <div class="option__wrapper">
       <button class="option" (click)="closeNav()" [routerLink]="[routes.allPosts.path]" mat-button>Strona główna</button>
     </div>
     <div class="option__wrapper">
-      <button class="option" (click)="closeNav()" mat-button>Wiadomości</button>
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.chatModule.path]" mat-button>Wiadomości</button>
     </div>
     <div class="option__wrapper">
-      <button class="option" (click)="closeNav()" mat-button>Grupy</button>
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.privateGroups.path]" mat-button>Grupy</button>
     </div>
     <div class="option__wrapper">
-      <button class="option" (click)="closeNav()" mat-button>Szukaj</button>
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.search.path]" mat-button>Szukaj</button>
     </div>
     <div class="option__wrapper">
-      <button class="option" (click)="closeNav()" mat-button>Profil</button>
+      <button class="option" (click)="closeNav()" [routerLink]="[routes.profile.path + (currentUser$ | async)?.id]" mat-button>
+        Profil
+      </button>
     </div>
     <div class="option__wrapper">
       <button class="option" (click)="logout()" mat-button>Wyloguj</button>

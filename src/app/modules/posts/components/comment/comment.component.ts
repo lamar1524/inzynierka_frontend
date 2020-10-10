@@ -1,13 +1,12 @@
-import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { IComment, IUser } from '@core/interfaces';
 import { DialogService } from '@core/services';
-import { selectCommentDeleting, selectCommentEditing, PostModuleState } from '../../store';
+import { IComment, IUser } from '../../../../interfaces';
+import { selectCommentDeleting, selectCommentEditing, PostsModuleState } from '../../store';
 import * as postsActions from '../../store/posts.actions';
 
 @Component({
@@ -22,19 +21,12 @@ export class CommentComponent implements OnInit {
   @Input() isOwner: boolean;
   @Input() isOwnerOrAdmin: boolean;
   @Input() postId: number;
-  dropdownVisible: boolean;
   formVisibility: boolean;
   editForm: FormGroup;
   commentEditing$: Observable<boolean>;
   commentDeleting$: Observable<boolean>;
 
-  constructor(
-    @Inject(DOCUMENT) private document: Document,
-    private store: Store<PostModuleState>,
-    private cdRef: ChangeDetectorRef,
-    private dialogService: DialogService,
-  ) {
-    this.dropdownVisible = false;
+  constructor(private store: Store<PostsModuleState>, private cdRef: ChangeDetectorRef, private dialogService: DialogService) {
     this.commentEditing$ = this.store.select(selectCommentEditing).pipe(
       tap((res) => {
         res ? this.editForm.disable() : this.editForm.enable();
@@ -48,29 +40,6 @@ export class CommentComponent implements OnInit {
     this.editForm = new FormGroup({
       content: new FormControl(this.comment.content),
     });
-  }
-
-  dropdownToggle(event) {
-    event.stopPropagation();
-    this.dropdownVisible = !this.dropdownVisible;
-    if (this.dropdownVisible) {
-      window.addEventListener('click', this.hideDropdown);
-    }
-    this.cdRef.markForCheck();
-  }
-
-  hideDropdown = (event) => {
-    this.dropdownVisible = false;
-    window.removeEventListener('click', this.hideDropdown);
-    this.cdRef.markForCheck();
-  };
-
-  hoverOption(event) {
-    event.target.classList.add('u-item--hover');
-  }
-
-  unHoverOption(event) {
-    event.target.classList.remove('u-item--hover');
   }
 
   editButton(event) {

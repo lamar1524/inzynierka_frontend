@@ -1,0 +1,33 @@
+<div class="container" (click)="hideGroupCreationForm($event)">
+  <div class="content" (click)="preventEventPropagation($event)">
+    <div class="header__wrapper">
+      <span class="header__inner">
+        Stwórz grupę
+      </span>
+    </div>
+    <div class="form__wrapper">
+      <form class="form-group" [formGroup]="groupCreationForm" (ngSubmit)="handleFormSubmit()">
+        <mat-form-field class="form-control__wrapper">
+          <mat-label>
+            Nazwa grupy
+          </mat-label>
+          <input placeholder="Nazwa" formControlName="groupName" type="text" matInput />
+        </mat-form-field>
+        <button
+          class="form-control form-button"
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="groupCreationForm.invalid || (groupCreationLoading$ | async) === true"
+        >
+          <span *ngIf="(groupCreationLoading$ | async) === false; else spinner">Zapisz</span>
+          <ng-template #spinner>
+            <div class="spinner__wrapper">
+              <mat-spinner [diameter]="35"></mat-spinner>
+            </div>
+          </ng-template>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

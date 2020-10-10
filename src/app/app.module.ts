@@ -23,8 +23,8 @@ registerLocaleData(localePl, 'pl-PL');
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
     StoreModule.forRoot({}, { metaReducers: [clearState] }),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([]),

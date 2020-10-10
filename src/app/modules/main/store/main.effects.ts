@@ -3,8 +3,8 @@ import { createEffect, ofType, Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { URLS } from '@core/consts';
 import { GroupsService, MessagesService, PopupService } from '@core/services';
+import { URLS } from '../../../consts';
 import * as mainActions from '../store/main.actions';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class MainEffects {
     this.actions$.pipe(
       ofType(mainActions.loadBaseGroups),
       switchMap(() =>
-        this.groupsService.getGroups().pipe(
+        this.groupsService.getGroups(URLS.usersGroups).pipe(
           map((res) => mainActions.loadBaseGroupsSuccess({ baseGroups: res.groups.slice(0, 5) })),
           catchError(() => {
             this.popupService.error('Błąd ładowania grup');

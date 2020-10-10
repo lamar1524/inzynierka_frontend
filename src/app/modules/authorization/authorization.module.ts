@@ -9,16 +9,17 @@ import { RouterModule } from '@angular/router';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
-import { STORE_FEATURES } from '@core/consts';
+import { STORE_FEATURES } from '../../consts';
 import { AuthorizationRoutingModule } from './authorization-routing.module';
-import { LoginComponent, RegisterComponent } from './components';
+import { Error403Component, LoginComponent, RegisterComponent } from './components';
 import { LoginGuard } from './guards';
 import { AuthInterceptor } from './interceptors';
 import { AuthService } from './services';
 import { authReducer, AuthorizationEffects } from './store';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
+  declarations: [LoginComponent, RegisterComponent, Error403Component],
   exports: [LoginComponent],
   imports: [
     CommonModule,
@@ -31,6 +32,7 @@ import { authReducer, AuthorizationEffects } from './store';
     MatProgressSpinnerModule,
     RouterModule,
     AuthorizationRoutingModule,
+    MatIconModule,
   ],
   providers: [
     AuthService,

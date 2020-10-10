@@ -1,6 +1,9 @@
+@import '../../../../../styles/variables';
+@import '../../../../../styles/mixins';
+
 .container {
   margin: 0 auto;
-  padding: 15px 25px;
+  padding-top: 15px;
   width: 90%;
 
   .spinner__wrapper {
@@ -39,11 +42,24 @@
   }
 
   .opening-button__wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
     padding-bottom: 10px;
     padding-top: 5px;
   }
 
   .placeholder {
     display: none;
+  }
+
+  .caption {
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+
+  @include break(map-get($breakpoints, lg)) {
+    padding: 15px 25px;
   }
 }

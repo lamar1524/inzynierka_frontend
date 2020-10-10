@@ -10,10 +10,10 @@
     <div class="register__form">
       <form class="form-group" (ngSubmit)="submitRegister()" [formGroup]="registerForm">
         <mat-form-field class="form-control">
-          <input matInput placeholder="Imię" formControlName="first_name" type="text" class="form-control" />
+          <input matInput placeholder="Imię" formControlName="firstName" type="text" class="form-control" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Nazwisko" formControlName="last_name" type="text" class="form-control" />
+          <input matInput placeholder="Nazwisko" formControlName="lastName" type="text" class="form-control" />
         </mat-form-field>
         <mat-form-field>
           <input matInput placeholder="Email" formControlName="email" type="email" class="form-control" />
@@ -61,7 +61,13 @@
           </div>
         </div>
         <div class="button__wrapper">
-          <button [disabled]="registerForm.invalid || registerForm.disabled" class="form__button" type="submit" mat-raised-button color="primary">
+          <button
+            [disabled]="registerForm.invalid || registerForm.disabled"
+            class="form__button"
+            type="submit"
+            mat-raised-button
+            color="primary"
+          >
             <span *ngIf="(loading$ | async) === false; else spinner">Wyślij</span>
             <ng-template #spinner><mat-spinner [diameter]="40"></mat-spinner></ng-template>
           </button>

@@ -1,13 +1,31 @@
-<div class="container" (scroll)="loadMoreFriends($event)">
-  <div class="friends__wrapper">
-    <div class="friends__header"><span>Kontakty</span></div>
-    <div class="friend__wrapper" (mouseenter)="hover($event)" (mouseleave)="unHover($event)" *ngFor="let friend of users$ | async">
-      <div class="friend__image"><img class="image" alt="profile" [src]="friend.image" /></div>
-      <div class="friend__credentials">
-        <span>{{ friend.first_name }} {{ friend.last_name }}</span>
+<div class="container">
+  <ng-scrollbar>
+    <div
+      class="infinite-scroll__wrapper"
+      infiniteScroll
+      [scrollWindow]="false"
+      scrollViewport
+      (scrolled)="loadMoreFriends()"
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="50"
+    >
+      <div class="friends__wrapper">
+        <div class="friends__header"><span>Kontakty</span></div>
+        <div
+          class="friend__wrapper u-text--link"
+          (mouseenter)="hover($event)"
+          (mouseleave)="unHover($event)"
+          [routerLink]="[routes.profile.path + friend.id + '/']"
+          *ngFor="let friend of users$ | async"
+        >
+          <div class="friend__image"><img class="image" alt="profile" [src]="friend.image" /></div>
+          <div class="friend__credentials">
+            <span>{{ friend.firstName }} {{ friend.lastName }}</span>
+          </div>
+        </div>
+        <div class="error__wrapper" *ngIf="(users$ | async)?.length === 0 || (users$ | async) === null">Brak kontaktów.</div>
+        <div class="spinner__wrapper" *ngIf="usersLoading$ | async"><mat-spinner [diameter]="75"></mat-spinner></div>
       </div>
     </div>
-    <div class="error__wrapper" *ngIf="(users$ | async)?.length === 0 || (users$ | async) === null">Brak kontaktów.</div>
-    <div class="spinner__wrapper" *ngIf="usersLoading$ | async"><mat-spinner [diameter]="75"></mat-spinner></div>
-  </div>
+  </ng-scrollbar>
 </div>

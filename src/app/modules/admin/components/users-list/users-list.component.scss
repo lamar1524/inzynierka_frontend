@@ -1,0 +1,51 @@
+@import '../../../../../styles/variables';
+
+.users-list__container {
+  width: 100%;
+  max-height: 100%;
+  min-height: 100px;
+  padding: 25px;
+  position: relative;
+
+  .spinner__wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    background-color: rgba(230, 230, 230, 0.3);
+  }
+
+  .header__wrapper {
+    padding: 10px 0;
+  }
+
+  .table__wrapper {
+    width: 100%;
+    max-height: 500px;
+    min-width: 730px;
+  }
+
+  .users-table {
+    width: 100%;
+
+    .mat-header-cell {
+      background-color: #e5e5e5;
+      color: #000;
+    }
+
+    .mat-row {
+      min-height: 65px;
+    }
+
+    .user-image {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+  }
+}

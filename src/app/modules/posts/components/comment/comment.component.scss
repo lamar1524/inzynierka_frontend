@@ -4,7 +4,7 @@ $image-wrapper: 60px;
 $options-wrapper: 35px;
 
 .container {
-  min-height: 80px;
+  min-height: 100px;
   padding: 10px;
   position: relative;
   width: 100%;
@@ -59,13 +59,13 @@ $options-wrapper: 35px;
   }
 
   .image {
-    border: 1px solid $gray;
     border-radius: 50%;
     height: 52px;
     width: 52px;
   }
 
   .content {
+    font-size: 1.4rem;
     margin-left: auto;
     margin-right: 0;
     padding: 10px;
@@ -92,24 +92,5 @@ $options-wrapper: 35px;
     display: flex;
     justify-content: space-around;
     width: 100%;
-  }
-}
-
-.dropdown {
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
-  left: calc(100% - #{$options-wrapper} - 75px);
-  padding: 5px;
-  position: absolute;
-  top: 50px;
-  width: 80px;
-  z-index: 2;
-
-  .option {
-    border-radius: 10px;
-    padding: 10px;
-    transition: background-color 0.5s ease;
-    z-index: 2;
   }
 }

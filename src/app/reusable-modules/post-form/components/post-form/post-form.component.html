@@ -1,0 +1,34 @@
+<div class="form__wrapper">
+  <form [formGroup]="form" class="form-group" (ngSubmit)="submitPost.emit({ data: data })">
+    <mat-form-field class="form-input">
+      <textarea matInput class="form__textarea" formControlName="content" cdkTextareaAutosize cdkAutosizeMinRows="1"></textarea>
+    </mat-form-field>
+    <div class="files__wrapper">
+      <div class="image__field">
+        <label>
+          <button type="button" (click)="chooseImage()" mat-icon-button>
+            <img class="icon" alt="image" src="../../../../../assets/img/photo.svg" />
+          </button>
+          <input class="input--invisible image__input" type="file" accept="image/*" (change)="imageChange($event)" />
+        </label>
+      </div>
+      <div class="file__field">
+        <label>
+          <button type="button" mat-icon-button (click)="chooseFile()">
+            <img alt="attachment" class="icon" src="../../../../../assets/img/attach.svg" />
+          </button>
+          <input class="input--invisible file__input" (change)="fileChange($event)" type="file" accept="*" />
+        </label>
+      </div>
+      <div class="button__wrapper">
+        <button type="button" mat-raised-button color="primary" (click)="hideForm.emit()">Anuluj</button>
+        <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid || form.disabled">
+          <span *ngIf="postProcessing === false; else spinner">Zapisz</span>
+          <ng-template #spinner>
+            <span><mat-spinner [diameter]="30"></mat-spinner></span>
+          </ng-template>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

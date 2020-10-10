@@ -1,18 +1,45 @@
 @import '../../../../../styles/variables';
 
 .container {
+  align-items: flex-start;
   background-color: #fff;
   color: #000;
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  justify-content: space-between;
   margin: 0;
-  text-align: center;
+  text-align: left;
   width: 100%;
 }
 
-.button__wrapper {
-  align-items: flex-end;
+.header {
+  padding: 10px 0;
+}
+
+.buttons__container {
+  align-items: center;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-end;
   padding-top: 30px;
+  width: 100%;
+
+  .accept__button,
+  .decline__button {
+    width: 75px;
+    height: 40px;
+  }
+
+  .decline__button {
+    margin-right: 5px;
+  }
+
+  .spinner__wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
 }

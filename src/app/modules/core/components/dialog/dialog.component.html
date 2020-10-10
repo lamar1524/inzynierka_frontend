@@ -1,11 +1,18 @@
 <div class="container" mat-dialog-content>
-  <h1>{{ data.header }}</h1>
-  <p>{{ data.caption }}</p>
-  <div class="button__wrapper">
+  <div class="text__container">
+    <h2 class="header">{{ data.header }}</h2>
+    <p class="caption">{{ data.caption }}</p>
+  </div>
+  <div class="buttons__container">
+    <button class="decline__button" mat-raised-button color="warn" (click)="onDecline()">Nie</button>
+
     <button class="accept__button" mat-raised-button color="primary" (click)="onAccept()" [disabled]="isProcessing">
-      <span *ngIf="!isProcessing; else spinner">Tak</span
-      ><ng-template #spinner><mat-spinner [diameter]="35" color="primary"></mat-spinner></ng-template>
+      <span *ngIf="!isProcessing; else spinner">Tak</span>
+      <ng-template #spinner>
+        <span class="spinner__wrapper">
+          <mat-spinner [diameter]="20" color="primary"></mat-spinner>
+        </span>
+      </ng-template>
     </button>
-    <button mat-raised-button color="warn" (click)="onDecline()">Nie</button>
   </div>
 </div>

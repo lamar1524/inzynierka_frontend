@@ -1,8 +1,8 @@
-import { logoutUser } from '@authorization/store';
+import { login, logoutUser } from '@authorization/store';
 
 export function clearState(reducer) {
   return (state, action) => {
-    if (action.type === logoutUser.type) {
+    if (action.type === logoutUser.type || action.type === login.type) {
       state = undefined;
     }
 

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { USER_ROLE } from '@core/enums';
-import { IPost, IUser } from '@core/interfaces';
+import { USER_ROLE } from '../../../../enums';
+import { IPost, IUser } from '../../../../interfaces';
 
 @Component({
   selector: 'app-posts-list',
@@ -14,6 +14,8 @@ export class PostsListComponent implements OnInit {
   @Input() isOwner: boolean;
   @Input() posts: IPost[];
   @Input() currentUser: IUser;
+  @Input() withRoute: boolean;
+  @Input() withGroup: boolean;
   @Input() postsLoading$: Observable<boolean>;
   @Input() postEditing$: Observable<boolean>;
   @Input() postDeleting$: Observable<boolean>;
@@ -32,11 +34,13 @@ export class PostsListComponent implements OnInit {
   ngOnInit(): void {}
 
   getDeletePerm(post: IPost): boolean {
-    return post.owner.id === this.currentUser.id || this.currentUser.role === USER_ROLE.ADMIN;
+    return (
+      post.owner?.id === this.currentUser?.id || this.currentUser?.role === USER_ROLE.ADMIN || post.group.moderator === this.currentUser?.id
+    );
   }
 
   getEditPerm(post: IPost) {
-    return post.owner.id === this.currentUser.id;
+    return post.owner?.id === this.currentUser?.id;
   }
 
   updatePost(data: { id: number; data: FormData }) {

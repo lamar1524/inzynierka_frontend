@@ -1,0 +1,78 @@
+<div class="container" *ngIf="(profileLoading$ | async) === false && (profileEditing$ | async) === false; else spinner">
+  <div class="photo__wrapper">
+    <img
+      alt="profile"
+      class="photo"
+      [src]="profile.image"
+      [ngClass]="{ 'photo--editable': currentUser.id === profile.id }"
+      (click)="currentUser.id === profile.id ? choosePhoto(photoInput) : null"
+    />
+    <input hidden alt="image" type="file" accept="image/*" #photoInput (change)="changePhoto($event)" />
+  </div>
+  <div class="full-name__wrapper">
+    <span class="full-name">{{ profile.firstName }} {{ profile.lastName }}</span>
+    <button (click)="editToggle()" *ngIf="isCurrentUser" mat-icon-button class="edit-icon__wrapper">
+      <mat-icon class="edit-icon">edit</mat-icon>
+    </button>
+  </div>
+  <div class="message__wrapper" *ngIf="!isCurrentUser">
+    <button mat-icon-button class="message__button" (click)="handleMessageClick()">
+      <mat-icon>email</mat-icon>
+    </button>
+  </div>
+  <div class="data__wrapper" *ngIf="!editing">
+    <div class="prop">
+      <span class="prop__label">Imię: </span>
+      <span class="prop__value">{{ profile.firstName }}</span>
+    </div>
+    <div class="prop">
+      <span class="prop__label">Nazwisko: </span>
+      <span class="prop__value">{{ profile.lastName }}</span>
+    </div>
+    <div class="prop">
+      <span class="prop__label">Email: </span> <span class="prop__value">{{ profile.email }}</span>
+    </div>
+  </div>
+  <div class="data__wrapper form__wrapper" *ngIf="editing && isCurrentUser">
+    <form [formGroup]="editForm" (ngSubmit)="submitUpdate()">
+      <div class="form__header u-text--bold">Edytuj dane</div>
+      <div class="prop">
+        <mat-form-field>
+          <input formControlName="firstName" matInput type="text" placeholder="Imię" />
+        </mat-form-field>
+      </div>
+      <div class="prop">
+        <mat-form-field>
+          <input formControlName="lastName" matInput type="text" placeholder="Nazwisko" [value]="profile.lastName" />
+        </mat-form-field>
+      </div>
+      <div class="prop">
+        <mat-form-field>
+          <input formControlName="email" matInput type="email" placeholder="Email" [value]="profile.email" />
+        </mat-form-field>
+      </div>
+      <div class="prop">
+        <button mat-raised-button type="submit" color="primary" [disabled]="editForm.invalid">Zapisz</button>
+      </div>
+    </form>
+    <form [formGroup]="editPasswordForm" (ngSubmit)="sendPasswordChange()">
+      <div class="form__header u-text--bold">Zmień hasło</div>
+      <div class="prop">
+        <mat-form-field>
+          <input formControlName="password" matInput type="password" placeholder="Nowe hasło" />
+        </mat-form-field>
+      </div>
+      <div class="prop">
+        <mat-form-field>
+          <input formControlName="repeatPassword" matInput type="password" placeholder="Powtórz hasło" />
+        </mat-form-field>
+      </div>
+      <button type="submit" mat-raised-button color="primary" [disabled]="editPasswordForm.invalid">Zapisz</button>
+    </form>
+  </div>
+</div>
+<ng-template #spinner>
+  <div class="spinner__wrapper">
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
+</ng-template>

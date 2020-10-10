@@ -2,26 +2,39 @@
   <div class="search__wrapper">
     <div class="search__header">Wyszukiwarka</div>
     <form (ngSubmit)="navigateToSearch()" [formGroup]="searchForm" class="form-group">
-      <mat-form-field>
+      <mat-form-field class="form-control">
         <input placeholder="Szukaj..." type="search" formControlName="phrase" matInput />
       </mat-form-field>
-      <button type="submit" class="form-button" mat-raised-button color="primary">Szukaj</button>
+      <button matTooltip="Wyszukaj grupę" mat-mini-fab type="submit" class="form-button" color="primary">
+        <mat-icon class="search-icon">search</mat-icon>
+      </button>
     </form>
   </div>
   <div class="groups__wrapper" *ngIf="(groupsLoading$ | async) === false; else spinner">
     <div class="groups__header">Grupy</div>
-    <div class="group" (mouseenter)="hover($event)" (mouseleave)="unHover($event)" *ngFor="let group of groups$ | async; index as i">
+    <div
+      class="group u-text--link"
+      [routerLink]="[routes.singleGroup.path + group.id]"
+      (mouseenter)="hover($event)"
+      (mouseleave)="unHover($event)"
+      *ngFor="let group of groups$ | async; index as i"
+    >
       <div class="group-image__wrapper">
         <img class="group-image" alt="image" [src]="group.image" />
       </div>
-      <div class="group__name" [title]="group.name">
+      <div class="group__name" [matTooltip]="group.name">
         <span>{{ group.name.length >= 20 ? (group.name | slice: 0:17) + '...' : group.name }}</span>
       </div>
     </div>
-    <div class="groups__caption u-text--link u-text--primary" *ngIf="(groups$ | async) && (groups$ | async).length === 5; else error">Zobacz więcej...</div>
-    <ng-template #error>
-      <div class="groups__caption u-text--link">Brak grup.</div>
-    </ng-template>
+    <button
+      class="groups__caption"
+      mat-button
+      [routerLink]="[routes.privateGroups.path]"
+      *ngIf="(groups$ | async) && (groups$ | async).length === 5"
+    >
+      Zobacz więcej...
+    </button>
+    <div class="groups__caption" *ngIf="(groups$ | async)?.length === 0">Brak grup</div>
   </div>
   <ng-template #spinner>
     <div class="spinner__wrapper">

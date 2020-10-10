@@ -13,9 +13,11 @@
   }
 
   .header__logo {
-    .logo {
-      height: 65px;
-      width: 65px;
+    .logo__icon {
+      height: 75px;
+      width: 80px;
+      font-size: 80px;
+      color: $primary;
     }
   }
 

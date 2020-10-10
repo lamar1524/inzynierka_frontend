@@ -8,16 +8,22 @@ $options-wrapper: 35px;
   background-color: #fff;
   border-radius: 10px;
   margin: 15px 0;
-  min-height: 80px;
+  min-height: 150px;
   padding: 5px 0;
   position: relative;
   width: 100%;
 
+  .profile-link {
+    &:hover {
+      color: $primary;
+    }
+  }
+
   .post__header {
     border-bottom: 1px solid $primary;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-areas: 'image credentials options';
+    grid-template-columns: $image-wrapper calc(100% - #{$image-wrapper} - #{$options-wrapper}) $options-wrapper;
     min-height: 40px;
     padding: 5px 10px;
     width: 100%;
@@ -26,11 +32,10 @@ $options-wrapper: 35px;
   .image__wrapper {
     align-items: center;
     display: flex;
+    grid-area: image;
     justify-content: center;
-    width: $image-wrapper;
 
     .image {
-      border: 1px solid $gray;
       border-radius: 50%;
       height: 52px;
       width: 52px;
@@ -40,13 +45,21 @@ $options-wrapper: 35px;
   .text__wrapper {
     display: flex;
     flex-direction: column;
+    grid-area: credentials;
     justify-content: center;
     padding: 0 10px;
-    width: calc(100% - #{$image-wrapper} - #{$options-wrapper});
 
     .credentials,
     .date {
       width: 100%;
+    }
+
+    .credentials {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-end;
+      height: 100%;
     }
 
     .date {
@@ -63,29 +76,41 @@ $options-wrapper: 35px;
     }
 
     .name,
-    .arrow,
     .group {
       display: inline-block;
+    }
+
+    .arrow {
+      color: #000;
+      width: unset;
+      height: unset;
+      font-size: 2rem;
+    }
+
+    .group {
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+
+  .options__button {
+    .mat-icon.more-icon {
+      color: #000;
     }
   }
 
   .options__wrapper {
     align-items: center;
     display: flex;
+    grid-area: options;
     height: 100%;
     justify-content: center;
-    width: $options-wrapper;
   }
 
   .options__img {
     height: 15px;
     width: 30px;
-  }
-
-  .arrow {
-    height: 10px;
-    margin: 0 5px;
-    width: 15px;
   }
 
   .post__content {
@@ -95,6 +120,7 @@ $options-wrapper: 35px;
 
   .post__text {
     padding-bottom: 5px;
+    word-break: break-all;
   }
 
   .post__image {
@@ -106,72 +132,8 @@ $options-wrapper: 35px;
     }
   }
 
-  .dropdown {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
-    left: calc(100% - #{$options-wrapper} - 75px);
-    padding: 5px;
-    position: absolute;
-    top: 50px;
-    width: 80px;
-  }
-
-  .option {
-    border-radius: 10px;
-    padding: 10px;
-    transition: background-color 0.5s ease;
-    z-index: 2;
-  }
-
   .form__wrapper {
     font-size: 1.4rem;
     padding: 15px 10px 0;
-  }
-
-  .form-group {
-    width: 100%;
-
-    .form-input {
-      height: auto;
-      width: 100%;
-    }
-  }
-
-  .form__textarea {
-    min-height: 100px;
-    overflow-y: hidden;
-  }
-
-  .button__wrapper {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .files__wrapper {
-    align-items: flex-end;
-    display: flex;
-    justify-content: flex-start;
-    padding: 5px 0;
-  }
-
-  .image__field {
-    padding-top: 10px;
-  }
-
-  .input--invisible {
-    display: none;
-  }
-
-  .icon {
-    height: 24px;
-    width: 24px;
-  }
-
-  @include break(map-get($breakpoints, md)) {
-    .button__wrapper {
-      justify-content: space-around;
-    }
   }
 }

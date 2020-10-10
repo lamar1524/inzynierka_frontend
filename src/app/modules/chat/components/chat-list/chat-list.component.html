@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="threads__wrapper">
+    <div class="info" *ngIf="(threads$ | async)?.length === 0">
+      Brak wiadomości
+    </div>
+    <div class="thread__container" *ngFor="let thread of threads$ | async" [routerLink]="[routes.singleChat.path + thread.id]">
+      <div class="image__wrapper">
+        <img class="image" alt="profile" [src]="(currentUser$ | async)?.id === thread.user1.id ? thread.user2.image : thread.user1.image" />
+      </div>
+      <div class="content__wrapper">
+        <p class="other-user__credentials">
+          {{
+            (currentUser$ | async)?.id === thread.user1.id
+              ? getFullName(thread.user2.firstName, thread.user2.lastName)
+              : getFullName(thread.user1.firstName, thread.user1.lastName)
+          }}
+        </p>
+        <p class="last-message">
+          {{ thread.lastMessage ? thread.lastMessage.content : 'Brak wiadomości' }}
+        </p>
+        <div class="date__wrapper" *ngIf="thread.lastMessage">
+          {{ thread.lastMessage.dateSend | date: 'yyyy-MM-dd HH:mm' }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

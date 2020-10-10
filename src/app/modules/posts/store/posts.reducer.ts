@@ -1,13 +1,13 @@
 import { createReducer, on, Action } from '@ngrx/store';
 
-import { IPost, IResponseComments, IResponsePosts } from '@core/interfaces';
+import { IPost, IResponseComments, IResponsePosts } from '../../../interfaces';
 import * as postsActions from '../store/posts.actions';
 
-export interface PostModuleState {
-  posts: PostState;
+export interface PostsModuleState {
+  posts: PostsState;
 }
 
-export interface PostState {
+export interface PostsState {
   allPostsLoading: boolean;
   allPosts: IResponsePosts;
   postEditing: boolean;
@@ -21,7 +21,7 @@ export interface PostState {
   commentAdding: boolean;
 }
 
-export const initialState: PostState = {
+export const initialState: PostsState = {
   allPostsLoading: false,
   allPosts: {
     next: null,
@@ -53,19 +53,11 @@ export const POSTS_REDUCER = createReducer(
   })),
   on(postsActions.loadAllPostsFail, (state) => ({ ...state, allPostsLoading: false })),
 
-  on(postsActions.editPost, (state) => ({ ...state, postEditing: true })),
-  on(postsActions.editPostSuccess, (state) => ({ ...state, postEditing: false })),
-  on(postsActions.editPostFail, (state) => ({ ...state, postEditing: false })),
-
-  on(postsActions.deletePost, (state) => ({ ...state, postDeleting: true })),
-  on(postsActions.deletePostSuccess, (state) => ({ ...state, postDeleting: false })),
-  on(postsActions.deletePostFail, (state) => ({ ...state, postDeleting: false })),
-
   on(postsActions.loadPost, (state) => ({ ...state, singlePostLoading: true })),
   on(postsActions.loadPostSuccess, (state, { post }) => ({ ...state, singlePostLoading: false, singlePost: post })),
   on(postsActions.loadPostFail, (state) => ({ ...state, singlePostLoading: false })),
 
-  on(postsActions.loadComments, (state) => ({ ...state, commentsLoading: true })),
+  on(postsActions.loadComments, (state, { url }) => ({ ...state, commentsLoading: true, comments: url ? state.comments : null })),
   on(postsActions.loadCommentsSuccess, (state, { comments }) => ({
     ...state,
     commentsLoading: false,
@@ -86,6 +78,6 @@ export const POSTS_REDUCER = createReducer(
   on(postsActions.addCommentFail, (state) => ({ ...state, commentAdding: false })),
 );
 
-export function postsReducer(state: PostState | undefined, action: Action) {
+export function postsReducer(state: PostsState | undefined, action: Action) {
   return POSTS_REDUCER(state, action);
 }

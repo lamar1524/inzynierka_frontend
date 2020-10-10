@@ -28,9 +28,10 @@ $hamburger-width: 30px;
   z-index: 2;
 
   .left__wrapper {
-    align-items: center;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-areas: 'logo user nav';
+    grid-template-columns: $logo-width auto 60px;
+    grid-template-rows: 100%;
     height: 100%;
     width: 100%;
   }
@@ -44,12 +45,18 @@ $hamburger-width: 30px;
   }
 
   .logo__wrapper {
+    grid-area: logo;
     height: 75px;
     width: $logo-width;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    .logo {
+    .logo__icon {
       height: 100%;
       width: 100%;
+      font-size: 70px;
+      color: $primary;
     }
   }
 
@@ -58,8 +65,8 @@ $hamburger-width: 30px;
     color: $primary;
     display: flex;
     font-size: 2rem;
-    justify-content: space-around;
-    width: $user-width;
+    grid-area: user;
+    justify-content: flex-start;
   }
 
   .img__wrapper {
@@ -70,7 +77,6 @@ $hamburger-width: 30px;
     width: 60px;
 
     .img {
-      border: 1px solid $gray;
       border-radius: 50%;
       display: inline-block;
       height: 52px;
@@ -78,25 +84,12 @@ $hamburger-width: 30px;
     }
   }
 
-  .message__wrapper {
-    align-items: center;
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    width: $message-width;
-
-    .message {
-      height: 32px;
-      width: 32px;
-    }
-  }
-
   .hamburger__wrapper {
     align-items: center;
     display: flex;
+    grid-area: nav;
     height: 100%;
     justify-content: center;
-    width: calc(100% - #{$logo-width} - #{$user-width} - #{$message-width});
 
     .hamburger__box {
       align-items: center;
@@ -104,9 +97,7 @@ $hamburger-width: 30px;
       border: 0;
       cursor: pointer;
       display: flex;
-      height: calc(#{$hamburger-height} + 5px);
       justify-content: center;
-      width: calc(#{$hamburger-width} + 5px);
     }
 
     .hamburger {
@@ -169,7 +160,7 @@ $hamburger-width: 30px;
   transform: translateX(-100%);
   transition: transform 0.5s ease-in-out;
   width: 100vw;
-  z-index: 1;
+  z-index: 100;
 
   .options {
     align-items: center;
@@ -232,5 +223,9 @@ $hamburger-width: 30px;
     .message__wrapper {
       display: none;
     }
+  }
+
+  .nav {
+    display: none;
   }
 }

@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { ROUTES, URLS } from '@core/consts';
-import { USER_ROLE } from '@core/enums';
-import { ILoginUser, IRegisterUser, IUser } from '@core/interfaces/user.interface';
+import { ROUTES, URLS } from '../../../consts';
+import { ILoginUser, IRegisterUser, IUser } from '../../../interfaces/user.interface';
+import { USER_ROLE } from '../../../enums';
 
 @Injectable({
   providedIn: 'root',
@@ -18,8 +18,19 @@ export class AuthService {
     this.TOKEN_KEY = 'Token';
   }
 
+  mapUserRole = (user: any) => {
+    let role = USER_ROLE.USER;
+    if (user.role === 1) {
+      role = USER_ROLE.LECTURER;
+    } else if (user.role === 2) {
+      role = USER_ROLE.ADMIN;
+    }
+    return { ...user, role };
+  };
+
   loginUser(data: ILoginUser): Observable<IUser> {
     return this.http.post<IUser>(URLS.login, data).pipe(
+      map(this.mapUserRole),
       tap((response) => {
         this.saveToken(response.token);
       }),
@@ -47,7 +58,7 @@ export class AuthService {
     this.router.navigate([ROUTES.login.path]);
   }
 
-  getCurrentUser() {
-    return this.http.get<IUser>(URLS.currentUser);
+  getCurrentUser(): Observable<IUser> {
+    return this.http.get<any>(URLS.currentUser).pipe(map(this.mapUserRole));
   }
 }

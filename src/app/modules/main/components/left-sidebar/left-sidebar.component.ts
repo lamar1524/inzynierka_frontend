@@ -1,10 +1,11 @@
-import { DOCUMENT } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { IGroup } from '@core/interfaces/group.interface';
+import { ROUTES } from '../../../../consts';
+import { IGroup, IRoutes } from '../../../../interfaces';
 import { loadBaseGroups, selectBaseGroups, selectBaseGroupsLoading, MainModuleState } from '../../store';
 
 @Component({
@@ -17,19 +18,23 @@ export class LeftSidebarComponent {
   groups$: Observable<IGroup[]>;
   groupsLoading$: Observable<boolean>;
   searchForm: FormGroup;
+  readonly routes: IRoutes;
 
-  constructor(private store: Store<MainModuleState>, @Inject(DOCUMENT) private document: Document) {
+  constructor(private store: Store<MainModuleState>, private router: Router) {
     this.store.dispatch(loadBaseGroups());
     this.groups$ = this.store.select(selectBaseGroups);
     this.groupsLoading$ = this.store.select(selectBaseGroupsLoading);
     this.searchForm = new FormGroup({
       phrase: new FormControl(null),
     });
+    this.routes = ROUTES;
   }
 
   navigateToSearch() {
     const data = this.searchForm.value;
     if (data.phrase !== null && data.phrase !== '') {
+      this.router.navigate([this.routes.search.path + data.phrase]);
+      this.searchForm.reset();
     }
   }
 

@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="scroll__wrapper">
+    <ng-scrollbar>
+      <div
+        class="infinite-scroll__wrapper"
+        infiniteScroll
+        [scrollWindow]="false"
+        scrollViewport
+        (scrolledUp)="handleMessagesScroll()"
+        [infiniteScrollDistance]="2"
+        [infiniteScrollThrottle]="50"
+      >
+        <div class="message__list">
+          <div class="spinner__wrapper" *ngIf="messagesLoading">
+            <mat-spinner [diameter]="40"></mat-spinner>
+          </div>
+          <div
+            class="message"
+            [ngClass]="{
+              'message--owner': currentUser.id === message.sender.id,
+              'first-message': i === messages?.length - 1,
+              'last-message': i === 0
+            }"
+            *ngFor="let message of messages; index as i"
+          >
+            <div class="image__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">
+              <img [src]="message.sender.image" alt="photo" class="user-image" />
+            </div>
+            <div class="content__wrapper" [matTooltip]="message.dateSend | date: 'dd-MM-yyyy HH:mm'">{{ message.content }}</div>
+          </div>
+        </div>
+      </div>
+    </ng-scrollbar>
+  </div>
+  <div class="form__wrapper">
+    <form class="message__form" [formGroup]="messageSubmitForm" (ngSubmit)="handleMessageSubmit()">
+      <mat-form-field class="message-field__wrapper">
+        <input class="message-field" matInput type="text" formControlName="content" />
+        <button class="message-button" mat-icon-button color="primary" [disabled]="messageSubmitForm.invalid">
+          <mat-icon>
+            send
+          </mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
+  </div>
+</div>
