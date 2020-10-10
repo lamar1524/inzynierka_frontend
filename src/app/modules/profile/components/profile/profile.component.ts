@@ -152,6 +152,19 @@ export class ProfileComponent implements OnDestroy {
     this.store.dispatch(profileActions.fetchOrCreateThread({ user2Id: this.profile.id }));
   }
 
+  choosePhoto(photoInput: HTMLElement) {
+    console.log(photoInput);
+    photoInput.dispatchEvent(new MouseEvent('click'));
+  }
+
+  changePhoto($event: any) {
+    const photo = $event.target.files[0];
+    const formData = new FormData();
+    formData.append('image', photo);
+    formData.append('id', this.currentUser.id.toString());
+    this.store.dispatch(profileActions.editProfileData({ user: formData, refreshAction: this.refreshCurrentUser }));
+  }
+
   ngOnDestroy(): void {
     this.sub$.unsubscribe();
   }

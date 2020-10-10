@@ -1,6 +1,13 @@
 <div class="container" *ngIf="(profileLoading$ | async) === false && (profileEditing$ | async) === false; else spinner">
   <div class="photo__wrapper">
-    <img class="photo" [src]="profile.image" />
+    <img
+      alt="profile"
+      class="photo"
+      [src]="profile.image"
+      [ngClass]="{ 'photo--editable': currentUser.id === profile.id }"
+      (click)="currentUser.id === profile.id ? choosePhoto(photoInput) : null"
+    />
+    <input hidden alt="image" type="file" accept="image/*" #photoInput (change)="changePhoto($event)" />
   </div>
   <div class="full-name__wrapper">
     <span class="full-name">{{ profile.firstName }} {{ profile.lastName }}</span>

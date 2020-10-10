@@ -7,7 +7,10 @@ export const loadProfileData = createAction('[Profile] Load profile data', props
 export const loadProfileDataSuccess = createAction('[Profile] Load profile data success', props<{ user: IUser }>());
 export const loadProfileDataFail = createAction('[Profile] Load profile data fail');
 
-export const editProfileData = createAction('[Profile] Send profile to update', props<{ user: IUpdateUser; refreshAction: () => void }>());
+export const editProfileData = createAction(
+  '[Profile] Send profile to update',
+  props<{ user: IUpdateUser | FormData; refreshAction: () => void }>(),
+);
 export const editProfileDataSuccess = createAction('[Profile] Send profile to update success', props<{ user: IUser }>());
 export const editProfileDataFail = createAction('[Profile] Send profile to update fail');
 

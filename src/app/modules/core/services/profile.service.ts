@@ -16,7 +16,7 @@ export class ProfileService {
     return this.http.get<IUser>(URLS.loadProfile + userId + '/');
   }
 
-  editProfile(user: IUpdateUser): Observable<IUser> {
+  editProfile(user: IUpdateUser | FormData): Observable<IUser> {
     return this.http.put<IUser>(URLS.editProfile, user);
   }
 
