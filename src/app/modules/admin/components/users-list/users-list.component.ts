@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { DialogService } from '@core/services';
 import { AuthModuleState, selectCurrentUser } from '@authorization/store';
 import { USER_ROLE } from '../../../../enums';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
   selector: 'app-users-list',
@@ -26,6 +27,7 @@ export class UsersListComponent implements OnDestroy {
   public readonly displayedColumns: string[];
   public readonly availableUserRoles: USER_ROLE[];
   public userToggling$: Observable<boolean>;
+  public settingUserRoleLoading$: Observable<boolean>;
   public currentUser$: Observable<IUser>;
 
   constructor(private _store: Store<AdminModuleState | AuthModuleState>, private _dialogService: DialogService) {
@@ -51,6 +53,7 @@ export class UsersListComponent implements OnDestroy {
     this._fetchData();
     this.userToggling$ = this._store.select(adminSelectors.selectActivityToggleLoading);
     this.currentUser$ = this._store.select(selectCurrentUser).pipe(filter((user) => !!user));
+    this.settingUserRoleLoading$ = this._store.select(adminSelectors.selectSettingRoleLoading);
   }
 
   private _fetchData = () => {
@@ -76,6 +79,24 @@ export class UsersListComponent implements OnDestroy {
       loadingSelect: this.userToggling$,
       onAcceptCallback: toggleActivity,
     });
+  }
+
+  switchUserRole({ value }: MatSelectChange, user: IUser) {
+    let futureRole = 0;
+    switch (value) {
+      case USER_ROLE.LECTURER: {
+        futureRole = 1;
+        break;
+      }
+      case USER_ROLE.ADMIN: {
+        futureRole = 2;
+        break;
+      }
+      default: {
+        futureRole = 0;
+      }
+    }
+    this._store.dispatch(adminActions.setUserRole({ userId: user.id, role: futureRole, refreshAction: this._fetchData }));
   }
 
   ngOnDestroy() {

@@ -1,4 +1,7 @@
 <div class="users-list__container">
+  <div class="spinner__wrapper" *ngIf="usersLoading || (settingUserRoleLoading$ | async) === true">
+    <mat-spinner [diameter]="50"></mat-spinner>
+  </div>
   <div class="header__wrapper">
     <h2>Lista użytkowników</h2>
   </div>
@@ -51,13 +54,16 @@
           <ng-container matColumnDef="role">
             <th mat-header-cell *matHeaderCellDef>Rola</th>
             <td mat-cell *matCellDef="let element">
-              <mat-form-field>
-                <mat-select [value]="element.role">
+              <mat-form-field *ngIf="element.id !== (currentUser$ | async).id; else roleInfo">
+                <mat-select [value]="element.role" (selectionChange)="switchUserRole($event, element)">
                   <mat-option *ngFor="let role of availableUserRoles" [value]="role">
                     {{ role }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
+              <ng-template #roleInfo>
+                <span>{{ element.role }}</span>
+              </ng-template>
             </td>
           </ng-container>
 

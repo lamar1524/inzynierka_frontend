@@ -11,12 +11,14 @@ export interface AdminState {
   usersLoading: boolean;
   usersList: IResponseUsers;
   activityToggleLoading: boolean;
+  settingRoleLoading: boolean;
 }
 
 export const initialState: AdminState = {
   usersLoading: false,
   usersList: null,
   activityToggleLoading: false,
+  settingRoleLoading: false,
 };
 
 export const ADMIN_REDUCER = createReducer(
@@ -33,6 +35,10 @@ export const ADMIN_REDUCER = createReducer(
   on(adminActions.toggleUserActivity, (state) => ({ ...state, activityToggleLoading: true })),
   on(adminActions.toggleUserActivitySuccess, (state) => ({ ...state, activityToggleLoading: false })),
   on(adminActions.toggleUserActivityFail, (state) => ({ ...state, activityToggleLoading: false })),
+
+  on(adminActions.setUserRole, (state) => ({ ...state, settingRoleLoading: true })),
+  on(adminActions.setUserRoleSuccess, (state) => ({ ...state, settingRoleLoading: false })),
+  on(adminActions.setUserRoleFail, (state) => ({ ...state, settingRoleLoading: false })),
 );
 
 export const adminReducer = (state: AdminState | undefined, action: Action) => ADMIN_REDUCER(state, action);

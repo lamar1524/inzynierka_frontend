@@ -14,19 +14,21 @@ export class AdminService {
   constructor(private _httpClient: HttpClient, private _authService: AuthService) {}
 
   fetchUsersList(url: string): Observable<IResponseUsers> {
-    return this._httpClient
-      .get<any>(url)
-      .pipe(
-        map((results) => ({
-          users: results.results.map(this._authService.mapUserRole),
-          next: results.next,
-          previous: results.previous,
-          count: results.count,
-        })),
-      );
+    return this._httpClient.get<any>(url).pipe(
+      map((results) => ({
+        users: results.results.map(this._authService.mapUserRole),
+        next: results.next,
+        previous: results.previous,
+        count: results.count,
+      })),
+    );
   }
 
   toggleUserActivity(userId: number): Observable<any> {
     return this._httpClient.put(URLS.manageUser, { userId });
+  }
+
+  setUserRole(userId: number, userRole: number): Observable<any> {
+    return this._httpClient.put(URLS.setUserRole, { userId, role: userRole });
   }
 }

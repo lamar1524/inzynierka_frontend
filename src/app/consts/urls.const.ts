@@ -13,6 +13,7 @@ export const URLS: IUrls = {
   currentUser: host + 'users/current_user/',
   usersList: host + 'users/users_list/',
   manageUser: host + 'users/manage_user/',
+  setUserRole: host + 'users/set_role/',
   allPosts: host + 'posts/user_posts_list/',
   postEdit: host + 'posts/update/',
   postDelete: host + 'posts/delete/',

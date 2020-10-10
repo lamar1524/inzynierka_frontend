@@ -8,3 +8,5 @@ export const selectUsersLoading = createSelector(adminSelector, (state: AdminSta
 export const selectUsersList = createSelector(adminSelector, (state: AdminState) => state.usersList);
 
 export const selectActivityToggleLoading = createSelector(adminSelector, (state: AdminState) => state.activityToggleLoading);
+
+export const selectSettingRoleLoading = createSelector(adminSelector, (state: AdminState) => state.settingRoleLoading);

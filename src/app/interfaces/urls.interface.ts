@@ -34,4 +34,5 @@ export interface IUrls {
   chatSocket: string;
   usersList: string;
   manageUser: string;
+  setUserRole: string;
 }

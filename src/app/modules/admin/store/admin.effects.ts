@@ -27,19 +27,38 @@ export class AdminEffects {
     ),
   );
 
-  toggleUserActivity = createEffect(() =>
+  toggleUserActivity$ = createEffect(() =>
     this._actions$.pipe(
       ofType(adminActions.toggleUserActivity),
       switchMap((action) =>
         this._adminService.toggleUserActivity(action.userId).pipe(
-          map((res) => {
+          map(() => {
             action.refreshAction();
             this._popupService.success('Pomyślnie zaktualizowałeś aktywność użytkownika');
             return adminActions.toggleUserActivitySuccess();
           }),
-          catchError((error) => {
+          catchError(() => {
             this._popupService.error('Błąd aktualizacji aktywności użytkownika');
             return of(adminActions.toggleUserActivityFail());
+          }),
+        ),
+      ),
+    ),
+  );
+
+  setUserRole$ = createEffect(() =>
+    this._actions$.pipe(
+      ofType(adminActions.setUserRole),
+      switchMap((action) =>
+        this._adminService.setUserRole(action.userId, action.role).pipe(
+          map(() => {
+            this._popupService.success('Pomyślnie zaktualizowano uprawnienia użytkownika');
+            action.refreshAction();
+            return adminActions.setUserRoleSuccess();
+          }),
+          catchError(() => {
+            this._popupService.error('Błąd zmiany uprawnień uzytkownika');
+            return of(adminActions.setUserRoleFail());
           }),
         ),
       ),
