@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { first } from 'rxjs/operators';
-
 import { selectCurrentUser, AuthModuleState } from '@authorization/store';
 import * as authActions from '@authorization/store/authorization.actions';
 import { ROUTES } from '../../../../consts';
@@ -24,26 +22,14 @@ export class NavigationComponent implements OnDestroy {
 
   constructor(private store: Store<AuthModuleState | MainModuleState>) {
     this.sub = new Subscription();
-    const temp = this.store
-      .select(selectCurrentUser)
-      .pipe(first())
-      .subscribe((user) => {
-        if (user === null) {
-          this.store.dispatch(authActions.loadUser());
-        }
-        this.loadUser();
-      });
-    this.sub.add(temp);
+    this.store.dispatch(authActions.loadUser());
+    this.currentUser$ = this.store.select(selectCurrentUser);
     this.navVisibility = this.store.select(selectNavVisibility);
     this.routes = ROUTES;
   }
 
   get roles() {
     return USER_ROLE;
-  }
-
-  loadUser() {
-    this.currentUser$ = this.store.select(selectCurrentUser);
   }
 
   toggleNav() {

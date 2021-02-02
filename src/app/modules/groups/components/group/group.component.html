@@ -126,7 +126,7 @@
                     </div>
                   </div>
                   <div class="buttons__wrapper" *ngIf="group?.moderator?.id === currentUser?.id || group?.owner?.id === currentUser?.id">
-                    <button matTooltip="Akceptu" mat-icon-button class="option" (click)="showAcceptDialog(pendingMember)">
+                    <button matTooltip="Akceptuj" mat-icon-button class="option" (click)="showAcceptDialog(pendingMember)">
                       <mat-icon>done</mat-icon>
                     </button>
                     <button matTooltip="Odrzuć" mat-icon-button class="option" (click)="showRejectDialog(pendingMember)">
